@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,4 +22,11 @@ Route::get('/', function () {
 
 Route::prefix('admin')->group(function() {
     Route::get('/', [AdminController::class, 'loginForm'])->name('login.form');
+
+    Route::get('/users', [UsersController::class, 'index'])->name('admin.users');
+    Route::get('/users/create', [UsersController::class, 'create'])->name('admin.users.create');
+    Route::post('/users/create', [UsersController::class, 'store'])->name('admin.users.store');
+    Route::get('/users/edit/{id}', [UsersController::class, 'edit'])->name('admin.users.edit');
+    Route::post('/users/update/{id}', [UsersController::class, 'update'])->name('admin.users.update');
+    Route::post('/users/destroy/{id}', [UsersController::class, 'destroy'])->name('admin.users.destroy');
 });

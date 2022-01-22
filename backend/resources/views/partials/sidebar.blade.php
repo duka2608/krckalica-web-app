@@ -25,8 +25,8 @@
                 <ul class="nav side-menu">
                         <li><a><i class="fa fa-users"></i> Korisnici <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                                <li><a href="#">Svi korisnici</a></li>
-                                <li><a href="#">Dodaj korisnika</a></li>
+                                <li><a href="{{ route('admin.users') }}">Svi korisnici</a></li>
+                                <li><a href="{{ route('admin.users.create') }}">Dodaj korisnika</a></li>
                             </ul>
                         </li>
                         <li><a><i class="fa fa-list"></i> Recepti <span class="fa fa-chevron-down"></span></a>
