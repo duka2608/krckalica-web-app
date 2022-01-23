@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
+use App\Models\Location;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -13,7 +18,9 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return view('pages.users.index');
+        $users = User::with('role', 'location')->get();
+
+        return view('pages.users.index', compact('users'));
     }
 
     /**
@@ -23,7 +30,10 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return view('pages.users.create');
+        $roles = Role::all();
+        $locations = Location::all();
+
+        return view('pages.users.create', compact('roles'), compact('locations'));
     }
 
     /**
@@ -34,7 +44,29 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $first_name = $request->first_name;
+        $last_name = $request->last_name;
+        $username = $request->username;
+        $email = $request->email;
+        $password = Hash::make($request->password);
+        $biography = $request->biography;
+        $location = (int)$request->location;
+        $role = (int)$request->role;
+
+        $user = new User();
+
+        $user->first_name = $first_name;
+        $user->last_name = $last_name;
+        $user->username = $username;
+        $user->email = $email;
+        $user->biography = $biography;
+        $user->password = $password;
+        $user->location_id = $location;
+        $user->role_id = $role;
+
+        $user->save();
+
+        return json_encode(200);
     }
 
     /**
@@ -56,7 +88,11 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        return view('pages.users.edit');
+        $data['roles'] = Role::all();
+        $data['locations'] = Location::all();
+        $data['user'] = User::findOrFail($id);
+
+        return view('pages.users.edit', compact('data'));
     }
 
     /**

@@ -18,4 +18,5 @@
 
     <!-- Custom styling plus plugins -->
     <link href="{{ asset('assets/gentelella/build/css/custom.min.css') }}" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 </head>

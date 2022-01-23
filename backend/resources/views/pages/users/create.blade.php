@@ -19,21 +19,30 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        <form action="#" id="submit-admin-form" class="form-horizontal form-label-left">
+                        <form method="POST" action="{{ route('admin.users.store') }}" id="submit-admin-form" class="form-horizontal form-label-left">
+                            @csrf
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="firstname">Ime<span class="required">*</span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first_name">Ime<span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" name="firstname" id="firstname"  class="form-control col-md-7 col-xs-12" required="required">
+                                    <input type="text" name="first_name" id="first_name"  class="form-control col-md-7 col-xs-12" required="required">
                                     <span class="error-custom error-custom-input error-firstname"></span>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lastname">Prezime<span class="required">*</span>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last_name">Prezime<span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" name="lastname" id="lastname"  class="form-control col-md-7 col-xs-12" required="required">
+                                    <input type="text" name="last_name" id="last_name"  class="form-control col-md-7 col-xs-12" required="required">
                                     <span class="error-custom error-custom-input error-lastname"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="username">Korisnicko ime<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" name="username" id="username"  class="form-control col-md-7 col-xs-12" required="required">
+                                    <span class="error-custom error-custom-input error-username"></span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -46,10 +55,28 @@
                             <div class="form-group">
                                 <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Uloga <span class="required">*</span></label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <select class="form-control changeUserRole">
-                                        <option>Administrator</option>
-                                        <option>Korisnik</option>
+                                    <select name="role" class="form-control changeUserRole">
+                                        @foreach ($roles as $role)
+                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                        @endforeach
                                     </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Uloga <span class="required">*</span></label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <select name="location" class="form-control changeUserRole">
+                                        @foreach ($locations as $location)
+                                            <option value="{{ $location->id }}">{{ $location->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="control-label col-md-3 col-sm-3 col-xs-12">Biografija <span class="required">*</span></label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <textarea name="biography" id="biography" class="form-control col-md-7 col-xs-12" required="required" style="resize: none"></textarea>
+                                    <span class="error-custom error-custom-input error-password"></span>
                                 </div>
                             </div>
                             <div class="form-group">

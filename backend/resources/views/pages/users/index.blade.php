@@ -24,28 +24,32 @@
                         <table id="datatable" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
+                                    <th>Ime i prezime</th>
                                     <th>Korisnicko ime</th>
-                                    <th>Email</th>
+                                    <th>E - mail</th>
                                     <th>Uloga</th>
-                                    <th>Created at</th>
                                     <th class="text-center">Uredi</th>
                                     <th class="text-center">Obrisi</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                <tr>
-                                    <td>Dusko Stupar</td>
-                                    <td>dusko@gmail.com</td>
-                                    <td>Administrator</td>
-                                    <td>16.08.1997.</td>
-                                    <td class="text-center">
-                                        <a href="{{ route('admin.users.edit', 1) }}" class="action"><i class="fa fa-pencil-square-o"></i></a>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{{ route('admin.users.destroy', 1) }}" class="action"><i class="fa fa-trash-o"></i></a>
-                                    </td>
-                                </tr>
+                                @if ($users)
+                                    @foreach ($users as $user)
+                                        <tr>
+                                            <td>{{ $user->first_name.' '.$user->last_name }}</td>
+                                            <td>{{ $user->username }}</td>
+                                            <td>{{ $user->email }}</td>
+                                            <td>{{ $user->role->name }}</td>
+                                            <td class="text-center">
+                                                <a href="{{ route('admin.users.edit', $user->id) }}" class="action"><i class="fa fa-pencil-square-o"></i></a>
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="{{ route('admin.users.destroy', $user->id) }}" class="action"><i class="fa fa-trash-o"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>
