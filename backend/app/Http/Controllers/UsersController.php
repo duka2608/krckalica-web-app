@@ -6,6 +6,7 @@ use App\Http\Requests\UserRequest;
 use App\Models\Location;
 use App\Models\Role;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -30,10 +31,10 @@ class UsersController extends Controller
      */
     public function create()
     {
-        $roles = Role::all();
-        $locations = Location::all();
+        $data['roles'] = Role::all();
+        $data['locations'] = Location::all();
 
-        return view('pages.users.create', compact('roles'), compact('locations'));
+        return view('pages.users.create', compact('data'));
     }
 
     /**
@@ -42,7 +43,7 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         $first_name = $request->first_name;
         $last_name = $request->last_name;
@@ -55,37 +56,29 @@ class UsersController extends Controller
 
         $user = new User();
 
-        $user->first_name = $first_name;
-        $user->last_name = $last_name;
-        $user->username = $username;
-        $user->email = $email;
-        $user->biography = $biography;
-        $user->password = $password;
-        $user->location_id = $location;
-        $user->role_id = $role;
+        try {
+            
+            $user->first_name = $first_name;
+            $user->last_name = $last_name;
+            $user->username = $username;
+            $user->email = $email;
+            $user->biography = $biography;
+            $user->password = $password;
+            $user->location_id = $location;
+            $user->role_id = $role;
 
-        $user->save();
+            $res = $user->save();
 
-        return json_encode(200);
+           if(!$res) {
+            return redirect()->route('admin.users')->with('error', 'Došlo je do greške prilikom pravljenja korisničkog naloga.');
+           } 
+
+            return redirect()->route('admin.users')->with('success', 'Korisnički nalog je uspešno kreiran !');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.users')->with('error', 'Došlo je do greške prilikom pravljenja korisničkog naloga.');
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $data['roles'] = Role::all();
@@ -115,6 +108,15 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $user = User::find($id);
+            $user->delete();
+
+            return response()->json([
+                'success' => 'Korisnik uspesno uklonjen.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Doslo je do greske prilikom uklanjanja.']);
+        }
     }
 }

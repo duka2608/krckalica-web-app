@@ -14,7 +14,7 @@
 
         @include('partials.footer')
         @include('common.scripts')
-      
+        @yield('script')
       </div>
     </div>
   </body>

@@ -25,8 +25,8 @@ Route::prefix('admin')->group(function() {
 
     Route::get('/users', [UsersController::class, 'index'])->name('admin.users');
     Route::get('/users/create', [UsersController::class, 'create'])->name('admin.users.create');
-    Route::post('/users/create', [UsersController::class, 'store'])->name('admin.users.store');
-    Route::get('/users/edit/{id}', [UsersController::class, 'edit'])->name('admin.users.edit');
-    Route::post('/users/update/{id}', [UsersController::class, 'update'])->name('admin.users.update');
-    Route::post('/users/destroy/{id}', [UsersController::class, 'destroy'])->name('admin.users.destroy');
+    Route::post('/users', [UsersController::class, 'store'])->name('admin.users.store');
+    Route::get('/users/{id}/edit', [UsersController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/users/{id}', [UsersController::class, 'update'])->name('admin.users.update');
+    Route::delete('/users/{id}', [UsersController::class, 'destroy'])->name('admin.users.destroy');
 });

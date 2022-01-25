@@ -19,6 +19,11 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
+                        @if(session()->has('success'))
+                            <div class="alert alert-success">
+                                <p>{{ session()->get('success') }}</p>
+                            </div>
+                        @endif
                         <a href="{{ route('admin.users.create') }}" class="btn btn-default btn-block"><i class="fa fa-plus-circle" aria-hidden="true"></i>Dodaj korisnika</a>
 
                         <table id="datatable" class="table table-striped table-bordered">
@@ -45,7 +50,7 @@
                                                 <a href="{{ route('admin.users.edit', $user->id) }}" class="action"><i class="fa fa-pencil-square-o"></i></a>
                                             </td>
                                             <td class="text-center">
-                                                <a href="{{ route('admin.users.destroy', $user->id) }}" class="action"><i class="fa fa-trash-o"></i></a>
+                                                <a href="#" data-user={{ $user->id }} class="action delete-user"><i class="fa fa-trash-o"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -58,5 +63,55 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="delete-user-alert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h2 class="modal-title">Da li ste sigurni?</h2>
+                <button type="button" id="delete-user" class="btn btn-primary" onclick="deleteUser()">Obriši</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Poništi</button>
+                <input type="hidden" value="" id="user-id">
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- /page content -->
+@endsection
+
+@section('script')
+    <script>
+        $('.delete-user').click(function(e) {
+            e.preventDefault();
+            let user = $(this).data('user');
+
+            $('#user-id').val(user);
+            $('#delete-user-alert').modal('show');
+        });
+
+        function deleteUser() {
+            let id = $('#user-id').val();
+
+            $.ajax({
+            method: "DELETE",
+            url: "/admin/users/" + id,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            dataType: 'json',
+            success: function(response) {
+                alert('Korisnik uspešno uklonjen.');
+                console.log(response);
+                location.reload();
+            },
+            error: function (xhr, error, message) {
+                console.log(error);
+            }
+            
+        })
+           
+        }
+
+    </script>
 @endsection
