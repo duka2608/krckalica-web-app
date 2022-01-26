@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LocationsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,4 +30,11 @@ Route::prefix('admin')->group(function() {
     Route::get('/users/{id}/edit', [UsersController::class, 'edit'])->name('admin.users.edit');
     Route::put('/users/{id}', [UsersController::class, 'update'])->name('admin.users.update');
     Route::delete('/users/{id}', [UsersController::class, 'destroy'])->name('admin.users.destroy');
+
+    Route::get('/locations', [LocationsController::class, 'index'])->name('admin.locations');
+    Route::get('/locations/create', [LocationsController::class, 'create'])->name('admin.locations.create');
+    Route::post('/locations', [LocationsController::class, 'store'])->name('admin.locations.store');
+    Route::get('/locations/{id}/edit', [LocationsController::class, 'edit'])->name('admin.locations.edit');
+    Route::put('/locations/{id}', [LocationsController::class, 'update'])->name('admin.locations.update');
+    Route::delete('/locations/{id}', [LocationsController::class, 'destroy'])->name('admin.locations.destroy');
 });

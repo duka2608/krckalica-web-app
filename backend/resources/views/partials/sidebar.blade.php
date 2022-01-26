@@ -37,8 +37,8 @@
                         </li>
                         <li><a><i class="fa fa-location-arrow"></i> Lokacije <span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
-                                <li><a href="#">Sve lokacije</a></li>
-                                <li><a href="#">Dodaj lokaciju</a></li>
+                                <li><a href="{{ route('admin.locations') }}">Sve lokacije</a></li>
+                                <li><a href="{{ route('admin.locations.create') }}">Dodaj lokaciju</a></li>
                             </ul>
                         </li>
                 </ul>

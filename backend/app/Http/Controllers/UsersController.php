@@ -19,7 +19,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::with('role', 'location')->get();
+        $users = User::with('role', 'location')->paginate(10);
 
         return view('pages.users.index', compact('users'));
     }
@@ -95,9 +95,30 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        //
+        try {
+            $user = User::find($id);
+            
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->username = $request->username;
+            $user->email = $request->email;
+            $user->biography = $request->biography;
+            $user->password = $request->password;
+            $user->location_id = $request->location;
+            $user->role_id = $request->role;
+    
+            $res = $user->save();
+
+           if(!$res) {
+            return redirect()->route('admin.users')->with('error', 'Došlo je do greške prilikom ažuriranja korisničkog naloga.');
+           } 
+
+            return redirect()->route('admin.users')->with('success', 'Korisnički nalog je uspešno ažuriran !');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.users')->with('error', 'Došlo je do greške prilikom ažuriranja korisničkog naloga.');
+        }
     }
 
     /**

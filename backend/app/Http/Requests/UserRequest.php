@@ -23,13 +23,24 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'first_name' => 'required|regex:/^([A-Z][a-z]+)$/',
             'last_name' => 'required|regex:/^([A-Z][a-z]+)$/',
             'username' => 'required|unique:users,username|min:8|max:15',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|max:20'
         ];
+
+        // provera u situaciji kada se edituje korisnik
+        // da prilikom editovanja u slucaju nepromenjenog username-a ili maila
+        // ne dodje do greske da oni vec postoje u bazi
+        
+        if (in_array($this->method(), ['PUT', 'PATCH'])) {
+            $rules['username'] = 'required|min:8|max:15|unique:users,username,'.$this->id;
+            $rules['email'] = 'required|email|unique:users,email,'.$this->id;
+        }
+
+        return $rules;
         
     }
 

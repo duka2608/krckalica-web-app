@@ -5,7 +5,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Dodaj korisnika</h3>
+                <h3>Dodaj lokaciju</h3>
             </div>
         </div>
 
@@ -15,11 +15,11 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Dodaj korisnika</h2>
+                        <h2>Dodaj lokaciju</h2>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                         @include('pages.users.form')
+                         @include('pages.locations.form')
                     </div>
                 </div>
             </div>
