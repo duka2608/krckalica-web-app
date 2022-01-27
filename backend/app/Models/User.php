@@ -21,6 +21,14 @@ class User extends Model
         'password'
     ];
 
+    public function recipes() {
+        return $this->hasMany(Recipe::class);
+    }
+
+    public function comments() {
+        return $this->hasMany(Comment::class);
+    }
+
     public function location() {
         return $this->belongsTo(Location::class);
     }
@@ -28,4 +36,5 @@ class User extends Model
     public function role() {
         return $this->belongsTo(Role::class);
     }
+
 }

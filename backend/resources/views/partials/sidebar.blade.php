@@ -31,8 +31,8 @@
                     </li>
                     <li><a><i class="fa fa-book"></i> Recepti <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="#">Svi recepti</a></li>
-                            <li><a href="#">Dodaj recept</a></li>
+                            <li><a href="{{ route('admin.recipes') }}">Svi recepti</a></li>
+                            <li><a href="{{ route('admin.recipes.create') }}">Dodaj recept</a></li>
                         </ul>
                     </li>
                     <li><a><i class="fa fa-location-arrow"></i> Lokacije <span class="fa fa-chevron-down"></span></a>
