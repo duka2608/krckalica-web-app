@@ -23,24 +23,36 @@
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
             <div class="menu_section">
                 <ul class="nav side-menu">
-                        <li><a><i class="fa fa-users"></i> Korisnici <span class="fa fa-chevron-down"></span></a>
-                            <ul class="nav child_menu">
-                                <li><a href="{{ route('admin.users') }}">Svi korisnici</a></li>
-                                <li><a href="{{ route('admin.users.create') }}">Dodaj korisnika</a></li>
-                            </ul>
-                        </li>
-                        <li><a><i class="fa fa-list"></i> Recepti <span class="fa fa-chevron-down"></span></a>
-                            <ul class="nav child_menu">
-                                <li><a href="#">Svi recepti</a></li>
-                                <li><a href="#">Dodaj recept</a></li>
-                            </ul>
-                        </li>
-                        <li><a><i class="fa fa-location-arrow"></i> Lokacije <span class="fa fa-chevron-down"></span></a>
-                            <ul class="nav child_menu">
-                                <li><a href="{{ route('admin.locations') }}">Sve lokacije</a></li>
-                                <li><a href="{{ route('admin.locations.create') }}">Dodaj lokaciju</a></li>
-                            </ul>
-                        </li>
+                    <li><a><i class="fa fa-users"></i> Korisnici <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{{ route('admin.users') }}">Svi korisnici</a></li>
+                            <li><a href="{{ route('admin.users.create') }}">Dodaj korisnika</a></li>
+                        </ul>
+                    </li>
+                    <li><a><i class="fa fa-book"></i> Recepti <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="#">Svi recepti</a></li>
+                            <li><a href="#">Dodaj recept</a></li>
+                        </ul>
+                    </li>
+                    <li><a><i class="fa fa-location-arrow"></i> Lokacije <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{{ route('admin.locations') }}">Sve lokacije</a></li>
+                            <li><a href="{{ route('admin.locations.create') }}">Dodaj lokaciju</a></li>
+                        </ul>
+                    </li>
+                    <li><a><i class="fa fa-list"></i> Kategorije <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{{ route('admin.categories') }}">Sve kategorije</a></li>
+                            <li><a href="{{ route('admin.categories.create') }}">Dodaj kategoriju</a></li>
+                        </ul>
+                    </li>
+                    <li><a><i class="fa fa-flag"></i> Kuhinje <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="{{ route('admin.cuisines') }}">Sve kuhinje</a></li>
+                            <li><a href="{{ route('admin.cuisines.create') }}">Dodaj kuhinju</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>

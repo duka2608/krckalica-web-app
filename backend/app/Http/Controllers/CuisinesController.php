@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Location;
+use App\Models\Cuisine;
 use Illuminate\Http\Request;
 
-class LocationsController extends Controller
+class CuisinesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class LocationsController extends Controller
      */
     public function index()
     {
-        $locations = Location::paginate(10);
-        return view('pages.locations.index')->with(compact('locations'));
+        $cuisines = Cuisine::paginate(10);
+        return view('pages.cuisines.index')->with(compact('cuisines'));
     }
 
     /**
@@ -25,7 +25,7 @@ class LocationsController extends Controller
      */
     public function create()
     {
-        return view('pages.locations.create');
+        return view('pages.cuisines.create');
     }
 
     /**
@@ -36,22 +36,21 @@ class LocationsController extends Controller
      */
     public function store(Request $request)
     {
-        $location = new Location();
+        $cuisine = new Cuisine();
 
         try {
-            $location->name = $request->location;
+            $cuisine->name = $request->cuisine;
     
-            $res = $location->save();
+            $res = $cuisine->save();
 
            if(!$res) {
-            return redirect()->route('admin.locations')->with('error', 'Došlo je do greške prilikom kreiranja lokacije.');
+            return redirect()->route('admin.cuisines')->with('error', 'Došlo je do greške prilikom kreiranja kuhinje.');
            } 
 
-            return redirect()->route('admin.locations')->with('success', 'Lokacija uspešno uneta !');
+            return redirect()->route('admin.cuisines')->with('success', 'Kuhinja uspešno uneta !');
         } catch (\Exception $e) {
-            return redirect()->route('admin.locations')->with('error', 'Došlo je do greške prilikom kreiranja lokacije.');
+            return redirect()->route('admin.cuisines')->with('error', 'Došlo je do greške prilikom kreiranja kuhinje.');
         }
-
     }
 
     /**
@@ -62,9 +61,8 @@ class LocationsController extends Controller
      */
     public function edit($id)
     {
-        $location = Location::find($id);
-
-        return view('pages.locations.edit')->with(compact('location'));
+        $cuisine = Cuisine::find($id);
+        return view('pages.cuisines.edit')->with(compact('cuisine'));
     }
 
     /**
@@ -77,18 +75,18 @@ class LocationsController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $location = Location::find($id);
-            $location->name = $request->location;
+            $cuisine = Cuisine::find($id);
+            $cuisine->name = $request->cuisine;
     
-            $res = $location->save();
+            $res = $cuisine->save();
 
            if(!$res) {
-            return redirect()->route('admin.locations')->with('error', 'Došlo je do greške prilikom ažuriranja lokacije.');
+            return redirect()->route('admin.cuisines')->with('error', 'Došlo je do greške prilikom ažuriranja kuhinje.');
            } 
 
-            return redirect()->route('admin.locations')->with('success', 'Lokacija uspešno ažurirana !');
+            return redirect()->route('admin.cuisines')->with('success', 'Kuhinja uspešno ažurirana !');
         } catch (\Exception $e) {
-            return redirect()->route('admin.locations')->with('error', 'Došlo je do greške prilikom ažuriranja lokacije.');
+            return redirect()->route('admin.cuisines')->with('error', 'Došlo je do greške prilikom ažuriranja kuhinje.');
         }
     }
 
@@ -101,11 +99,11 @@ class LocationsController extends Controller
     public function destroy($id)
     {
         try {
-            $location = Location::find($id);
-            $location->delete();
+            $cuisine = Cuisine::find($id);
+            $cuisine->delete();
 
             return response()->json([
-                'success' => 'Lokacija uspešno uklonjena.'
+                'success' => 'Kuhinja uspešno uklonjena.'
             ]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Došlo je do greške prilikom uklanjanja.']);

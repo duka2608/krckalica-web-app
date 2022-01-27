@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CuisinesController;
 use App\Http\Controllers\LocationsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -37,4 +39,18 @@ Route::prefix('admin')->group(function() {
     Route::get('/locations/{id}/edit', [LocationsController::class, 'edit'])->name('admin.locations.edit');
     Route::put('/locations/{id}', [LocationsController::class, 'update'])->name('admin.locations.update');
     Route::delete('/locations/{id}', [LocationsController::class, 'destroy'])->name('admin.locations.destroy');
+
+    Route::get('/categories', [CategoriesController::class, 'index'])->name('admin.categories');
+    Route::get('/categories/create', [CategoriesController::class, 'create'])->name('admin.categories.create');
+    Route::post('/categories', [CategoriesController::class, 'store'])->name('admin.categories.store');
+    Route::get('/categories/{id}/edit', [CategoriesController::class, 'edit'])->name('admin.categories.edit');
+    Route::put('/categories/{id}', [CategoriesController::class, 'update'])->name('admin.categories.update');
+    Route::delete('/categories/{id}', [CategoriesController::class, 'destroy'])->name('admin.categories.destroy');
+
+    Route::get('/cuisines', [CuisinesController::class, 'index'])->name('admin.cuisines');
+    Route::get('/cuisines/create', [CuisinesController::class, 'create'])->name('admin.cuisines.create');
+    Route::post('/cuisines', [CuisinesController::class, 'store'])->name('admin.cuisines.store');
+    Route::get('/cuisines/{id}/edit', [CuisinesController::class, 'edit'])->name('admin.cuisines.edit');
+    Route::put('/cuisines/{id}', [CuisinesController::class, 'update'])->name('admin.cuisines.update');
+    Route::delete('/cuisines/{id}', [CuisinesController::class, 'destroy'])->name('admin.cuisines.destroy');
 });

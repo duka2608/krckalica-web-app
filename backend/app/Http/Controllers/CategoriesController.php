@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Location;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class LocationsController extends Controller
+class CategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class LocationsController extends Controller
      */
     public function index()
     {
-        $locations = Location::paginate(10);
-        return view('pages.locations.index')->with(compact('locations'));
+        $categories = Category::paginate(10);
+        return view('pages.categories.index')->with(compact('categories'));
     }
 
     /**
@@ -25,7 +25,7 @@ class LocationsController extends Controller
      */
     public function create()
     {
-        return view('pages.locations.create');
+        return view('pages.categories.create');
     }
 
     /**
@@ -36,22 +36,21 @@ class LocationsController extends Controller
      */
     public function store(Request $request)
     {
-        $location = new Location();
+        $category = new Category();
 
         try {
-            $location->name = $request->location;
+            $category->name = $request->category;
     
-            $res = $location->save();
+            $res = $category->save();
 
            if(!$res) {
-            return redirect()->route('admin.locations')->with('error', 'Došlo je do greške prilikom kreiranja lokacije.');
+            return redirect()->route('admin.categories')->with('error', 'Došlo je do greške prilikom kreiranja kategorije.');
            } 
 
-            return redirect()->route('admin.locations')->with('success', 'Lokacija uspešno uneta !');
+            return redirect()->route('admin.categories')->with('success', 'Kategorija uspešno uneta !');
         } catch (\Exception $e) {
-            return redirect()->route('admin.locations')->with('error', 'Došlo je do greške prilikom kreiranja lokacije.');
+            return redirect()->route('admin.categories')->with('error', 'Došlo je do greške prilikom kreiranja kategorije.');
         }
-
     }
 
     /**
@@ -62,9 +61,8 @@ class LocationsController extends Controller
      */
     public function edit($id)
     {
-        $location = Location::find($id);
-
-        return view('pages.locations.edit')->with(compact('location'));
+        $category = Category::find($id);
+        return view('pages.categories.edit')->with(compact('category'));
     }
 
     /**
@@ -77,18 +75,18 @@ class LocationsController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $location = Location::find($id);
-            $location->name = $request->location;
+            $category = Category::find($id);
+            $category->name = $request->category;
     
-            $res = $location->save();
+            $res = $category->save();
 
            if(!$res) {
-            return redirect()->route('admin.locations')->with('error', 'Došlo je do greške prilikom ažuriranja lokacije.');
+            return redirect()->route('admin.categories')->with('error', 'Došlo je do greške prilikom ažuriranja kategorije.');
            } 
 
-            return redirect()->route('admin.locations')->with('success', 'Lokacija uspešno ažurirana !');
+            return redirect()->route('admin.categories')->with('success', 'Kategorija uspešno ažurirana !');
         } catch (\Exception $e) {
-            return redirect()->route('admin.locations')->with('error', 'Došlo je do greške prilikom ažuriranja lokacije.');
+            return redirect()->route('admin.categories')->with('error', 'Došlo je do greške prilikom ažuriranja kategorije.');
         }
     }
 
@@ -101,11 +99,11 @@ class LocationsController extends Controller
     public function destroy($id)
     {
         try {
-            $location = Location::find($id);
-            $location->delete();
+            $category = Category::find($id);
+            $category->delete();
 
             return response()->json([
-                'success' => 'Lokacija uspešno uklonjena.'
+                'success' => 'Kategorija uspešno uklonjena.'
             ]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Došlo je do greške prilikom uklanjanja.']);
