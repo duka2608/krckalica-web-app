@@ -31,7 +31,9 @@
                                 <tr>
                                     <th>Slika</th>
                                     <th>Informacije</th>
-                                    <th>Opcije</th>
+                                    <th class="text-center">Pogledaj recept</th>
+                                    <th class="text-center">Uredi</th>
+                                    <th class="text-center">Obriši</th>
                                 </tr>
                             </thead>
 
@@ -54,7 +56,7 @@
                                                 <p>Korisnik: {{ $recipe->user->first_name.' '.$recipe->user->last_name }}</p>
                                             </li>
                                             <li>
-                                                <p>Pregledi: 128</p>
+                                                <p>Pregledi: {{ $recipe->views ? $recipe->views : 0 }}</p>
                                             </li>
                                             @if($recipe->fast)
                                                 <li>
@@ -63,30 +65,14 @@
                                             @endif
                                         </ul>
                                     </td>
-                                    <td class="model-options">
-                                        <h1>Opcije</h1>
-
-                                                {{-- <button data-tooltip title="Add discount" class="model-options-button model-options-smaller model-options-qoute" data-model="{{$model}}">
-                                                    <img src="{{ asset('assets/images/pound.png')  }}" alt="Pound">
-                                                </button>
-                                
-                                            <button data-tooltip title="Finish project" data-id="{{$model->id}}" class="model-options-button model-options-flag">
-                                                <img src="{{ asset('assets/images/flag.png')  }}" alt="Flags">
-                                            </button>
-                                            <button data-tooltip title="Feedback received" class="model-options-button model-options-chat" data-id="{{$model->id}}">
-                                                <img src="{{ asset('assets/images/chat.png')}}" alt="Chat">
-                                            </button>
-                                            <button data-tooltip title="Download assets" class="model-options-button model-option-download" data-id="{{$model->id}}">
-                                                <img src="{{ asset('assets/images/download.png')}}" alt="Download Model">
-                                            </button>
-                                            <button data-tooltip title="View solution" class="model-options-button model-solution"
-                                                    data-link="{{$model->solution_link}}">
-                                                <img src="{{ asset('assets/images/go_to_solution.png')  }}" alt="Solution">
-                                            </button>
-                                            <button data-tooltip title="View model" class="model-options-button model-link model-eye" data-id="{{$model->id}}">
-                                                <img src="{{ asset('assets/images/eye.png')}}" alt="Eye">
-                                            </button> --}}
-                                
+                                    <td class="text-center">
+                                        <a href="{{ route('admin.recipes.show', $recipe->id) }}" class="action"><i class="fa fa-eye"></i></a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{{ route('admin.recipes.edit', $recipe->id) }}" class="action"><i class="fa fa-pencil-square-o"></i></a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="#" data-recipe={{ $recipe->id }} class="action delete-recipe"><i class="fa fa-trash-o"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
