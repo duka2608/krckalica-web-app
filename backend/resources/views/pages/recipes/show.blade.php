@@ -22,58 +22,32 @@
 
                 <div>
 
-                  <h4>Recent Activity</h4>
+                  <h4>Komentari</h4>
 
                   <!-- end of user messages -->
                   <ul class="messages">
-                    <li>
-                      <img src="images/img.jpg" class="avatar" alt="Avatar">
-                      <div class="message_date">
-                        <h3 class="date text-info">24</h3>
-                        <p class="month">May</p>
-                      </div>
-                      <div class="message_wrapper">
-                        <h4 class="heading">Desmond Davison</h4>
-                        <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
-                        <br />
-                        <p class="url">
-                          <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
-                          <a href="#"><i class="fa fa-paperclip"></i> User Acceptance Test.doc </a>
-                        </p>
-                      </div>
-                    </li>
-                    <li>
-                      <img src="images/img.jpg" class="avatar" alt="Avatar">
-                      <div class="message_date">
-                        <h3 class="date text-error">21</h3>
-                        <p class="month">May</p>
-                      </div>
-                      <div class="message_wrapper">
-                        <h4 class="heading">Brian Michaels</h4>
-                        <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
-                        <br />
-                        <p class="url">
-                          <span class="fs1" aria-hidden="true" data-icon=""></span>
-                          <a href="#" data-original-title="">Download</a>
-                        </p>
-                      </div>
-                    </li>
-                    <li>
-                      <img src="images/img.jpg" class="avatar" alt="Avatar">
-                      <div class="message_date">
-                        <h3 class="date text-info">24</h3>
-                        <p class="month">May</p>
-                      </div>
-                      <div class="message_wrapper">
-                        <h4 class="heading">Desmond Davison</h4>
-                        <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
-                        <br />
-                        <p class="url">
-                          <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
-                          <a href="#"><i class="fa fa-paperclip"></i> User Acceptance Test.doc </a>
-                        </p>
-                      </div>
-                    </li>
+                    @if($recipe->comments->count())
+                      @foreach ($recipe->comments as $comment)
+                      <li>
+                        <img src="{{ asset('assets/gentelella/production/images/user.png') }}" class="avatar" alt="Avatar">
+                        <div class="message_date">
+                          <h3 class="date text-info">{{ $comment->created_at->format('jS') }}</h3>
+                          <p class="month">{{ $comment->created_at->format('F') }}</p>
+                        </div>
+                        <div class="message_wrapper">
+                          <h4 class="heading">{{ $comment->user->first_name.' '.$comment->user->last_name }}</h4>
+                          <p>{{ $comment->created_at->format('H:i:s') }}</p>
+                          <blockquote class="message">{{ $comment->content }}</blockquote>
+                          <br />
+                          <p class="url">
+                            <a href="#" data-comment={{ $comment->id }} class="btn btn-sm btn-danger delete-comment-btn">Ukloni komentar</a>
+                          </p>
+                        </div>
+                      </li>
+                      @endforeach
+                    @else
+                      <h3>Nema komentara za ovaj recept.</h3>
+                    @endif
                   </ul>
                   <!-- end of user messages -->
 
@@ -99,11 +73,19 @@
                     <br />
 
                     <div class="project_detail">
-
+                      <p class="title">Kuhinja</p>
+                      <p>{{ $recipe->cuisine->name }}</p>
                       <p class="title">Vreme pripreme</p>
                       <p>{{ $recipe->preparation_time }}</p>
                       <p class="title">Broj porcija</p>
                       <p>{{ $recipe->portions }}</p>
+                    </div>
+                    <div class="project_detail">
+                      <p class="title">Pregledi</p>
+                      <p>{{ $recipe->views ? $recipe->views : 0 }}</p>
+
+                      <p>{{ $recipe->fast ? 'Posno' : '' }}</p>
+
                     </div>
 
                     <br />
@@ -134,4 +116,51 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="delete-comment-alert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h2 class="modal-title">Da li ste sigurni?</h2>
+                <button type="button" id="delete-comment" class="btn btn-primary" onclick="deleteComment()">Obriši</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Poništi</button>
+                <input type="hidden" value="" id="comment-id">
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('script')
+    <script>
+        $('.delete-comment-btn').click(function(e) {
+            e.preventDefault();
+            let comment = $(this).data('comment');
+
+            $('#comment-id').val(comment);
+            $('#delete-comment-alert').modal('show');
+        });
+
+        function deleteComment() {
+              let id = $('#comment-id').val();
+
+              $.ajax({
+              method: "DELETE",
+              url: "/admin/comments/" + id,
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              dataType: 'json',
+              success: function(response) {
+                  alert(response.success);
+                  location.reload();
+              },
+              error: function (xhr, error, message) {
+                  console.log(error);
+              }
+          });
+           
+        }
+
+    </script>
 @endsection

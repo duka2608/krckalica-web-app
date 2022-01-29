@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Cuisine;
-use App\Models\Recipe;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
-class RecipesController extends Controller
+class CommentsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +14,7 @@ class RecipesController extends Controller
      */
     public function index()
     {
-        $recipes = Recipe::with('user', 'category', 'cuisine', 'ingredients')->get();
-        return view('pages.recipes.index')->with(compact('recipes'));
+        //
     }
 
     /**
@@ -49,8 +46,7 @@ class RecipesController extends Controller
      */
     public function show($id)
     {
-        $recipe = Recipe::with('user', 'category', 'cuisine', 'ingredients')->find($id);
-        return view('pages.recipes.show')->with(compact('recipe'));
+        //
     }
 
     /**
@@ -61,11 +57,7 @@ class RecipesController extends Controller
      */
     public function edit($id)
     {
-        $data['recipe'] = Recipe::with('user', 'category', 'cuisine', 'ingredients', 'comments')->find($id);
-        $data['categories'] = Category::all();
-        $data['cuisines'] = Cuisine::all();
-
-        return view('pages.recipes.edit')->with(compact('data'));
+        //
     }
 
     /**
@@ -88,6 +80,16 @@ class RecipesController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        try {
+            $comment = Comment::find($id);
+            $comment->delete();
+
+            return response()->json([
+                'success' => 'Komentar uspesno uklonjen.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Doslo je do greske prilikom uklanjanja.']);
+        }
     }
 }

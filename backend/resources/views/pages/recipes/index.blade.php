@@ -107,7 +107,6 @@
 
 <!-- /page content -->
 @endsection
-
 @section('script')
     <script>
         $('.delete-user').click(function(e) {

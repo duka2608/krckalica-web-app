@@ -56,6 +56,39 @@
             <span class="error-custom error-custom-input error-description"></span>
         </div>
     </div>
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="preparation_time">Vreme pripreme<span class="required">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <input type="text" name="preparation_time" id="preparation_time"  class="form-control col-md-7 col-xs-12" required="required" value="{{ $route ? $data['recipe']->preparation_time : old('preparation_time') }}">
+            @error('preparation_time')
+                <span class="error-custom error-custom-input error-preparation-time">{{ $message }}</span>
+            @enderror
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fast">Posno<span class="required">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            @if($route)
+                <input type="checkbox" name="fast" id="fast"  class="form-control col-md-7 col-xs-12" required="required" {{ $data['recipe']->fast ? 'checked' : ''  }}>
+            @else 
+                <input type="checkbox" name="fast" id="fast"  class="form-control col-md-7 col-xs-12" required="required">
+            @endif
+            
+            @error('fast')
+                <span class="error-custom error-custom-input error-fast">{{ $message }}</span>
+            @enderror
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="recipe_name">Slika recepta<span class="required">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="fa fa-picture-o"></i></a>
+            <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" accept=".jpg, .jpeg, .png" />
+        </div>
+    </div>
     <div class="ln_solid"></div>
     <div class="form-group">
         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

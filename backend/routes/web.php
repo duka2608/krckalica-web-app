@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\CuisinesController;
 use App\Http\Controllers\LocationsController;
 use App\Http\Controllers\RecipesController;
@@ -62,4 +63,6 @@ Route::prefix('admin')->group(function() {
     Route::get('/cuisines/{id}/edit', [CuisinesController::class, 'edit'])->name('admin.cuisines.edit');
     Route::put('/cuisines/{id}', [CuisinesController::class, 'update'])->name('admin.cuisines.update');
     Route::delete('/cuisines/{id}', [CuisinesController::class, 'destroy'])->name('admin.cuisines.destroy');
+
+    Route::delete('/comments/{id}', [CommentsController::class, 'destroy'])->name('admin.comments.destroy');
 });
