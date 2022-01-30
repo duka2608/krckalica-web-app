@@ -41,7 +41,11 @@
                                 @foreach ($recipes as $recipe)
                                 <tr>
                                     <td>
-                                        <h1>Slika</h1>
+                                        @if($recipe->images->count() > 0)
+                                        <img src="{{ asset($recipe->images[0]->path.$recipe->images[0]->name) }}" alt="{{ $recipe->name }}" height='100px'/>
+                                        @else
+                                            <h1>Slika</h1>
+                                        @endif
                                     </td>
                                     <td>
                                         <h4>{{ $recipe->name }}</h4>

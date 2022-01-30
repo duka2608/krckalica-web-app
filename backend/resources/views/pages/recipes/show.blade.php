@@ -18,6 +18,7 @@
 
                 <div id="mainb" style="height:350px;">
                     <h1>Slika recepta</h1>
+                    <img src="{{ asset($recipe->images[0]->path.$recipe->images[0]->name) }}" alt="{{ $recipe->name }}" height='300px'/>
                 </div>
 
                 <div>
@@ -76,7 +77,7 @@
                       <p class="title">Kuhinja</p>
                       <p>{{ $recipe->cuisine->name }}</p>
                       <p class="title">Vreme pripreme</p>
-                      <p>{{ $recipe->preparation_time }}</p>
+                      <p>{{ $recipe->preparation_time }} min</p>
                       <p class="title">Broj porcija</p>
                       <p>{{ $recipe->portions }}</p>
                     </div>

@@ -24,6 +24,16 @@ class CommentSeeder extends Seeder
                 'user_id' => 2,
                 'recipe_id' => 1,
                 'content' => 'Ma bruka recept.'
+            ],
+            [
+                'user_id' => 2,
+                'recipe_id' => 2,
+                'content' => 'Ma bruka recept.'
+            ],
+            [
+                'user_id' => 2,
+                'recipe_id' => 2,
+                'content' => 'Ma bruka recept.'
             ]
         ]);
     }

@@ -18,8 +18,8 @@ class RecipeSeeder extends Seeder
         DB::table('recipes')->insert([
             [
                 'name' => 'Piletina u soja sosu sa ananasom',
-                'preparation_time' => '45 min',
-                'portions' => '4',
+                'preparation_time' => 45,
+                'portions' => 4,
                 'fast' => false,
                 'advice' => 'Ohladiti jelo 10 minuta pre secenja.',
                 'category_id' => 1,
@@ -29,8 +29,8 @@ class RecipeSeeder extends Seeder
             ],
             [
                 'name' => 'Recept 2',
-                'preparation_time' => '90 min',
-                'portions' => '4',
+                'preparation_time' => 90,
+                'portions' => 5,
                 'fast' => false,
                 'advice' => 'Ohladiti jelo 10 minuta pre secenja.',
                 'category_id' => 2,
@@ -40,8 +40,8 @@ class RecipeSeeder extends Seeder
             ],
             [
                 'name' => 'Recept 3',
-                'preparation_time' => '80 min',
-                'portions' => '4',
+                'preparation_time' => 80,
+                'portions' => 3,
                 'fast' => true,
                 'advice' => 'Ohladiti jelo 10 minuta pre secenja.',
                 'category_id' => 3,
