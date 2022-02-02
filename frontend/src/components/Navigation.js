@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import logo from '../assets/images/Krckalica-logo.png';
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
+import DropdownList from './DropdownList';
+import axios from 'axios';
 const Header = styled.header`
 
 `;
@@ -38,15 +39,19 @@ const List = styled.ul`
     li {
         list-style: none;
         padding: 0.2rem 0.3rem;
+        position: relative;
 
-        a {
+        p {
             display: block;
             font-size: 1.4rem;
             font-weight: 800;
+            margin-bottom: 0;
+            cursor: pointer;
+            padding-top: 3px;
+            border-bottom: 3px solid transparent;
         }
 
-        a:hover {
-            padding: 5px 0px;
+        p:hover {
             border-bottom: 3px solid #000;
         }
 
@@ -61,12 +66,18 @@ const List = styled.ul`
         flex-direction: column;
 
         li {
-            display: none;
+            text-align: center;
             padding: 0.5rem 0.3rem;
 
-            a {
-                font-size: 1.2rem;
+            p {
+                font-size: 1.2rem;   
             }
+
+            p, 
+            p:hover {
+                border-bottom: none;
+            }
+
         }
 
         .show {
@@ -127,10 +138,44 @@ const ToggleButton = styled.div`
 `;
 
 const Navigation = () => {
-    const [mobileNav, setMobileNav] = useState(false);
+    const [mobileNav, setMobileNav] = useState(true);
+    const [categoryDropdown, setCategoryDropdown] = useState(false);
+    const [cuisineDropdown, setCuisineDropdown] = useState(false);
+    const [categories, setCategories] = useState([]);
+    const [cuisines, setCuisines] = useState([]);
+
+    const fetchCategories = () => {
+        axios.get('http://localhost:8000/api/get-categories')
+            .then(function (response) {
+                setCategories(response.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    const fetchCuisines = () => {
+        axios.get('http://localhost:8000/api/get-cuisines')
+            .then(function (response) {
+                setCuisines(response.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    useEffect(() => {
+        fetchCategories();
+        fetchCuisines();
+    }, []);
 
     const toggleMenuHandler = () => {
         setMobileNav(!mobileNav);
+    }
+
+    const closeDropdowns = () => {
+        setCuisineDropdown(false);
+        setCategoryDropdown(false);
     }
 
     return(
@@ -145,25 +190,29 @@ const Navigation = () => {
                         <span></span>
                         <span></span>
                     </ToggleButton>
-                    <li>
-                        <a href="#">Recepti</a>
-                    </li>
-                    <li>
-                        <a href="#">Kuhinje <i className="fa fa-arrow-down" aria-hidden="true"></i></a>
-                    </li>
-                    <li>
-                        <a href="#">Kategorije <i className="fa fa-arrow-down" aria-hidden="true"></i></a>    
-                    </li>   
-                    <div>
-                        <input type="text" placeholder="Pretrazi" />
-                    </div>
+                    {mobileNav && <>
+                        <li>
+                            <p>Recepti</p>
+                        </li>
+                        <li>
+                            <p onClick={() => setCategoryDropdown(!categoryDropdown)}>Kuhinje <i className="fa fa-arrow-down" aria-hidden="true"></i></p>
+                            {categoryDropdown && <DropdownList data={cuisines} closeDropdown={closeDropdowns}/>}
+                        </li>
+                        <li>
+                            <p onClick={() => setCuisineDropdown(!cuisineDropdown)} >Kategorije <i className="fa fa-arrow-down" aria-hidden="true"></i></p> 
+                            {cuisineDropdown && <DropdownList data={categories} closeDropdown={closeDropdowns} />}
+                        </li>   
+                        <div>
+                            <input type="text" placeholder="Pretrazi" />
+                        </div>
+                    </>}
                 </List>
             </TopNav>
             <BottomNav>
                 <SecondList className='container'>
-                    <li><a href="#">Recepti</a></li>
-                    <li><a href="#">Recepti</a></li>
-                    <li><a href="#">Recepti</a></li>
+                    <li><a>Recepti</a></li>
+                    <li><a>Recepti</a></li>
+                    <li><a>Recepti</a></li>
                 </SecondList>
             </BottomNav>
         </Header>
