@@ -21,3 +21,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('get-categories', [ApiController::class, 'getCategories']);
 Route::get('get-cuisines', [ApiController::class, 'getCuisines']);
+Route::get('get-on-menu-today', [ApiController::class, 'getForTodaysOnMenu']);
+Route::get('get-latest-recipes', [ApiController::class, 'getRecentRecipes']);
