@@ -20,11 +20,21 @@ a,
 a:active,
 a:hover {
   text-decoration: none;
-  color: #000;
+  color: #000 !important;
 }
 
-input[type='text'] {
+.nav-search {
+  width: 500px;
   padding: 5px 20px;
   border: none;
   border-radius: 20px;
+}
+
+.container {
+  max-width: 90%!important;
+}
+
+#formLogin{ 
+  padding: 15px; 
+  min-width:300px;
 }
