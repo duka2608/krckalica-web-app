@@ -7,6 +7,7 @@ import axios from "axios";
 const TopNav = styled.nav`
   background-color: var(--main-green);
   padding: 10px 0px;
+  box-shadow: 5px 5px 10px 5px rgba(0,0,0,0.15);
 `;
 
 const ImageBox = styled.div`
@@ -134,7 +135,7 @@ const Navigation = () => {
                                         <input className="form-control" name="password" id="password" type="password"/>
                                         <br className=""/>
                                     </div>
-                                    <button type="submit" id="btnLogin" class="btn btn-success btn-sm">Login</button>
+                                    <button type="submit" id="btnLogin" className="btn btn-success btn-sm">Login</button>
                                 </form>
                             </div>
                         </div>
