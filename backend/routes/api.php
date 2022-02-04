@@ -19,7 +19,10 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::get('get-categories', [ApiController::class, 'getCategories']);
-Route::get('get-cuisines', [ApiController::class, 'getCuisines']);
-Route::get('get-on-menu-today', [ApiController::class, 'getForTodaysOnMenu']);
-Route::get('get-latest-recipes', [ApiController::class, 'getRecentRecipes']);
+Route::get('/categories', [ApiController::class, 'getCategories']);
+Route::get('/cuisines', [ApiController::class, 'getCuisines']);
+Route::get('/recipes/all', [ApiController::class, 'getAllRecipes']);
+Route::get('/recipes/today-on-menu', [ApiController::class, 'getForTodaysOnMenu']);
+Route::get('/recipes/latest', [ApiController::class, 'getRecentRecipes']);
+Route::get('/recipes/{id}', [ApiController::class, 'getRecipe']);
+

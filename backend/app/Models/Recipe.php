@@ -15,7 +15,8 @@ class Recipe extends Model
         'portions',
         'fast',
         'advice',
-        'description'
+        'description',
+        'slug'
     ];
 
     public function images() {

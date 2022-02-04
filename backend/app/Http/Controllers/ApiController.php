@@ -19,13 +19,23 @@ class ApiController extends Controller
         return response()->json($cuisines, 200);
     }
 
+    public function getAllRecipes() {
+        $recipes = Recipe::with('images')->get();
+        return response()->json($recipes, 200);
+    }
+
     public function getForTodaysOnMenu() {
         $recipe = Recipe::inRandomOrder()->with('user', 'images')->firstOrFail();
         return response()->json($recipe, 200);
     }
 
     public function getRecentRecipes() {
-        $recipes = Recipe::with('images')->orderBy('created_at', 'desc')->limit(3)->get();
+        $recipes = Recipe::with('images')->orderBy('created_at')->limit(3)->get();
         return response()->json($recipes, 200);
+    }
+
+    public function getRecipe($id) {
+        $recipe = Recipe::with('images', 'category', 'cuisine', 'ingredients')->where('id', $id)->firstOrFail();
+        return response()->json($recipe);
     }
 }

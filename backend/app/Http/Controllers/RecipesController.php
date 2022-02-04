@@ -7,6 +7,7 @@ use App\Models\Cuisine;
 use App\Models\Image;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class RecipesController extends Controller
 {
@@ -52,6 +53,7 @@ class RecipesController extends Controller
         $recipe->fast = $request->fast === 'on' ? true : false;
         $recipe->advice = $request->advice;
         $recipe->user_id = 2;
+        $recipe->slug = Str::slug($request->recipe_name, '-').'-'.Str::uuid()->toString();
 
         $recipe->save();
 
