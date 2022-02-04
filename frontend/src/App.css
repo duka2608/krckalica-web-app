@@ -45,8 +45,58 @@ a:hover {
   object-fit: cover;
 }
 
+.large-img {
+  height: 25vw;
+}
+
 .word-break {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.banner {
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6)),  url('../src/assets/images/banner-image.jpg') ;
+  height: 170px;
+}
+
+.page-title {
+  font-size: 46px;
+  line-height: 1.3rem;
+  font-weight: 500;
+}
+
+.fa-star {
+    font-size: 11px;
+    color: #fbb710;
+    display: inline-block;
+    padding: 0 1px;
+}
+
+.fa-star-lg {
+  font-size: 18px;
+  padding: 0 3px;
+}
+
+.green-btn {
+    display: inline-block;
+    min-width: 160px;
+    height: 60px;
+    color: #fff !important;
+    font-weight: 400;
+    border: none;
+    border-left: 3px solid var(--border-green);
+    border-radius: 0;
+    padding: 0 30px;
+    font-size: 18px;
+    line-height: 58px;
+    -webkit-transition-duration: 500ms;
+    transition-duration: 500ms;
+    text-transform: capitalize;
+    background-color: #1c8314;
+    cursor: initial;
+}
+
+.custom-text {
+
 }

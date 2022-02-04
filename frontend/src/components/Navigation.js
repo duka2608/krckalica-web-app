@@ -3,6 +3,7 @@ import logo from "../assets/images/Krckalica-logo.png";
 import { useState, useEffect } from "react";
 import DropdownList from "./DropdownList";
 import axios from "axios";
+import { Link } from 'react-router-dom';
 
 const TopNav = styled.nav`
   background-color: var(--main-green);
@@ -34,7 +35,7 @@ const Navigation = () => {
 
   const fetchCategories = () => {
     axios
-      .get("http://localhost:8000/api/get-categories")
+      .get("http://localhost:8000/api/categories")
       .then(function (response) {
         setCategories(response.data);
       })
@@ -45,7 +46,7 @@ const Navigation = () => {
 
   const fetchCuisines = () => {
     axios
-      .get("http://localhost:8000/api/get-cuisines")
+      .get("http://localhost:8000/api/cuisines")
       .then(function (response) {
         setCuisines(response.data);
       })
@@ -64,9 +65,9 @@ const Navigation = () => {
       <TopNav className="navbar navbar-expand-md">
         <div className="container">
           <ImageBox>
-            <a href="#">
+            <Link to="/">
               <img src={logo} alt="Krckalica logo" />
-            </a>
+            </Link>
           </ImageBox>
           <button
             className="navbar-toggler"
@@ -78,10 +79,6 @@ const Navigation = () => {
           </button>
           <div className="row collapse navbar-collapse" id="navmenu">
             <ul className="navbar-nav ms-auto d-flex align-items-center justify-content-evenly">
-              <li className="nav-item dropdown">
-                <a className="nav-link">Recepti</a>
-              </li>
-
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"

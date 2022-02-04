@@ -6,7 +6,7 @@ const OnMenuToday = () => {
 
     const fetchRecipe = async() => {
        axios
-        .get("http://localhost:8000/api/get-on-menu-today")
+        .get("http://localhost:8000/api/recipes/today-on-menu")
         .then(function (response) {
             console.log(response.data);
             setRecipe(response.data);
