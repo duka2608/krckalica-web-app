@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Cuisine;
+use App\Models\Step;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(RecipeSeeder::class);
         $this->call(IngredientSeeder::class);
         $this->call(CommentSeeder::class);
+        $this->call(StepSeeder::class);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Cuisine;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
@@ -35,7 +36,7 @@ class ApiController extends Controller
     }
 
     public function getRecipe($id) {
-        $recipe = Recipe::with('images', 'category', 'cuisine', 'ingredients')->where('id', $id)->firstOrFail();
+        $recipe = Recipe::with('images', 'category', 'cuisine', 'ingredients', 'steps', 'comments', 'user')->where('id', $id)->firstOrFail();
         return response()->json($recipe);
     }
 }
