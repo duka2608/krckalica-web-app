@@ -23,6 +23,10 @@ a:hover {
   color: #000 !important;
 }
 
+textarea {
+  resize: none;
+}
+
 .nav-search {
   width: 500px;
   padding: 5px 20px;
@@ -97,6 +101,12 @@ a:hover {
     cursor: initial;
 }
 
-.custom-text {
+.form-btn {
+  background-color: #1c8314;
+  width: 50%;
+  color: #fff;
+}
 
+.form-btn:hover {
+  background-color: var(--secondary-green);
 }
