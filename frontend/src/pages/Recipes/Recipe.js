@@ -50,14 +50,15 @@ const CommentBox = styled.div`
 
 const Recipe = () => {
   const [recipe, setRecipe] = useState({});
+  const [comments, setComments] = useState([]);
   const { recipeId } = useParams();
 
   const fetchRecipe = () => {
     axios
       .get(`http://localhost:8000/api/recipes/${recipeId}`)
       .then((response) => {
-          console.log(response.data);
-        setRecipe(response.data);
+        setRecipe(response.data.recipe);
+        setComments(response.data.comments);
       });
   };
 
@@ -65,11 +66,15 @@ const Recipe = () => {
     fetchRecipe();
   }, []);
 
-  const dateFormat = new Date(recipe.created_at).toLocaleDateString("en-us", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
+  const dateFormat = (date) => {
+    let newDate =  new Date(date).toLocaleDateString("en-us", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+
+    return newDate.toString();
+  };
 
   return (
     <>
@@ -97,7 +102,7 @@ const Recipe = () => {
           </div>
           <div className="row">
             <div className="col-12 col-md-8">
-              <RecipeDate>{dateFormat.toString()}</RecipeDate>
+              <RecipeDate>{dateFormat(recipe.created_at)}</RecipeDate>
               <RecipeHeading>{recipe.name}</RecipeHeading>
               <RecipeInfo>
                 <h6>Priprema: {recipe.preparation_time} min</h6>
@@ -158,10 +163,12 @@ const Recipe = () => {
               <div className="col-12 col-lg-8">
                   <RecipeHeading>Komentari</RecipeHeading>
                   <div>
-                    {recipe.comments && recipe.comments.map((comment) => {
+                    {comments && comments.map((comment) => {
                         return (
                             <CommentBox key={comment.id}>
                                 <p>{comment.content}</p>
+                                <p>{comment.user.first_name+' '+comment.user.last_name}</p>
+                                <span>{dateFormat(comment.created_at)}</span>
                             </CommentBox>
                         );
                     })}
