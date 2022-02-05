@@ -41,4 +41,16 @@ class ApiController extends Controller
         return response()->json($data);
     }
 
+    public function getRecipesFromCategory($id, Request $request) {
+        $limit = $request->limit ? $request->limit : 0;
+        $recipeId = $request->recipe;
+
+        $recipes = Recipe::where([
+            ['id', '!=', $recipeId], 
+            ['category_id', '=', $id]
+        ])->with('images')->offset(0)->limit($limit)->get();
+
+        return response()->json($recipes);
+    }
+
 }

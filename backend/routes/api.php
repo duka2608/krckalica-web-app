@@ -25,4 +25,5 @@ Route::get('/recipes/all', [ApiController::class, 'getAllRecipes']);
 Route::get('/recipes/today-on-menu', [ApiController::class, 'getForTodaysOnMenu']);
 Route::get('/recipes/latest', [ApiController::class, 'getRecentRecipes']);
 Route::get('/recipes/{id}', [ApiController::class, 'getRecipe']);
+Route::post('/recipes/category/{id}', [ApiController::class, 'getRecipesFromCategory']);
 
