@@ -43,14 +43,30 @@ class ApiController extends Controller
 
     public function getRecipesFromCategory($id, Request $request) {
         $limit = $request->limit ? $request->limit : 0;
-        $recipeId = $request->recipe;
+        $recipeId = $request->recipe ? $request->recipe : 0;
 
-        $recipes = Recipe::where([
-            ['id', '!=', $recipeId], 
-            ['category_id', '=', $id]
-        ])->with('images')->offset(0)->limit($limit)->get();
+        $query = Recipe::where('category_id', $id);
 
-        return response()->json($recipes);
+        if($recipeId) {
+            $query = Recipe::where([
+                ['id', '!=', $recipeId], 
+                ['category_id', '=', $id]
+            ]);
+        }
+
+        $data['recipes'] = $query->with('images')->offset(0)->limit($limit)->get();
+        $data['category'] = Category::find($id);
+
+        return response()->json($data);
+    }
+
+    public function getRecipesFromCuisine($id, Request $request) {
+        $limit = $request->limit ? $request->limit : 0;
+
+        $data['recipes'] = Recipe::where('cuisine_id', $id)->with('images')->offset(0)->limit($limit)->get();
+        $data['cuisine'] = Cuisine::find($id);
+
+        return response()->json($data);
     }
 
 }
