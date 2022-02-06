@@ -41,7 +41,7 @@ const RecipeCard = (props) => {
         <RecipeContainer>
             <img className="card-img-top fluid" src={props.path} alt={props.name} />
             <div className="recipe-content">
-                <Link className="link" target="_top" to={`/recipes/${props.id}`} >
+                <Link className="link" to={`/recipes/${props.id}`} >
                     <h5>{props.name}</h5>
                 </Link>
                 {props.rating && <div className="ratings">

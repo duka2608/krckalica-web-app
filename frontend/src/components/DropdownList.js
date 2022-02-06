@@ -1,8 +1,10 @@
+import { Link } from "react-router-dom";
+
 const DropdownList = (props) => {
   const categoriesDisplay = props.data.map((el) => (
-    <a href="#" className="dropdown-item" key={el.id}>
+    <Link to={`/recipes/${props.title}/${el.id}`} className="dropdown-item" key={el.id}>
       {el.name}
-    </a>
+    </Link>
   ));
 
   return (

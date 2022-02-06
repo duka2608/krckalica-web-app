@@ -90,7 +90,7 @@ const Navigation = () => {
                 >
                   Kategorije
                 </a>
-                {categories && <DropdownList data={categories} />}
+                {categories && <DropdownList data={categories} title="category"/>}
               </li>
               <li className="nav-item dropdown">
                 <a
@@ -103,7 +103,7 @@ const Navigation = () => {
                 >
                   Kuhinje
                 </a>
-                {cuisines && <DropdownList data={cuisines} />}
+                {cuisines && <DropdownList data={cuisines} title="cuisine"/>}
               </li>
               <li>
                 <input type="text" className="navbar-form nav-search" placeholder="Pretrazi" />

@@ -7,6 +7,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Recipes from "./pages/Recipes/Recipes";
 import Recipe from "./pages/Recipes/Recipe";
 import RecipesLayout from "./pages/Recipes/RecipesLayout";
+import RecipesByCategory from "./pages/Recipes/RecipesByCategory";
+import RecipesByCuisine from "./pages/Recipes/RecipesByCuisine";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
           <Route exact path="/recipes" element={<RecipesLayout />}>
             <Route path="all" element={<Recipes />}/>
             <Route path=":recipeId" element={<Recipe />}/>
+            <Route path="/recipes/category/:categoryId" element={<RecipesByCategory />}/>
+            <Route path="/recipes/cuisine/:cuisineId" element={<RecipesByCuisine />}/>
             <Route
               path="/recipes"
               element={<Navigate to="all" />}

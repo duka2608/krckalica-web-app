@@ -85,13 +85,13 @@ const Recipe = () => {
     axios.post(`http://localhost:8000/api/recipes/category/${categoryId}`, { limit: 4, recipe: recipeId } )
     .then((response) => {
       console.log(response);
-      setSimilar(response.data);
+      setSimilar(response.data.recipes);
     });
   }
 
   useEffect(() => {
     fetchRecipe();
-  }, []);
+  }, [recipeId]);
 
   const dateFormat = (date) => {
     let newDate = new Date(date).toLocaleDateString("en-us", {
@@ -231,7 +231,6 @@ const Recipe = () => {
                     name={recipe.name}
                     path={recipe.images ? "http://localhost:8000/" + recipe.images[0].path + recipe.images[0].name : '' }
                     rating={false}
-
                   />
                 </div>
                 );
