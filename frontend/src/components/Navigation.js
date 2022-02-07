@@ -139,7 +139,7 @@ const Navigation = () => {
                     </div>
               </li>
               <li>
-                <a href="#" className="nav-link">Registracija</a>
+                <Link to="/registration" className="nav-link">Registracija</Link>
               </li>
             </ul>
           </div>

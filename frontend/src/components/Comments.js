@@ -95,7 +95,7 @@ const Comments = ({ recipeId, dateFormat, itemsPerPage }) => {
               Vaš komentar
             </label>
             <textarea
-              className="form-control"
+              className="form-control form-textarea"
               id="exampleFormControlTextarea1"
               rows="3"
               value={comment}
@@ -110,7 +110,7 @@ const Comments = ({ recipeId, dateFormat, itemsPerPage }) => {
         </form>
       </div>
       <div>{comments && commentsDisplay}</div>
-      <div className="row">
+        {comments.length > 0 && <div className="row">
           <ReactPaginate 
                     previousLabel={'<'}
                     nextLabel={'>'} 
@@ -126,7 +126,7 @@ const Comments = ({ recipeId, dateFormat, itemsPerPage }) => {
                     nextClassName={'pageItem'}
                     nextLinkClassName={'pageLink'}
             />
-      </div>
+      </div>}
     </div>
   );
 };

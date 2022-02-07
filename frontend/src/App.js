@@ -9,6 +9,7 @@ import Recipe from "./pages/Recipes/Recipe";
 import RecipesLayout from "./pages/Recipes/RecipesLayout";
 import RecipesByCategory from "./pages/Recipes/RecipesByCategory";
 import RecipesByCuisine from "./pages/Recipes/RecipesByCuisine";
+import Registration from "./pages/Registration/Registration";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               element={<Navigate to="all" />}
             />
           </Route>
+          <Route path="/registration" element={<Registration />} />
         </Routes>
       <Footer />
     </div>
