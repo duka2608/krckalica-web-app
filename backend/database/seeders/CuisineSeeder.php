@@ -22,7 +22,12 @@ class CuisineSeeder extends Seeder
             'Španska',
             'Kineska',
             'Bosanska',
-            'Grčka'
+            'Grčka',
+            'Mađarska',
+            'Turska',
+            'Nemačka',
+            'Ruska',
+            'Francuska'
         ];
 
         foreach($cuisines as $cuisine) {

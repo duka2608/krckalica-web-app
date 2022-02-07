@@ -12,6 +12,19 @@ use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
+
+    public function login(Request $request) {
+        $username = $request->username;
+        $user = User::where('username', $username);
+        $checkPassword = Hash::check($request->password, 'password');
+
+        if(!$user || !$checkPassword) {
+            return response(Hash::make('sifra'));
+            
+        }
+
+        return response()->json($user, 200);
+    }
     /**
      * Display a listing of the resource.
      *

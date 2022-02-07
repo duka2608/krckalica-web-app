@@ -21,9 +21,11 @@ class CategorySeeder extends Seeder
             'Supe i čorbe',
             'Salate',
             'Glavna jela',
+            'Riba i morski plodovi',
             'Sosevi',
             'Torte',
-            'Kolači'
+            'Kolači',
+            'Zimnica'
         ];
 
         foreach($categories as $category) {

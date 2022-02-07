@@ -5,11 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Cuisine;
+use App\Models\Location;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
 {
+    public function getLocations() {
+        $locations = Location::all();
+        return response()->json($locations, 200);
+    }
+
     public function getCategories() {
         $categories = Category::all();
         return response()->json($categories, 200);
