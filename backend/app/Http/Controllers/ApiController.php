@@ -37,7 +37,13 @@ class ApiController extends Controller
 
     public function getRecipe($id) {
         $data['recipe'] = Recipe::with('images', 'category', 'cuisine', 'ingredients', 'steps', 'user')->where('id', $id)->firstOrFail();
-        $data['comments'] = Comment::with('recipe', 'user')->where('recipe_id', $id)->get();
+        
+        return response()->json($data);
+    }
+
+    public function getCommentsForRecipe($id) {
+        $data['comments'] = Comment::with('recipe', 'user')->where('recipe_id', $id)->orderBy('created_at', 'desc')->get();
+
         return response()->json($data);
     }
 

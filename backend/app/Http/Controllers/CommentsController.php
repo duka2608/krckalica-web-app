@@ -35,7 +35,14 @@ class CommentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $comment = new Comment();
+        $comment->user_id = 1;
+        $comment->content = $request->comment;
+        $comment->recipe_id = $request->recipe_id;
+
+        $comment->save();
+        $data['comments'] = Comment::with('recipe', 'user')->where('recipe_id', $request->recipe_id)->orderBy('created_at', 'desc')->get();
+        return response()->json($data, 200);
     }
 
     /**
