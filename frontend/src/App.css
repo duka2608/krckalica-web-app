@@ -110,3 +110,16 @@ textarea {
 .form-btn:hover {
   background-color: var(--secondary-green);
 }
+
+.pageLink {
+  border: initial;
+  border-bottom: 2px solid #40ba37;
+  padding: 10px;
+  transition: .3s;
+}
+
+.pageLink:hover,
+.activeLink a{
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
