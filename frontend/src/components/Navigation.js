@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import DropdownList from "./DropdownList";
 import axios from "axios";
 import { Link } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { login } from "../actions/userActions";
 
 const TopNav = styled.nav`
   background-color: var(--main-green);
@@ -33,6 +35,11 @@ const Navigation = () => {
   const [categories, setCategories] = useState([]);
   const [cuisines, setCuisines] = useState([]);
 
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const dispatch = useDispatch();
+
   const fetchCategories = () => {
     axios
       .get("http://localhost:8000/api/categories")
@@ -59,6 +66,22 @@ const Navigation = () => {
     fetchCategories();
     fetchCuisines();
   }, []);
+
+  const loginHandler = (e) => {
+    e.preventDefault();
+    
+    let data = new FormData();
+    data.append('username', username);
+    data.append('password', password);
+
+    let loginUser = {
+      username,
+      password
+    }
+
+    let res = dispatch(login(loginUser));
+    console.log(res);
+  }
 
   return (
     <header>
@@ -122,14 +145,14 @@ const Navigation = () => {
                 <div className="dropdown-menu" id="formLogin">
                         <div className="row">
                             <div className="container-fluid">
-                                <form className="">
+                                <form onSubmit={loginHandler}>
                                     <div className="form-group my-2">
                                         <label className="">Username</label>
-                                        <input className="form-control" name="username" id="username" type="text"/>
+                                        <input className="form-control" name="username" id="username" type="text" value={username} onChange={(e) => setUsername(e.target.value)}/>
                                     </div>
                                     <div className="form-group">
                                         <label className="">Password</label>
-                                        <input className="form-control" name="password" id="password" type="password"/>
+                                        <input className="form-control" name="password" id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                                         <br className=""/>
                                     </div>
                                     <button type="submit" id="btnLogin" className="btn btn-success btn-sm">Login</button>

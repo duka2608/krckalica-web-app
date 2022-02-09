@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { register } from '../../actions/userActions';
+
 const Container = styled.div`
     margin: 0 auto;
     max-width: 50%;
@@ -24,26 +27,45 @@ const Container = styled.div`
 `;
 
 const Registration = () => {
-    const [locations, setLocations] = useState([]);
+    const [firstName, setFirstName] = useState('');
+    const [firstNameError, setFirstNameError] = useState('');
 
-    const fetchLocations = () => {
-        axios
-          .get("http://localhost:8000/api/locations")
-          .then(function (response) {
-            setLocations(response.data);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      };
+    const [lastName, setLastName] = useState('');
+    const [lastNameError, setLastNameError] = useState('');
 
-      useEffect(() => {
-        fetchLocations();
-      }, []);
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-      const locationsDropdown = locations.map((location) => {
-          return <option value={location.id} key={location.id}>{location.name}</option>
-      });
+    const [isValid, setIsValid] = useState(true);
+
+    const dispatch = useDispatch();
+
+    const formSubmitHandler = (e) => {
+        e.preventDefault();
+        
+        if(firstName.trim() === '') {
+            setFirstNameError('Polje za ime ne sme biti prazno.');
+            setIsValid(false);
+        }
+
+        if(lastName.trim() === '') {
+            setLastNameError('Polje za prezime ne sme biti prazno.');
+            setIsValid(false);
+        }
+
+        const newUser = {
+            first_name: firstName,
+            last_name: lastName,
+            username,
+            email,
+            password
+        }
+
+        if(isValid) {
+           let result = dispatch(register(newUser));
+        }
+    }
 
     return (
         <div className="px-3 py-5">
@@ -52,38 +74,33 @@ const Registration = () => {
                     <h2>Registracija</h2>
                 </div>
                 <div className="row">
-                <form>
+                <form onSubmit={formSubmitHandler}>
                     <div className='form-row d-flex justify-content-between'>
-                        <div className='col-md-6'>
-                            <label className='text-muted' for="exampleInputEmail1">Ime</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
+                        <div className='col-md-5'>
+                            <label className='text-muted' htmlFor="first-name">Ime</label>
+                            <input type="text" className="form-control" id="first-name" aria-describedby="emailHelp" placeholder="Unesite ime" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                            {firstNameError && <p className='text-danger mb-0'>{firstNameError}</p>}
                         </div>
                         <div className='col-md-6'>
-                            <label className='text-muted' for="exampleInputPassword1">Prezime</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"/>
+                            <label className='text-muted' htmlFor="last-name">Prezime</label>
+                            <input type="text" className="form-control" id="last-name" placeholder="Unesite prezime" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                            {lastNameError && <p className='text-danger mb-0'>{lastNameError}</p>}
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label className='text-muted' for="exampleInputEmail1">Email adresa</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
+                    <div className="form-group">
+                        <label className='text-muted' htmlFor="username">Korisničko ime</label>
+                        <input type="text" className="form-control" id="username" aria-describedby="emailHelp" placeholder="Unesite korisničko ime" value={username} onChange={(e) => setUsername(e.target.value)} />
                     </div>
-                    <div class="form-group">
-                        <label className='text-muted' for="exampleInputPassword1">Šifra</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"/>
+                    <div className="form-group">
+                        <label className='text-muted' htmlFor="email">Email adresa</label>
+                        <input type="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Unesite email adresu" value={email} onChange={(e) => setEmail(e.target.value)} />
                     </div>
-                    <div className="form-group mb-3">
-                        <label className="text-muted" htmlFor="exampleFormControlTextarea1">Kratka biografija</label>
-                        <textarea className="form-control form-textarea"id="exampleFormControlTextarea1" rows="3"
-                        ></textarea>
-                    </div>
-                    <div className='form-group'>
-                            <label className="text-muted" for="inlineFormCustomSelectPref">Lokacija</label>
-                            <select className="form-control" id="inlineFormCustomSelectPref">
-                                {locations && locationsDropdown}
-                            </select>
+                    <div className="form-group">
+                        <label className='text-muted' htmlFor="password">Šifra</label>
+                        <input type="password" className="form-control" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
                     </div>
                     <div className="d-flex justify-content-center mt-5">
-                        <button type="submit" className="btn form-btn">
+                        <button type="submit" className="btn form-btn" >
                         Pošalji
                         </button>
                     </div>
