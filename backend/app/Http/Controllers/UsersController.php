@@ -8,23 +8,12 @@ use App\Models\Role;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
 
-    public function login(Request $request) {
-        $username = $request->username;
-        $user = User::where('username', $username);
-        $checkPassword = Hash::check($request->password, 'password');
-
-        if(!$user || !$checkPassword) {
-            return response(Hash::make('sifra'));
-            
-        }
-
-        return response()->json($user, 200);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -118,7 +107,7 @@ class UsersController extends Controller
             $user->username = $request->username;
             $user->email = $request->email;
             $user->biography = $request->biography;
-            $user->password = $request->password;
+            $user->password = Hash::make($request->password);
             $user->location_id = $request->location;
             $user->role_id = $request->role;
     

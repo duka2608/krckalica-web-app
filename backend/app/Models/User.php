@@ -2,23 +2,29 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
-class User extends Model
+class User extends Authenticatable
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
         'first_name',
         'last_name',
         'username',
         'email',
-        'biography'
+        'biography',
+        'location_id',
+        'role_id',
+        'password'
     ];
 
     protected $hidden = [
-        'password'
+        'password', 
+        'remember_token',
     ];
 
     public function recipes() {

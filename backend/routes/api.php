@@ -20,7 +20,9 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-Route::post('/login', [UsersController::class, 'login']);
+Route::post('/login', [ApiController::class, 'login']);
+Route::post('/register', [ApiController::class, 'register']);
+Route::get('/user', [ApiController::class, 'getUser']);
 
 Route::get('/categories', [ApiController::class, 'getCategories']);
 Route::get('/cuisines', [ApiController::class, 'getCuisines']);
