@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Http\Request;
@@ -20,9 +21,13 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-Route::post('/login', [ApiController::class, 'login']);
-Route::post('/register', [ApiController::class, 'register']);
-Route::get('/user', [ApiController::class, 'getUser']);
+
+Route::group(['middleware' => 'CORS'], function($router) {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::get('/user', [AuthController::class, 'getUser']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
 
 Route::get('/categories', [ApiController::class, 'getCategories']);
 Route::get('/cuisines', [ApiController::class, 'getCuisines']);

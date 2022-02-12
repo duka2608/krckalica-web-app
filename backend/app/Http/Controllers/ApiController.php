@@ -16,51 +16,6 @@ use Illuminate\Support\Facades\Hash;
 
 class ApiController extends Controller
 {
-    public function register(Request $request) {
-        // $validatedData = $request->validate([
-        //     'name' => 'required|max:55',
-        //     'email' => 'email|required|unique:users',
-        //     'password' => 'required|confirmed'
-        // ]);
-
-        // $validatedData['password'] = Hash::make($request->password);
-
-        $data = $request->all();
-        $data['location_id'] = 1;
-        $data['role_id'] = 2;
-        $data['biography'] = "Bbbbbbbbbbbbbbbb";
-        $data['password'] = Hash::make($request->password);
-
-        $user = User::create($data);
-
-        if(!$user) {
-            return response(['message' => "Registration failed"]);
-        }
-
-        $accessToken = $user->createToken('authToken')->accessToken;
-
-        return response([ 'user' => $user, 'access_token' => $accessToken]);
-    }
-
-    public function login(Request $request) {
-        $login = $request->validate([
-            'username' => 'required|string',
-            'password' => 'required|min:6'
-        ]);
-
-        if(!Auth::attempt($login)) {
-            return response(['message' => "Invalid login credentials."]);
-        }
-
-        $accessToken = Auth::user()->createToken('authToken')->accessToken;
-
-        return response(['user' => Auth::user(), 'access_token' => $accessToken]);
-    }
-
-    public function getUser() {
-        return response()->json(Auth::user(), 200);
-    }
-
     public function getLocations() {
         $locations = Location::all();
         return response()->json($locations, 200);

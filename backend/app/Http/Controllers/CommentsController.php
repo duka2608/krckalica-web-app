@@ -36,7 +36,7 @@ class CommentsController extends Controller
     public function store(Request $request)
     {
         $comment = new Comment();
-        $comment->user_id = 1;
+        $comment->user_id = $request->user_id;
         $comment->content = $request->comment;
         $comment->recipe_id = $request->recipe_id;
 
