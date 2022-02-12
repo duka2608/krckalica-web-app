@@ -10,28 +10,29 @@ import {
     REGISTER_FAIL
 } from './types';
 
-// export const loadUser = () => (dispatch, getState) => {
-//     dispatch({ type: USER_LOADING });
+export const loadUser = () => (dispatch, getState) => {
+    dispatch({ type: USER_LOADING });
 
-//     const token = getState().user.token;
+    const token = getState().token;
 
-//     const config = {
-//         headers: {
-//             "Content-type": "application/json"
-//         }
-//     }
+    const config = {
+        headers: {
+            "Content-type": "application/json"
+        }
+    }
 
-//     if(token) {
-//         config.headers['x-auth-token'] = token;
-//     }
+    if(token) {
+        config.headers['Authorization'] = `Bearer ${token}`;
+    }
 
-//     axios.get('http://localhost:8000/api/user', config)
-//         .then(res => dispatch({
-//             type: USER_LOADED,
-//             payload: res.data
-//         }))
-//         .catch(err => console.log(err));
-// }
+
+    axios.get('http://localhost:8000/api/user', config)
+        .then(res => dispatch({
+            type: USER_LOADED,
+            payload: res.data
+        }))
+        .catch(err => console.log(err));
+}
 
 export const register = ({ first_name, last_name, username, email, password }) => dispatch => {
     const config = {
@@ -73,4 +74,29 @@ export const login = ({ username, password }) => dispatch => {
             type: LOGIN_FAIL
         });
     });
+}
+
+export const logout = () => (dispatch) => {
+    const token = localStorage.getItem('access_token');
+
+    const config = {
+        headers: {
+            "Content-type": "application/json"
+        }
+    }
+
+    if(token) {
+        config.headers['Authorization'] = `Bearer ${token}`;
+    }
+
+
+    axios.post("http://localhost:8000/api/logout", config)
+        .then(res => dispatch({
+            type: LOGOUT_SUCCESS
+        }))
+        .catch(err => {
+            dispatch({
+                type: AUTH_ERROR
+            });
+        })
 }

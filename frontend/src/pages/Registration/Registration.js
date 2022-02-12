@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { register } from '../../actions/userActions';
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
     margin: 0 auto;
@@ -40,6 +41,7 @@ const Registration = () => {
     const [isValid, setIsValid] = useState(true);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const formSubmitHandler = (e) => {
         e.preventDefault();
@@ -64,6 +66,7 @@ const Registration = () => {
 
         if(isValid) {
            let result = dispatch(register(newUser));
+           navigate("/");
         }
     }
 

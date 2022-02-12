@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import ReactPaginate from "react-paginate";
+import { useDispatch, useSelector } from "react-redux";
 
 const CommentBox = styled.div`
   border-left: 3px solid #40ba37;
@@ -32,8 +33,9 @@ const Comments = ({ recipeId, dateFormat, itemsPerPage }) => {
   const [comment, setComment] = useState("");
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
-
-
+;
+  const user = useSelector(state => state.user);
+  console.log(user);
   const fetchComments = () => {
     axios
       .post(`http://localhost:8000/api/recipes/${recipeId}/comments`)
@@ -59,6 +61,7 @@ const Comments = ({ recipeId, dateFormat, itemsPerPage }) => {
       .post("http://localhost:8000/api/comments/add", {
         comment,
         recipe_id: recipeId,
+        user_id: user.id
       })
       .then((response) => {
         setCommentsCount(response.data.comments.length);
@@ -88,7 +91,7 @@ const Comments = ({ recipeId, dateFormat, itemsPerPage }) => {
   return (
     <div className="col-12 col-lg-8 mt-3">
       <h2>Komentari</h2>
-      <div className="mb-4">
+      {user &&       <div className="mb-4">
         <form onSubmit={submitComment}>
           <div className="form-group mb-3">
             <label className="text-muted" htmlFor="exampleFormControlTextarea1">
@@ -108,7 +111,7 @@ const Comments = ({ recipeId, dateFormat, itemsPerPage }) => {
             </button>
           </div>
         </form>
-      </div>
+      </div>}
       <div>{comments && commentsDisplay}</div>
         {comments.length > 0 && <div className="row">
           <ReactPaginate 

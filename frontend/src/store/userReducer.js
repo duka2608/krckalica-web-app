@@ -34,7 +34,7 @@ const userReducer = (state = initialState, action) => {
             };
         case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
-            localStorage.setItem('access_token');
+            localStorage.setItem('access_token', action.payload.access_token);
             return {
                 ...state,
                 ...action.payload,
@@ -45,7 +45,7 @@ const userReducer = (state = initialState, action) => {
         case LOGIN_FAIL:
         case LOGOUT_SUCCESS:
         case REGISTER_FAIL:
-            localStorage.removeItem('acces_token');
+            localStorage.clear();
             return {
                 ...state,
                 token: null,

@@ -10,8 +10,17 @@ import RecipesLayout from "./pages/Recipes/RecipesLayout";
 import RecipesByCategory from "./pages/Recipes/RecipesByCategory";
 import RecipesByCuisine from "./pages/Recipes/RecipesByCuisine";
 import Registration from "./pages/Registration/Registration";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { loadUser } from "./actions/userActions";
+
 
 function App() {
+  const dispatch = useDispatch();
+  const [user, setUser] = useState();
+  useEffect(() => {
+    setUser(dispatch(loadUser()));
+  }, [user]);
   return (
     <div className="App">
       <Navigation />

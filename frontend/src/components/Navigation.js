@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import DropdownList from "./DropdownList";
 import axios from "axios";
 import { Link } from 'react-router-dom';
-import { useDispatch } from "react-redux";
-import { login } from "../actions/userActions";
+import { useSelector, useDispatch } from "react-redux";
+import { loadUser, login, logout } from "../actions/userActions";
 
 const TopNav = styled.nav`
   background-color: var(--main-green);
@@ -40,6 +40,8 @@ const Navigation = () => {
 
   const dispatch = useDispatch();
 
+  const user = useSelector(state => state);
+
   const fetchCategories = () => {
     axios
       .get("http://localhost:8000/api/categories")
@@ -65,6 +67,10 @@ const Navigation = () => {
   useEffect(() => {
     fetchCategories();
     fetchCuisines();
+
+    if(!user) {
+      localStorage.removeItem('access_token');
+    }
   }, []);
 
   const loginHandler = (e) => {
@@ -79,10 +85,15 @@ const Navigation = () => {
       password
     }
 
-    let res = dispatch(login(loginUser));
-    console.log(res);
+    dispatch(login(loginUser));
   }
 
+  const logoutHandler = (e) => {
+    e.preventDefault();
+
+    dispatch(logout());
+  } 
+  
   return (
     <header>
       <TopNav className="navbar navbar-expand-md">
@@ -131,7 +142,9 @@ const Navigation = () => {
               <li>
                 <input type="text" className="navbar-form nav-search" placeholder="Pretrazi" />
               </li>
-              <li className="nav-item dropdown">
+              {
+                !user.isAuthenticated ? <>
+                              <li className="nav-item dropdown">
                   <a
                   className="nav-link dropdown-toggle"
                   href="#"
@@ -164,6 +177,12 @@ const Navigation = () => {
               <li>
                 <Link to="/registration" className="nav-link">Registracija</Link>
               </li>
+                </>
+                :
+                <li className="nav-item">
+                  <a href="#" className="nav-link" onClick={logoutHandler}>Logout</a>
+                </li>
+              }
             </ul>
           </div>
         </div>
