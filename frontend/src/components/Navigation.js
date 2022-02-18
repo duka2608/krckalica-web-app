@@ -179,9 +179,14 @@ const Navigation = () => {
               </li>
                 </>
                 :
-                <li className="nav-item">
-                  <a href="#" className="nav-link" onClick={logoutHandler}>Logout</a>
-                </li>
+                <>
+                  <li className="nav-item">
+                    <Link to="/user/profile" className="nav-link">Moj profil</Link>
+                  </li>
+                  <li className="nav-item">
+                    <a href="#" className="nav-link" onClick={logoutHandler}>Logout</a>
+                  </li>
+                </>
               }
             </ul>
           </div>

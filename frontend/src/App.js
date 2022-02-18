@@ -13,6 +13,7 @@ import Registration from "./pages/Registration/Registration";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { loadUser } from "./actions/userActions";
+import UserPage from "./pages/UserProfile/UserPage";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
               element={<Navigate to="all" />}
             />
           </Route>
+          <Route path="/user/profile" element={<UserPage />} />
           <Route path="/registration" element={<Registration />} />
         </Routes>
       <Footer />
