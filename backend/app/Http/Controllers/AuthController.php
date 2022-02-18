@@ -88,6 +88,9 @@ class AuthController extends Controller
 
     public function getUser() {
         $user = Auth::guard('api')->user();
+        $user->location;
+        $user->recipesCount = count($user->recipes);
+        $user->commentsCount = count($user->comments);
         return response()->json($user, 200);
     }
 
@@ -98,4 +101,5 @@ class AuthController extends Controller
             'message' => "Successful logout."
         ], 204);
     }
+
 }

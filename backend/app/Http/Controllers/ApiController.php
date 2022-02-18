@@ -86,4 +86,10 @@ class ApiController extends Controller
         return response()->json($data);
     }
 
+    public function getUserRecipes($id) {
+        $recipes = Recipe::with('images', 'category', 'cuisine', 'ingredients', 'steps')->where('user_id', $id)->get();
+
+        return response()->json($recipes, 200);
+    }
+
 }

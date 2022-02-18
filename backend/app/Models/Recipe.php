@@ -31,6 +31,10 @@ class Recipe extends Model
         return $this->hasMany(Step::class);
     }
 
+    public function favoriteRecipes() {
+        return $this->hasMany(FavoriteRecipe::class);
+    }
+
     public function comments() {
         return $this->hasMany(Comment::class);
     }
