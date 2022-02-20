@@ -13,7 +13,7 @@ class CreateFavoriteRecepiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('favorite_recepies', function (Blueprint $table) {
+        Schema::create('favorite', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('recipe_id');
@@ -33,6 +33,6 @@ class CreateFavoriteRecepiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('favorite_recepies');
+        Schema::dropIfExists('favorite');
     }
 }

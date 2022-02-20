@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FavoriteRecipe;
+use App\Models\Recipe;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -14,7 +16,7 @@ class AuthController extends Controller
 
     public function __construct()
     {
-        $this->middleware("auth:api",["except" => ["login","register"]]);
+        $this->middleware("auth:api",["except" => ["login","register", "addToFavorites"]]);
         $this->user = new User;
     }
 
@@ -102,4 +104,31 @@ class AuthController extends Controller
         ], 204);
     }
 
+    public function addToFavorites($id, Request $request) {
+        $check = FavoriteRecipe::where([
+            ['recipe_id', '=', $id],
+            ['user_id', '=', $request->user_id]
+        ])->first();
+
+        if($check) {
+            return response()->json(['message' => 'Recept se vec nalazi u Vasim omiljenim receptima.'], 200);
+        }
+
+        $check = Recipe::where('user_id', $request->id)->first();
+
+        if($check) {
+            return response()->json(['message' => 'Ne mozete dodati Vas recept u omiljene.'], 200);
+        }
+
+       $favRecipe = new FavoriteRecipe();
+       $favRecipe->recipe_id = (int)$id;
+       $favRecipe->user_id = $request->user_id;
+        $res = $favRecipe->save();
+
+        if(!$res) {
+            return response()->json(['message' => 'Doslo je do greske prilikom dodavanja recepta u omiljene'], 500);
+        }
+
+        return response()->json(['message' => 'Recept uspesno dodat u omiljene'], 200);
+    }
 }

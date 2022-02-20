@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
                 'username' => 'dusko.stupar',
                 'email' => 'dusko.stupar.128.16@ict.edu.rs',
                 'biography' => 'Kratka biografija korisnika',
-                'password' => Hash::make('Pass#word123'),
+                'password' => Hash::make('Sifra123'),
                 'location_id' => 1,
                 'role_id' => 1
             ],
@@ -32,8 +32,28 @@ class UserSeeder extends Seeder
                 'username' => 'pera.peric',
                 'email' => 'pera@gmail.com',
                 'biography' => 'Kratka biografija korisnika Pera Peric',
-                'password' => Hash::make('Pass#word123'),
+                'password' => Hash::make('Sifra123'),
                 'location_id' => 5,
+                'role_id' => 2
+            ],
+            [
+                'first_name' => 'Jovan',
+                'last_name' => 'Memedovic',
+                'username' => 'jovan.memedovic',
+                'email' => 'memed@gmail.com',
+                'biography' => 'Kratka biografija korisnika Jovan Memedovic',
+                'password' => Hash::make('Sifra123'),
+                'location_id' => 8,
+                'role_id' => 2
+            ],
+            [
+                'first_name' => 'Mika',
+                'last_name' => 'Mikic',
+                'username' => 'mika.mikic',
+                'email' => 'mika@gmail.com',
+                'biography' => 'Kratka biografija korisnika Mika Mikic',
+                'password' => Hash::make('Sifra123'),
+                'location_id' => 7,
                 'role_id' => 2
             ]
         ]);

@@ -24,5 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->call(IngredientSeeder::class);
         $this->call(CommentSeeder::class);
         $this->call(StepSeeder::class);
+        $this->call(FavoriteRecipeSeeder::class);
     }
 }

@@ -9,6 +9,7 @@ class FavoriteRecipe extends Model
 {
     use HasFactory;
 
+    protected $table = 'favorite';
     
     public function user() {
         return $this->belongsTo(User::class);

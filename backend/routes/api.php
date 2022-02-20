@@ -27,6 +27,7 @@ Route::group(['middleware' => 'CORS'], function($router) {
     Route::post('/register', [AuthController::class, 'register']);
     Route::get('/user', [AuthController::class, 'getUser']);
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/recipes/{id}/favorite', [AuthController::class, 'addToFavorites']);
 });
 
 Route::get('/categories', [ApiController::class, 'getCategories']);
@@ -44,5 +45,8 @@ Route::post('/recipes/{id}/comments', [ApiController::class, 'getCommentsForReci
 Route::post('/comments/add', [CommentsController::class, 'store']);
 
 Route::get('/user/{id}/recipes', [ApiController::class, 'getUserRecipes']);
+
+Route::get('/user/{id}/recipes/favorite', [ApiController::class, 'getUserFavoriteRecipes']);
+
 
 

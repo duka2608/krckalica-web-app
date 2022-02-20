@@ -6,6 +6,8 @@ use App\Http\Requests\UserRequest;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Cuisine;
+use App\Models\FavoriteRecipe;
+use App\Models\Image;
 use App\Models\Location;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
@@ -91,5 +93,16 @@ class ApiController extends Controller
 
         return response()->json($recipes, 200);
     }
+
+    public function getUserFavoriteRecipes($id) {
+        $recipes = FavoriteRecipe::with('recipe')->where('user_id', $id)->get();
+
+        foreach($recipes as $recipe) {
+            $recipe->recipe->image = Image::where('recipe_id', $recipe->recipe->id)->get();
+        }
+
+        return response()->json($recipes, 200);
+    }
+
 
 }
