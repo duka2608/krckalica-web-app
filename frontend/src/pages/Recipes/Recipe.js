@@ -6,6 +6,8 @@ import RecipeCard from "../../components/RecipeCard";
 import Comments from '../../components/Comments';
 import SimilarRecipes from "../../components/SimilarRecipes";
 
+import { useSelector } from 'react-redux';
+
 const RootDiv = styled.div`
   h2 {
     font-size: 36px;
@@ -48,6 +50,7 @@ const IngredientsHeading = styled.h4`
 
 const Recipe = () => {
   const [recipe, setRecipe] = useState({});
+  const user = useSelector((state) => state.user);
 
   const { recipeId } = useParams();
 
@@ -76,6 +79,14 @@ const Recipe = () => {
 
     return newDate.toString();
   };
+
+  const addToFavoritesHandler = (e) => {
+    e.preventDefault();
+    axios.post(`http://localhost:8000/api/recipes/${recipeId}/favorite`, { user_id:  user.id })
+      .then((res) => {
+        console.log(res);
+      })
+  }
 
   return (
     <RootDiv>
@@ -124,9 +135,11 @@ const Recipe = () => {
                   <i className="fa fa-star fa-star-lg" aria-hidden="true"></i>
                   <i className="fa fa-star fa-star-lg" aria-hidden="true"></i>
                 </div>
-                <a href="#" className="btn green-btn align-self-end">
-                  Lako
-                </a>
+                {user && (
+                  <a href="#" onClick={addToFavoritesHandler} className="btn green-btn align-self-end">
+                    Dodaj u omiljene
+                  </a>
+                )}
               </div>
             </div>
           </div>
@@ -162,9 +175,18 @@ const Recipe = () => {
             </div>
           </div>
           <div className="row">
-              <Comments recipeId={recipeId} dateFormat={dateFormat} itemsPerPage={3}/>
+            <Comments
+              recipeId={recipeId}
+              dateFormat={dateFormat}
+              itemsPerPage={3}
+            />
           </div>
-          {recipe.category && <SimilarRecipes categoryId={recipe.category_id} recipeId={recipeId} />}
+          {recipe.category && (
+            <SimilarRecipes
+              categoryId={recipe.category_id}
+              recipeId={recipeId}
+            />
+          )}
         </div>
       </div>
     </RootDiv>

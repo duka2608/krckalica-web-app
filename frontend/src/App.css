@@ -101,9 +101,13 @@ textarea {
     line-height: 58px;
     -webkit-transition-duration: 500ms;
     transition-duration: 500ms;
-    text-transform: capitalize;
     background-color: #1c8314;
     cursor: initial;
+    cursor: pointer;
+}
+
+.green-btn:hover {
+  background-color: var(--secondary-green);
 }
 
 .form-btn {

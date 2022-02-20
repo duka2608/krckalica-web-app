@@ -35,12 +35,11 @@ const Comments = ({ recipeId, dateFormat, itemsPerPage }) => {
   const [itemOffset, setItemOffset] = useState(0);
 ;
   const user = useSelector(state => state.user);
-  console.log(user);
+
   const fetchComments = () => {
     axios
       .post(`http://localhost:8000/api/recipes/${recipeId}/comments`)
       .then((response) => {
-          console.log(response.data);
         setCommentsCount(response.data.comments.length);
 
         const endOffset = itemOffset + itemsPerPage;

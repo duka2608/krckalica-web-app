@@ -5,6 +5,7 @@ import RecipeCard from "../../components/RecipeCard";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import UserRecipes from "./UserRecipes";
+import FavoriteRecipes from "./FavoriteRecipes";
 
 const Box = styled.span`
   width: 30px;
@@ -66,16 +67,8 @@ const UserPage = () => {
           <div className="row">
             <h1>Omiljeni recepti</h1>
           </div>
-          <div className="row">
-            <div className="col-12 col-sm-6 col-lg-3">
-              <RecipeCard />
-            </div>
-            <div className="col-12 col-sm-6 col-lg-3">
-              <RecipeCard />
-            </div>
-            <div className="col-12 col-sm-6 col-lg-3">
-              <RecipeCard />
-            </div>
+          <div className="row mt-3">
+              {<FavoriteRecipes id={user.id} />}
           </div>
         </div>
       </div>
