@@ -2,15 +2,18 @@ import { useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import axios from "axios";
 import RecipeCard from "../../components/RecipeCard";
+import LoadingPage from "../../components/LoadingPage";
 
 
 const Recipes = () => {
+    const [loading, setLoading] = useState(true);
     const [recipes, setRecipes] = useState([]);
 
     const fetchRecipes = () => {
         axios.get('http://localhost:8000/api/recipes/all')
         .then((response) => {
             setRecipes(response.data);
+            setLoading(false);
         });
     }
 
@@ -34,6 +37,7 @@ const Recipes = () => {
 
     return (
         <>
+            {loading && <LoadingPage/>}
             <div className="bg-img bg-overlay rounded text-light banner mb-5">
                 <div className="row h-100 py-4">
                     <div className="col-12 d-flex align-items-center justify-content-center">

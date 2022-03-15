@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { loadUser } from "./actions/userActions";
 import UserPage from "./pages/UserProfile/UserPage";
+import NewRecipe from "./pages/NewRecipe/NewRecipe";
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
             />
           </Route>
           <Route path="/user/profile" element={<UserPage />} />
+          <Route path="/user/new-recipe" element={<NewRecipe />} />
           <Route path="/registration" element={<Registration />} />
         </Routes>
       <Footer />

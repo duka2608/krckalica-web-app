@@ -3,8 +3,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import RecipeCard from "../../components/RecipeCard";
+import LoadingPage from "../../components/LoadingPage";
 
 const RecipesByCategory = () => {
+    const [loading, setLoading] = useState(false);
     const { cuisineId } = useParams();
     const [recipes, setRecipes] = useState([]);
     const [cuisine, setCuisine] = useState('');
@@ -15,11 +17,13 @@ const RecipesByCategory = () => {
             console.log(response);
             setRecipes(response.data.recipes);
             setCuisine(response.data.cuisine);
+            setLoading(false);
         });
     }
 
 
     useEffect(() => {
+        setLoading(true);
         fetchRecipes();
     }, [cuisineId]);
 
@@ -38,6 +42,7 @@ const RecipesByCategory = () => {
 
     return (
         <>
+            {loading && <LoadingPage />}
             <div className="bg-img bg-overlay rounded text-light banner mb-5">
                 <div className="row h-100 py-4">
                     <div className="col-12 d-flex align-items-center justify-content-center">
@@ -46,7 +51,7 @@ const RecipesByCategory = () => {
                 </div>
             </div>
             <div className="row">
-                {recipes.length ? displayRecipes : <h1>Trenutno nema recepata za izabranu kuhinju.</h1>}
+                {recipes.length ? displayRecipes : <h1 className="text-center">Trenutno nema recepata za izabranu kuhinju.</h1>}
             </div>
         </>
     );

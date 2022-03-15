@@ -7,6 +7,8 @@ import Comments from '../../components/Comments';
 import SimilarRecipes from "../../components/SimilarRecipes";
 
 import { useSelector } from 'react-redux';
+import Popup from "../../components/Popup";
+import LoadingPage from "../../components/LoadingPage";
 
 const RootDiv = styled.div`
   h2 {
@@ -50,15 +52,20 @@ const IngredientsHeading = styled.h4`
 
 const Recipe = () => {
   const [recipe, setRecipe] = useState({});
+  const [popup, setPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
+  const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.user);
 
   const { recipeId } = useParams();
 
   const fetchRecipe = () => {
+    setLoading(true);
     axios
       .get(`http://localhost:8000/api/recipes/${recipeId}`)
       .then((response) => {
         setRecipe(response.data.recipe);
+        setLoading(false)
       });
   };
 
@@ -84,11 +91,20 @@ const Recipe = () => {
     e.preventDefault();
     axios.post(`http://localhost:8000/api/recipes/${recipeId}/favorite`, { user_id:  user.id })
       .then((res) => {
-        console.log(res);
+        let message = res.data.message;
+        setPopup(true);
+        setPopupMessage(message);
       })
   }
 
+  const closePopup = () => {
+    setPopup(false);
+  }
+
   return (
+    <>
+    {loading && <LoadingPage />}
+    {popup && <Popup closePopup={closePopup} message={popupMessage} />}
     <RootDiv>
       <div className="bg-img bg-overlay rounded text-light banner mb-5">
         <div className="row h-100 py-4">
@@ -190,6 +206,7 @@ const Recipe = () => {
         </div>
       </div>
     </RootDiv>
+    </>
   );
 };
 
