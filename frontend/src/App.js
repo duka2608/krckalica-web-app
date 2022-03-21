@@ -20,9 +20,12 @@ import NewRecipe from "./pages/NewRecipe/NewRecipe";
 function App() {
   const dispatch = useDispatch();
   const [user, setUser] = useState();
+  
   useEffect(() => {
     setUser(dispatch(loadUser()));
   }, [user]);
+
+
   return (
     <div className="App">
       <Navigation />

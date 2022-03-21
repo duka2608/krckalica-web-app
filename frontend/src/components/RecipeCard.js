@@ -44,6 +44,10 @@ const RecipeCard = (props) => {
                 <Link className="link" to={`/recipes/${props.id}`} >
                     <h5>{props.name}</h5>
                 </Link>
+                {
+                    props.difference && <p><small className="text-muted">Objavljeno pre:  { props.dayDifference ? props.dayDifference+" dana" : props.hourDifference + " sati"}
+                    </small></p>
+                }
                 {props.rating && <div className="ratings">
                     <i className="fa fa-star" aria-hidden="true"></i>
                     <i className="fa fa-star" aria-hidden="true"></i>

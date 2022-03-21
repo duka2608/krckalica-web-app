@@ -2,6 +2,7 @@
   --main-green: #79de9b;
   --secondary-green: #c9f2d7;
   --border-green: #1c3424;
+  --border-green-light: #40ba37;
   --gray: #f4f4f4;
   --pink: #e2135c;
   --purple: #ad9ccf;
@@ -21,6 +22,11 @@ a:active,
 a:hover {
   text-decoration: none;
   color: #000 !important;
+}
+
+.height-img {
+  height: 80vh;
+  object-fit: cover;
 }
 
 ul {

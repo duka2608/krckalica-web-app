@@ -3,7 +3,7 @@ import logo from "../assets/images/Krckalica-logo.png";
 import { useState, useEffect } from "react";
 import DropdownList from "./DropdownList";
 import axios from "axios";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { loadUser, login, logout } from "../actions/userActions";
 
@@ -32,6 +32,7 @@ const ImageBox = styled.div`
 `;
 
 const Navigation = () => {
+  const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [cuisines, setCuisines] = useState([]);
 
@@ -86,12 +87,17 @@ const Navigation = () => {
     }
 
     dispatch(login(loginUser));
+    
+    if(user.isAuthenticated) {
+      navigate('/user/profile');
+    }
   }
 
   const logoutHandler = (e) => {
     e.preventDefault();
 
     dispatch(logout());
+    navigate('/');
   } 
   
   return (

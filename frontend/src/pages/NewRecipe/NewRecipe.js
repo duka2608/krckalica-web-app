@@ -22,6 +22,8 @@ h2 {
 `;
 
 const NewRecipe = () => {
+    
+
     return(
         <div className="px-3 py-5">
             <Container>

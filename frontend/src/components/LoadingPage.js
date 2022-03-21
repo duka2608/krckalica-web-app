@@ -2,6 +2,7 @@ import styled, { keyframes } from 'styled-components';
 
 const Container = styled.div`
     position: fixed;
+    z-index: 10;
     top: 0;
     left: 0;
     min-height: 100vh;

@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import RecipeCard from "../../components/RecipeCard";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import UserRecipes from "./UserRecipes";
 import FavoriteRecipes from "./FavoriteRecipes";
 import { Link } from "react-router-dom";
+import { loadUser } from "../../actions/userActions";
 
 const Box = styled.span`
   width: 30px;
@@ -15,7 +16,10 @@ const Box = styled.span`
 `;
 
 const UserPage = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  
+
 
   return (
     user && (

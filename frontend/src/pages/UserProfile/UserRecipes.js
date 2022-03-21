@@ -1,19 +1,24 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import RecipeCard from "../../components/RecipeCard";
-
+import LoadingPage from '../../components/LoadingPage';
 
 
 const UserRecipes = ({ id }) => {
+  const [loading, setLoading] = useState(false);
   const [userRecipes, setUserRecipes] = useState([]);
 
   const fetchUserRecipes = () => {
     axios
       .get(`http://localhost:8000/api/user/${id}/recipes`)
-      .then((res) => setUserRecipes(res.data));
+      .then((res) => {
+        setUserRecipes(res.data);
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
+    setLoading(true);
     fetchUserRecipes();
   }, []);
 
@@ -38,6 +43,7 @@ const UserRecipes = ({ id }) => {
 
   return (
       <>
+        {loading && <LoadingPage />}
         {recipes}
       </>
   )
