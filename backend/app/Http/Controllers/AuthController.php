@@ -71,6 +71,7 @@ class AuthController extends Controller
         $credentials = $request->only(["username", "password"]);
         $user = User::where('username', $credentials['username'])->first();
 
+
         if(!$user) {
             return response()->json([
                 'message' => "User does not exist."
@@ -84,8 +85,11 @@ class AuthController extends Controller
         }
 
         $accessToken = Auth::user()->createToken('authToken')->accessToken;
-
-        return response(['user' => Auth::user(), 'access_token' => $accessToken]);
+        $authUser = Auth::user();
+        $authUser->location;
+        $authUser->recipesCount = count($authUser->recipes);
+        $authUser->commentsCount = count($authUser->comments);
+        return response(['user' => $authUser, 'access_token' => $accessToken]);
     }
 
     public function getUser() {

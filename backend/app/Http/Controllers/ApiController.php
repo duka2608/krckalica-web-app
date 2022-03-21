@@ -104,5 +104,12 @@ class ApiController extends Controller
         return response()->json($recipes, 200);
     }
 
+    public function popularRecipes() {
+        $recipes = Recipe::with('images')->orderBy('created_at')->limit(9)->get();
+        foreach($recipes as $r) {
+            $r->commentCount = $r->comments->count();
+        }
 
+        return response()->json($recipes, 200);
+    } 
 }

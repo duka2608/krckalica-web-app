@@ -33,6 +33,7 @@ Route::group(['middleware' => 'CORS'], function($router) {
 Route::get('/categories', [ApiController::class, 'getCategories']);
 Route::get('/cuisines', [ApiController::class, 'getCuisines']);
 Route::get('/recipes/all', [ApiController::class, 'getAllRecipes']);
+Route::get('/recipes/popular', [ApiController::class, 'popularRecipes']);
 Route::get('/recipes/today-on-menu', [ApiController::class, 'getForTodaysOnMenu']);
 Route::get('/recipes/latest', [ApiController::class, 'getRecentRecipes']);
 Route::get('/recipes/{id}', [ApiController::class, 'getRecipe']);
