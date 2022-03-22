@@ -9,6 +9,7 @@ import SimilarRecipes from "../../components/SimilarRecipes";
 import { useSelector } from 'react-redux';
 import Popup from "../../components/Popup";
 import LoadingPage from "../../components/LoadingPage";
+import Button from '../../components/Button';
 
 const RootDiv = styled.div`
   h2 {
@@ -103,109 +104,117 @@ const Recipe = () => {
 
   return (
     <>
-    {loading && <LoadingPage />}
-    {popup && <Popup closePopup={closePopup} message={popupMessage} />}
-    <RootDiv>
-      <div className="bg-img bg-overlay rounded text-light banner mb-5">
-        <div className="row h-100 py-4">
-          <div className="col-12 d-flex align-items-center justify-content-center">
-            <h1 className="text-center page-title">Recept</h1>
+      {loading && <LoadingPage />}
+      {popup && <Popup closePopup={closePopup} message={popupMessage} />}
+      <RootDiv>
+        <div className="bg-img bg-overlay rounded text-light banner mb-5">
+          <div className="row h-100 py-4">
+            <div className="col-12 d-flex align-items-center justify-content-center">
+              <h1 className="text-center page-title">Recept</h1>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="row py-5">
-        <div className="container w-70">
-          <div className="col-12">
-            <img
-              className="card-img-top large-img fluid mb-5"
-              src={
-                recipe.images
-                  ? "http://localhost:8000/" +
-                    recipe.images[0].path +
-                    recipe.images[0].name
-                  : ""
-              }
-              alt={recipe.name}
-            />
-          </div>
-          <div className="row">
-            <div className="col-12 col-md-8">
-              <RecipeDate>{dateFormat(recipe.created_at)}</RecipeDate>
-              <h2>{recipe.name}</h2>
-              <RecipeInfo>
-                <h6>Priprema: {recipe.preparation_time} min</h6>
-                <h6>Broj porcija: {recipe.portions}</h6>
-                {recipe.category && (
-                  <h6>Kategorija: {recipe.category.name} </h6>
-                )}
-                {recipe.cuisine && <h6>Kuhinja: {recipe.cuisine.name} </h6>}
-                {recipe.fast ? <h6>Posno</h6> : ""}
-              </RecipeInfo>
+        <div className="row py-5">
+          <div className="container w-70">
+            <div className="col-12">
+              <img
+                className="card-img-top large-img fluid mb-5"
+                src={
+                  recipe.images
+                    ? "http://localhost:8000/" +
+                      recipe.images[0].path +
+                      recipe.images[0].name
+                    : ""
+                }
+                alt={recipe.name}
+              />
             </div>
-            <div className="col-12 col-md-4">
-              <div className="d-flex flex-column">
-                <div className="ratings align-self-end mb-4">
-                  <i className="fa fa-star fa-star-lg" aria-hidden="true"></i>
-                  <i className="fa fa-star fa-star-lg" aria-hidden="true"></i>
-                  <i className="fa fa-star fa-star-lg" aria-hidden="true"></i>
-                  <i className="fa fa-star fa-star-lg" aria-hidden="true"></i>
-                  <i className="fa fa-star fa-star-lg" aria-hidden="true"></i>
+            <div className="row">
+              <div className="col-12 col-md-8">
+                <RecipeDate>{dateFormat(recipe.created_at)}</RecipeDate>
+                <h2>{recipe.name}</h2>
+                <RecipeInfo>
+                  <h6>Priprema: {recipe.preparation_time} min</h6>
+                  <h6>Broj porcija: {recipe.portions}</h6>
+                  {recipe.category && (
+                    <h6>Kategorija: {recipe.category.name} </h6>
+                  )}
+                  {recipe.cuisine && <h6>Kuhinja: {recipe.cuisine.name} </h6>}
+                  {recipe.fast ? <h6>Posno</h6> : ""}
+                </RecipeInfo>
+              </div>
+              <div className="col-12 col-md-4">
+                <div className="d-flex flex-column">
+                  <div className="ratings align-self-end mb-4">
+                    <i className="fa fa-star fa-star-lg" aria-hidden="true"></i>
+                    <i className="fa fa-star fa-star-lg" aria-hidden="true"></i>
+                    <i className="fa fa-star fa-star-lg" aria-hidden="true"></i>
+                    <i className="fa fa-star fa-star-lg" aria-hidden="true"></i>
+                    <i className="fa fa-star fa-star-lg" aria-hidden="true"></i>
+                  </div>
+                  {user && (
+                      
+                      <div onClick={addToFavoritesHandler} className='align-self-end'>
+                        <Button
+                        path="#"
+                        btnClass='align-self-end'
+                        customStyle={{ btnWidth: '100%' }}
+                    >
+                      Dodaj u omiljene
+                    </Button>
+                    </div>
+                    
+                  )}
                 </div>
-                {user && (
-                  <a href="#" onClick={addToFavoritesHandler} className="btn green-btn align-self-end">
-                    Dodaj u omiljene
-                  </a>
-                )}
               </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-12 col-lg-8 mt-5">
-              {recipe.steps &&
-                recipe.steps.map((step, index) => {
-                  return (
-                    <div className="d-flex" key={step.id}>
-                      <h4>0{index + 1}.</h4>
-                      <p className="px-4 text-justify text-muted">
-                        {step.description}
-                      </p>
-                    </div>
-                  );
-                })}
-            </div>
-            <div className="col-12 col-lg-4">
-              <div className="ingredients">
-                <IngredientsHeading>Sastojci</IngredientsHeading>
-                {recipe.ingredients &&
-                  recipe.ingredients.map((ingredient) => {
+            <div className="row">
+              <div className="col-12 col-lg-8 mt-5">
+                {recipe.steps &&
+                  recipe.steps.map((step, index) => {
                     return (
-                      <div className="d-flex mb-4" key={ingredient.id}>
-                        <Box></Box>
-                        <p className="d-flex align-items-center mb-0 bold">
-                          {ingredient.name + " " + ingredient.amount}
+                      <div className="d-flex" key={step.id}>
+                        <h4>0{index + 1}.</h4>
+                        <p className="px-4 text-justify text-muted">
+                          {step.description}
                         </p>
                       </div>
                     );
                   })}
               </div>
+              <div className="col-12 col-lg-4">
+                <div className="ingredients">
+                  <IngredientsHeading>Sastojci</IngredientsHeading>
+                  {recipe.ingredients &&
+                    recipe.ingredients.map((ingredient) => {
+                      return (
+                        <div className="d-flex mb-4" key={ingredient.id}>
+                          <Box></Box>
+                          <p className="d-flex align-items-center mb-0 bold">
+                            {ingredient.name + " " + ingredient.amount}
+                          </p>
+                        </div>
+                      );
+                    })}
+                </div>
+              </div>
             </div>
+            <div className="row">
+              <Comments
+                recipeId={recipeId}
+                dateFormat={dateFormat}
+                itemsPerPage={3}
+              />
+            </div>
+            {recipe.category && (
+              <SimilarRecipes
+                categoryId={recipe.category_id}
+                recipeId={recipeId}
+              />
+            )}
           </div>
-          <div className="row">
-            <Comments
-              recipeId={recipeId}
-              dateFormat={dateFormat}
-              itemsPerPage={3}
-            />
-          </div>
-          {recipe.category && (
-            <SimilarRecipes
-              categoryId={recipe.category_id}
-              recipeId={recipeId}
-            />
-          )}
         </div>
-      </div>
-    </RootDiv>
+      </RootDiv>
     </>
   );
 };

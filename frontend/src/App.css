@@ -93,29 +93,6 @@ textarea {
   padding: 0 3px;
 }
 
-.green-btn {
-    display: inline-block;
-    min-width: 160px;
-    height: 60px;
-    color: #fff !important;
-    font-weight: 400;
-    border: none;
-    border-left: 3px solid var(--border-green);
-    border-radius: 0;
-    padding: 0 30px;
-    font-size: 18px;
-    line-height: 58px;
-    -webkit-transition-duration: 500ms;
-    transition-duration: 500ms;
-    background-color: #1c8314;
-    cursor: initial;
-    cursor: pointer;
-}
-
-.green-btn:hover {
-  background-color: var(--secondary-green);
-}
-
 .form-btn {
   background-color: #1c8314;
   width: 50%;

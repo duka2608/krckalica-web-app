@@ -30,6 +30,10 @@ const SmallCard = styled.div`
             transition-duration: 500ms;
             line-height: 1.3;
             font-weight: 600;
+
+            &:hover {
+                color: var(--main-green);
+            }
         }
 
         p {

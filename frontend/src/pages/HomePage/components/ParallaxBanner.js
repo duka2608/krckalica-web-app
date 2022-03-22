@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ParallaxBackground from '../../../assets/images/parallax-bg.jpg'
+import Button from '../../../components/Button';
 
 const ParallaxContainer = styled.div`
     background: radial-gradient(circle, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6)), url(${ParallaxBackground});
@@ -33,9 +34,9 @@ const ParallaxBanner = () => {
             <p>
                 Fusce nec ante vitae lacus aliquet vulputate. Donec scelerisque accumsan molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras sed accumsan neque. Ut vulputate, lectus vel aliquam congue, risus leo elementum nibh
             </p>
-            <Link to='/' className='btn green-btn'>
+            <Button path='/' customStyle={{ btnWidth: '250px' }}>
                 Idi na recept
-            </Link>
+            </Button>
         </ParallaxContainer>
     );
 }

@@ -7,6 +7,7 @@ import UserRecipes from "./UserRecipes";
 import FavoriteRecipes from "./FavoriteRecipes";
 import { Link } from "react-router-dom";
 import { loadUser } from "../../actions/userActions";
+import Button from '../../components/Button';
 
 const Box = styled.span`
   width: 30px;
@@ -60,9 +61,9 @@ const UserPage = () => {
               <h1>Moji recepti</h1>
             </div>
             <div className="col d-flex justify-content-center">
-              <Link to="/user/new-recipe" className="btn green-btn">
+              <Button path="/user/new-recipe">
                 Novi recept
-              </Link>
+              </Button>
             </div>
           </div>
           <div className="row mt-3">

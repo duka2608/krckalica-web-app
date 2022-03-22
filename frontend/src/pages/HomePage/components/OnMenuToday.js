@@ -3,6 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import LoadingPage from '../../../components/LoadingPage';
+import Button from '../../../components/Button';
 
 const RecipeInfo = styled.div`
     background-color: rgba(0, 0, 0, 0.4);
@@ -74,9 +75,9 @@ const OnMenuToday = () => {
                         <h2 className="card-title">{recipe.name}</h2>
                         <p className="card-text">{recipe.description}</p>
                         {recipe.user && <p className="card-text">Autor: {recipe.user.first_name+' '+recipe.user.last_name}</p>}
-                        <Link to={`/recipes/${recipe.id}`} className='btn green-btn'>
+                        <Button path={`/recipes/${recipe.id}`} customStyle={{ btnWidth: '200px' }}>
                             Pogledaj recept
-                        </Link>
+                        </Button>
                     </RecipeInfo>
                 </div>
             </div>

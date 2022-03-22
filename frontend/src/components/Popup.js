@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Button from './Button';
 
 const PopupContainer = styled.div`
     min-height: 100vh;
@@ -29,7 +30,7 @@ const PopupCard = styled.div`
     h1 {
         width: 100%;
         padding: 2rem 0;
-        background-color: var(--main-green);
+        background-color: #1c8314;
         text-align: center;
         color: #fff;
         border-radius: 0.25rem 0.25rem 0 0 ;
@@ -54,8 +55,9 @@ const Popup = (props) => {
             <PopupCard>
                 <h1>{ props.title ? props.title : '' }</h1>
                 <p>{ props.message ? props.message : 'Neka poruka' }</p>
-                <Close className='btn btn-success
-                ' onClick={() => props.closePopup()}>Zatvori</Close>
+                <div onClick={() => props.closePopup()}>
+                    <Button path='#'>Zatvori</Button>
+                </div>
             </PopupCard>
         </PopupContainer>
     );
