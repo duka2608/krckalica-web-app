@@ -121,3 +121,7 @@ textarea {
   padding: 0 10px;
   margin: 5px 0;
 }
+
+footer {
+  border-top: 1px solid #dcdcdc;
+}

@@ -15,11 +15,16 @@ const Popular = () => {
     const [loading, setLoading] = useState(false);
     const [recipes, setRecipes] = useState([]);
 
-    const fetchRecipes = () => {
-        axios.get('http://localhost:8000/api/recipes/popular')
-        .then((response) => {
-            setRecipes(response.data);
-        });
+    const fetchRecipes = async () => {
+        try {
+            await axios.get('http://localhost:8000/api/recipes/popular')
+            .then((response) => {
+                let responseData = response.data;
+                setRecipes(responseData);
+            });
+        } catch(err) {
+            console.log(err)
+        }
     }
 
     useEffect(() => {

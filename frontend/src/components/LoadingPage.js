@@ -7,7 +7,7 @@ const Container = styled.div`
     left: 0;
     min-height: 100vh;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;

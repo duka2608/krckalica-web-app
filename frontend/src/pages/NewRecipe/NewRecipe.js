@@ -4,6 +4,9 @@ import CustomSelect from "../../components/CustomSelect";
 import InputField from "../../components/InputField";
 import axios from "axios";
 import LoadingPage from "../../components/LoadingPage";
+import { useSelector } from "react-redux";
+import Popup from "../../components/Popup";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   margin: 0 auto;
@@ -28,6 +31,7 @@ const Container = styled.div`
 
 const NewRecipe = () => {
   const [loading, setLoading] = useState(false);
+  const user = useSelector((state) => state.user);
   const [categories, setCategories] = useState([]);
   const [cuisines, setCuisines] = useState([]);
 
@@ -47,6 +51,11 @@ const NewRecipe = () => {
   const [cuisineError, setCuisineError] = useState("");
   const [prepError, setPrepError] = useState("");
   const [portionError, setPortionError] = useState("");
+
+  const [isValid, setIsValid] = useState(false);
+  const [popup, setPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
+  const navigate = useNavigate();
 
   const fetchCategories = () => {
     setLoading(true);
@@ -84,36 +93,66 @@ const NewRecipe = () => {
 
     if (name === "") {
       setNameError("Polje za ime je prazno.");
+      setIsValid(false);
     } 
 
     if (desc === "") {
-        setDescError("Polje za opis je prazno.");
+      setDescError("Polje za opis je prazno.");
+      setIsValid(false);
     }
 
     if (category === 0) {
       setCategoryError("Morate izabrati kategoriju.");
+      setIsValid(false);
     }
 
     if (cuisine === 0) {
       setCuisineError("Morate izabrati kuhinju.");
+      setIsValid(false);
     }
 
     if (prep === "") {
       setPrepError("Unesite vreme pripreme.");
+      setIsValid(false);
     }
 
     if (portions === "") {
       setPortionError("Unesite broj porcija.");
+      setIsValid(false);
     }
 
-    console.log({
-      name,
-      desc,
-      advice,
-      prep,
-      portions,
-      fast,
-    });
+    setIsValid(true);
+
+    if(isValid) {
+      const formData = new FormData();
+
+      console.log(image);
+      formData.append('recipe_name', name);
+      formData.append('portions', portions);
+      formData.append('category', category);
+      formData.append('cuisine', cuisine);
+      formData.append('description', desc);
+      formData.append('preparation_time', prep);
+      formData.append('fast', fast);
+      formData.append('advice', advice);
+      formData.append('user_id', user.id);
+      formData.append('recipe-image', image)
+      console.log({
+        formData
+      });
+
+      axios
+        .post("http://localhost:8000/api/recipes/add", formData, {
+          headers: {
+            "Content-type": "multipart/form-data"
+          }
+        })
+        .then((res) => {
+          let message = res.data.message;
+          setPopup(true);
+          setPopupMessage(message);
+        });
+    }
 
   };
 
@@ -149,6 +188,9 @@ const NewRecipe = () => {
       case "fast":
         setFast(value);
         return;
+      case "image": 
+        setImage(value);
+        return;
       default:
         return;
     }
@@ -163,9 +205,15 @@ const NewRecipe = () => {
     setFast(false);
   };
 
+  const closePopup = () => {
+    setPopup(false);
+    navigate('/user/profile');
+  }
+
   return (
     <>
       {loading && <LoadingPage />}
+      {popup && <Popup message={popupMessage} closePopup={closePopup} />}
       <div className="px-3 py-5">
         <Container>
           <div className="row text-center">
@@ -268,6 +316,8 @@ const NewRecipe = () => {
                 label="Izaberite sliku recepta"
                 type="file"
                 inputClass="form-control"
+                name="image"
+                handler={onChangeHandler}
               />
               <div className="d-flex justify-content-center mt-5">
                 <button type="submit" className="btn form-btn">
