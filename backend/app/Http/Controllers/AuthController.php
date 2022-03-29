@@ -135,4 +135,6 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Uspešno ste dodali recept u omiljene.'], 200);
     }
+
+  
 }

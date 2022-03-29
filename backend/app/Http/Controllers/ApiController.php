@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+
 
 
 class ApiController extends Controller
@@ -112,4 +114,46 @@ class ApiController extends Controller
 
         return response()->json($recipes, 200);
     } 
+
+    public function addRecipe(Request $request) {
+        try {
+            $recipe = new Recipe();
+            $recipe->name = $request->recipe_name;
+            $recipe->portions = (int)$request->portions;
+            $recipe->category_id = $request->category;
+            $recipe->cuisine_id = $request->cuisine;
+            $recipe->description = $request->description;
+            $recipe->preparation_time = (int)$request->preparation_time;
+            $recipe->fast = (bool)$request->fast;
+            $recipe->advice = $request->advice;
+            $recipe->user_id = 2;
+            $recipe->slug = Str::slug($request->recipe_name, '-').'-'.Str::uuid()->toString();
+    
+    
+            $recipe->save();
+    
+            if($request->hasFile('recipe-image')) {
+                $image = time()."-".$request->file('recipe-image')->getClientOriginalName();
+                $request->file('recipe-image')->storeAs('public/images/recipes/', $image);
+                $newImage = new Image();
+                $newImage->name = $image;
+                $newImage->path = 'storage/images/recipes/';
+                $newImage->recipe_id = $recipe->id;
+                $newImage->main = true;
+    
+                $newImage->save();
+            }
+             
+            return response()->json(['message' => 'Uspešno ste uneli novi recept.'], 201);
+        } catch(\Exception $e) {
+            return response()->json(['message' => 'Došlo je do greške prilikom unosa recepta.'], 500);
+        }
+    }
+
+    public function searchRecipes(Request $request) {
+        $search = $request->get('search');
+        $recipes = Recipe::select('name', 'id')->where('name', 'like', "%{$search}%")->with('images')->get();
+
+        return response()->json($recipes, 200);
+    }
 }
