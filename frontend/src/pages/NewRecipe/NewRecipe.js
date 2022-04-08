@@ -7,6 +7,7 @@ import LoadingPage from "../../components/LoadingPage";
 import { useSelector } from "react-redux";
 import Popup from "../../components/Popup";
 import { useNavigate } from "react-router-dom";
+import IngredientsInput from "./components/IngredientsInput";
 
 const Container = styled.div`
   margin: 0 auto;
@@ -44,6 +45,7 @@ const NewRecipe = () => {
   const [portions, setPortions] = useState("");
   const [fast, setFast] = useState(false);
   const [image, setImage] = useState("");
+  const [ingredients, setIngredients] = useState([{ name: "", amount: "" }]);
 
   const [nameError, setNameError] = useState("");
   const [descError, setDescError] = useState("");
@@ -136,7 +138,7 @@ const NewRecipe = () => {
       formData.append('fast', fast);
       formData.append('advice', advice);
       formData.append('user_id', user.id);
-      formData.append('recipe-image', image)
+      formData.append('recipe-image', image);
       console.log({
         formData
       });
@@ -210,6 +212,37 @@ const NewRecipe = () => {
     navigate('/user/profile');
   }
 
+  const ingredientChangesHandler = (index, e) => {
+    let ingredientsCopy = [...ingredients];
+    ingredientsCopy[index][e.target.name] = e.target.value
+
+    setIngredients(ingredientsCopy);
+    console.log(ingredients);
+  }
+
+  const addField = () => {
+    setIngredients([...ingredients, { name: '', amount: '' }]);
+  }
+
+  const removeFields = (ingredientIndex) => {
+    let newIngredients = [...ingredients];
+    newIngredients.splice(ingredientIndex, 1);
+    setIngredients(newIngredients);
+  }
+
+  const displayIngredientsInput = ingredients.map((input, index) => (
+    <IngredientsInput 
+      key={index} 
+      ingredientIndex={index}
+      ingredientsLength={ingredients.length}
+      nameValue={input.name}
+      amountValue={input.amount}
+      inputHandler={ingredientChangesHandler}
+      addNewInput={addField}  
+      removeInput={removeFields}
+    />
+  ));
+
   return (
     <>
       {loading && <LoadingPage />}
@@ -253,6 +286,12 @@ const NewRecipe = () => {
                   error={cuisineError}
                 />
               </div>
+              <div className="row">
+                <h3>Sastojci</h3>
+              </div>
+              {
+                displayIngredientsInput
+              }
               <InputField
                 cardClass="form-group"
                 label="Opis"

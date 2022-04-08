@@ -13,6 +13,8 @@ const ParallaxContainer = styled.div`
     flex-direction: column;
     margin-bottom: 5rem;
     background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
 
     h1 {
         font-size: 72px;
