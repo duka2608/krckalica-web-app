@@ -50,7 +50,7 @@ Route::get('/locations', [ApiController::class, 'getLocations']);
 Route::post('/recipes/{id}/comments', [ApiController::class, 'getCommentsForRecipe']);
 Route::post('/comments/add', [CommentsController::class, 'store']);
 
-Route::get('/user/{id}/recipes', [ApiController::class, 'getUserRecipes']);
+Route::post('/user/{id}/recipes', [ApiController::class, 'getUserRecipes']);
 
 Route::get('/user/{id}/recipes/favorite', [ApiController::class, 'getUserFavoriteRecipes']);
 

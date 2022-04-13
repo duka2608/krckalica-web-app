@@ -118,7 +118,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'Recept se već nalazi u Vašim omiljenim receptima.'], 200);
         }
 
-        $check = Recipe::where('user_id', $request->id)->first();
+        $check = Recipe::where('user_id', $request->user_id)->first();
 
         if($check) {
             return response()->json(['message' => 'Ne mozete dodati Vas recept u omiljene.'], 200);
