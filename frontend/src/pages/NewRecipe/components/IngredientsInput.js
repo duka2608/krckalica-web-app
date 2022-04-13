@@ -11,10 +11,10 @@ const IngredientsInput = (props) => {
       </div>
       <div className="col-md-2 d-flex align-items-end">
         {
-          props.ingredientsLength - 1 !== props.ingredientIndex ? <div className="btn btn-success px-3" onClick={() => props.removeInput(props.ingredientIndex) }>-</div> : null
+         <div className="btn btn-success px-3" onClick={() => props.removeInput(props.ingredientIndex) }>-</div>
         }
         {
-          props.ingredientsLength - 1 === props.ingredientIndex ? <div className="btn btn-success" onClick={() => props.addNewInput() }>+</div> : null
+          props.ingredientsLength - 1 === props.ingredientIndex ? <div className="btn btn-success mx-3" onClick={() => props.addNewInput() }>+</div> : null
         }
       </div>
     </div>

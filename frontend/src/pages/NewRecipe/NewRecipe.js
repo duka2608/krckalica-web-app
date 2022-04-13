@@ -33,6 +33,7 @@ const Container = styled.div`
 const NewRecipe = () => {
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.user);
+  const token = useSelector((state) => state.token);
   const [categories, setCategories] = useState([]);
   const [cuisines, setCuisines] = useState([]);
 
@@ -139,14 +140,16 @@ const NewRecipe = () => {
       formData.append('advice', advice);
       formData.append('user_id', user.id);
       formData.append('recipe-image', image);
+      formData.append('ingredients', JSON.stringify(ingredients));
       console.log({
         formData
       });
-
+      
       axios
         .post("http://localhost:8000/api/recipes/add", formData, {
           headers: {
-            "Content-type": "multipart/form-data"
+            "Content-type": "multipart/form-data",
+            // "Authorization": `Bearer ${token}`
           }
         })
         .then((res) => {
@@ -248,10 +251,16 @@ const NewRecipe = () => {
       {loading && <LoadingPage />}
       {popup && <Popup message={popupMessage} closePopup={closePopup} />}
       <div className="px-3 py-5">
+        <div className="container">
+        <div className="bg-img bg-overlay rounded text-light banner mb-5">
+                <div className="row h-100 py-4">
+                    <div className="col-12 d-flex align-items-center justify-content-center">
+                        <h1 className="text-center page-title">Novi recept</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
         <Container>
-          <div className="row text-center">
-            <h2>Novi recept</h2>
-          </div>
           <div className="row">
             <form onSubmit={onSubmitHandler}>
               <InputField
