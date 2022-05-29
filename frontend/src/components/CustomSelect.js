@@ -14,6 +14,7 @@ const CustomSelect = (props) => {
         className={props.selectClass}
         id={props.id}
         onChange={(e) => props.handler(props.name, e.target.value)}
+        value={props.value && props.value}
       >
         <option value={0}>Izaberite...</option>
         {displayData}

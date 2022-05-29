@@ -3,13 +3,13 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import RecipeCard from "../../components/RecipeCard";
-import Comments from '../../components/Comments';
+import Comments from "../../components/Comments";
 import SimilarRecipes from "../../components/SimilarRecipes";
 
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import Popup from "../../components/Popup";
 import LoadingPage from "../../components/LoadingPage";
-import Button from '../../components/Button';
+import Button from "../../components/Button";
 
 const RootDiv = styled.div`
   h2 {
@@ -32,6 +32,7 @@ const RecipeInfo = styled.div`
   border-left: 3px solid #40ba37;
   padding: 15px;
   background: #f4f4f4;
+  margin-bottom: 30px;
 
   h6 {
     color: #000000;
@@ -54,7 +55,7 @@ const IngredientsHeading = styled.h4`
 const Recipe = () => {
   const [recipe, setRecipe] = useState({});
   const [popup, setPopup] = useState(false);
-  const [popupMessage, setPopupMessage] = useState('');
+  const [popupMessage, setPopupMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.user);
 
@@ -66,7 +67,7 @@ const Recipe = () => {
       .get(`http://localhost:8000/api/recipes/${recipeId}`)
       .then((response) => {
         setRecipe(response.data.recipe);
-        setLoading(false)
+        setLoading(false);
       });
   };
 
@@ -75,14 +76,13 @@ const Recipe = () => {
     fetchRecipe();
   }, [recipeId]);
 
-
   const dateFormat = (date) => {
     let newDate = new Date(date).toLocaleDateString("en-us", {
       year: "numeric",
       month: "short",
       day: "numeric",
       hour: "numeric",
-      minute: "2-digit"
+      minute: "2-digit",
     });
 
     return newDate.toString();
@@ -90,17 +90,25 @@ const Recipe = () => {
 
   const addToFavoritesHandler = (e) => {
     e.preventDefault();
-    axios.post(`http://localhost:8000/api/recipes/${recipeId}/favorite`, { user_id:  user.id })
+    axios
+      .post(`http://localhost:8000/api/recipes/${recipeId}/favorite`, {
+        user_id: user.id,
+      })
       .then((res) => {
         let message = res.data.message;
         setPopup(true);
         setPopupMessage(message);
-      })
+      });
+  };
+
+  const goToEditPageHandler = (e) => {
+    e.preventDefault();
+    window.location.href = `/user/recipe/${recipeId}/edit`;
   }
 
   const closePopup = () => {
     setPopup(false);
-  }
+  };
 
   return (
     <>
@@ -142,6 +150,12 @@ const Recipe = () => {
                   {recipe.cuisine && <h6>Kuhinja: {recipe.cuisine.name} </h6>}
                   {recipe.fast ? <h6>Posno</h6> : ""}
                 </RecipeInfo>
+                {recipe.description && (
+                  <div>
+                    <h2>Priprema</h2>
+                    {recipe.description}
+                  </div>
+                )}
               </div>
               <div className="col-12 col-md-4">
                 <div className="d-flex flex-column">
@@ -153,17 +167,20 @@ const Recipe = () => {
                     <i className="fa fa-star fa-star-lg" aria-hidden="true"></i>
                   </div>
                   {user && (
-                      
-                      <div onClick={addToFavoritesHandler} className='align-self-end'>
-                        <Button
-                        path="#"
-                        btnClass='align-self-end'
-                        customStyle={{ btnWidth: '100%' }}
+                    <div
+                      onClick={user.id === recipe.user_id ? goToEditPageHandler : addToFavoritesHandler}
+                      className="align-self-end"
                     >
-                      Dodaj u omiljene
-                    </Button>
+                      <Button
+                        path="#"
+                        btnClass="align-self-end"
+                        customStyle={{ btnWidth: "100%" }}
+                      >
+                        {
+                          user.id === recipe.user_id ? "Izmeni" : "Dodaj u omiljene"
+                        }
+                      </Button>
                     </div>
-                    
                   )}
                 </div>
               </div>

@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { loadUser } from "./actions/userActions";
 import UserPage from "./pages/UserProfile/UserPage";
 import NewRecipe from "./pages/NewRecipe/NewRecipe";
+import EditRecipe from "./pages/EditRecipe/EditRecipe";
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
           </Route>
           <Route path="/user/profile" element={<UserPage />} />
           <Route path="/user/new-recipe" element={<NewRecipe />} />
+          <Route path="/user/recipe/:recipeId/edit" element={<EditRecipe />} />
           <Route path="/registration" element={<Registration />} />
         </Routes>
       <Footer />

@@ -11,6 +11,11 @@ const TopNav = styled.nav`
   background-color: var(--main-green);
   padding: 10px 0px;
   box-shadow: 5px 5px 10px 5px rgba(0, 0, 0, 0.15);
+
+  .dropdown-menu {
+    left: initial;
+    right: 0;
+  }
 `;
 
 const ImageBox = styled.div`
@@ -126,6 +131,9 @@ const Navigation = () => {
     if (user.isAuthenticated) {
       navigate("/user/profile");
     }
+
+    setUsername('');
+    setPassword('');
   };
 
   const logoutHandler = (e) => {
@@ -289,7 +297,7 @@ const Navigation = () => {
                             </button>
                             <Link
                               to="/registration"
-                              className="btn btn-sm mx-3 btn-success"
+                              className="btn btn-sm mx-3 btn-success text-white"
                             >
                               Registracija
                             </Link>
