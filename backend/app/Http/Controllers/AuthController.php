@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\FavoriteRecipe;
 use App\Models\Recipe;
+use App\Models\Image;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
@@ -41,7 +43,7 @@ class AuthController extends Controller
 
         $validatedData['location_id'] = 1;
         $validatedData['role_id'] = 2;
-        $validatedData['biography'] = "Ja sam Bcava.";
+        $validatedData['biography'] = "Ja sam ". $validatedData['first_name'];
 
         // $data = (array)$validatedData;
 
@@ -114,11 +116,15 @@ class AuthController extends Controller
             ['user_id', '=', $request->user_id]
         ])->first();
 
+
         if($check) {
             return response()->json(['message' => 'Recept se već nalazi u Vašim omiljenim receptima.'], 200);
         }
 
-        $check = Recipe::where('user_id', $request->user_id)->first();
+        $check = Recipe::where([
+            ['id', $id],
+            ['user_id', $request->user_id]
+        ])->first();
 
         if($check) {
             return response()->json(['message' => 'Ne mozete dodati Vas recept u omiljene.'], 200);
@@ -136,5 +142,32 @@ class AuthController extends Controller
         return response()->json(['message' => 'Uspešno ste dodali recept u omiljene.'], 200);
     }
 
-  
+    public function deleteRecipe($id) {
+        try {
+            $recipe = Recipe::find($id);
+            $image = Image::where('recipe_id', $recipe->id)->first();
+
+            
+
+            $storageDelete = \Storage::exists('\public\images\recipes\\'.$image->name);
+            if (!$storageDelete) {
+                return response()->json(['message' => 'Slika za izabrani recept ne postoji.'], 500);
+            }
+
+            $storageDelete = \Storage::delete('\public\images\recipes\\'.$image->name);
+
+            $dbDelete = $image->delete();
+            $recipeDelete = $recipe->delete();
+
+            if (!$storageDelete || !$dbDelete || !$recipeDelete) {
+                return response()->json(['message' => 'Doslo je do greske prilikom uklanjanja recepta.'], 500);
+            }
+
+            return response()->json(['message' => 'Uspešno ste uklonili recept.'], 200);
+
+        } catch(\Exception $e) {
+            dd($e->getMessage());
+        }
+    }
+
 }

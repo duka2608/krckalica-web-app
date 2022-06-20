@@ -28,7 +28,7 @@ Route::group(['middleware' => 'CORS'], function($router) {
     Route::get('/user', [AuthController::class, 'getUser']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/recipes/{id}/favorite', [AuthController::class, 'addToFavorites']);
-
+    Route::delete('/recipes/{id}', [AuthController::class, 'deleteRecipe']);
 });
 
 Route::post('/recipes/add', [ApiController::class, 'addRecipe']);
@@ -44,7 +44,7 @@ Route::post('/recipes/search', [ApiController::class, 'searchRecipes']);
 Route::get('/recipes/{id}', [ApiController::class, 'getRecipe']);
 Route::post('/recipes/category/{id}', [ApiController::class, 'getRecipesFromCategory']);
 Route::post('/recipes/cuisine/{id}', [ApiController::class, 'getRecipesFromCuisine']);
-
+Route::put('/recipes/{id}', [ApiController::class, 'updateRecipe']);
 Route::get('/locations', [ApiController::class, 'getLocations']);
 
 Route::post('/recipes/{id}/comments', [ApiController::class, 'getCommentsForRecipe']);

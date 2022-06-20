@@ -21,7 +21,7 @@ class CreateImagesTable extends Migration
 
             $table->unsignedBigInteger('recipe_id');
 
-            $table->foreign('recipe_id')->references('id')->on('recipes');
+            $table->foreign('recipe_id')->references('id')->on('recipes')->onDelete('cascade');
 
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable();

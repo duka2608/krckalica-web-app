@@ -162,6 +162,52 @@ class ApiController extends Controller
         }
     }
 
+    public function updateRecipe(Request $request, $id) {
+        try {
+            $recipe = Recipe::find($id);
+            $recipe->name = $request->recipe_name;
+            $recipe->portions = (int)$request->portions;
+            $recipe->category_id = $request->category;
+            $recipe->cuisine_id = $request->cuisine;
+            $recipe->description = $request->description;
+            $recipe->preparation_time = (int)$request->preparation_time;
+            $recipe->fast = (bool)$request->fast;
+            $recipe->advice = $request->advice;
+            $recipe->user_id = 2;
+            $recipe->slug = Str::slug($request->recipe_name, '-').'-'.Str::uuid()->toString();
+            
+
+            $recipe->save();
+            $ingredients = json_decode($request->ingredients);
+
+            foreach($ingredients as $ingredient) {
+                $newIngredient = new Ingredient();
+
+                $newIngredient->name = $ingredient->name;
+                $newIngredient->amount = $ingredient->amount;
+                $newIngredient->recipe_id = $recipe->id;
+                $newIngredient->save();
+            }
+
+            if($request->hasFile('recipe-image')) {
+                $image = time()."-".$request->file('recipe-image')->getClientOriginalName();
+                $request->file('recipe-image')->storeAs('public/images/recipes/', $image);
+                $newImage = new Image();
+                $newImage->name = $image;
+                $newImage->path = 'storage/images/recipes/';
+                $newImage->recipe_id = $recipe->id;
+                $newImage->main = true;
+    
+                $newImage->save();
+            }
+
+
+            return response()->json(['message' => 'Uspešno ste izmenili recept.'], 201);
+        } catch(\Exception $e) {
+            return response()->json(['message' => 'Došlo je do greške prilikom izmene recepta.'], 500);
+        }
+    }
+
     public function searchRecipes(Request $request) {
         $search = $request->get('search');
         $recipes = Recipe::select('name', 'id')->where('name', 'like', "%{$search}%")->with('images')->get();
