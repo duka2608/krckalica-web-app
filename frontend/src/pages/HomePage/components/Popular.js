@@ -29,7 +29,6 @@ const Popular = () => {
 
     useEffect(() => {
         fetchRecipes();
-        console.log(recipes);
     }, []);
 
     const displayRecipes = recipes.map(recipe => {

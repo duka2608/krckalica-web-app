@@ -68,11 +68,17 @@ const EditRecipe = () => {
     axios
       .get(`http://localhost:8000/api/recipes/${recipeId}`)
       .then((response) => {
-        setRecipe(response.data.recipe);
+        let recipe = response.data.recipe;
+        setRecipe(recipe);
+        setName(recipe.name);
+        setDesc(recipe.description);
+        setCategory(recipe.category_id);
+        setCuisine(recipe.cuisine_id);
+        setPrep(recipe.prep);
+        setPortions(recipe.portions)
         setIngredients(response.data.recipe.ingredients);
         setLoading(false);
       });
-      console.log(recipe)
   };
 
   const fetchCategories = () => {
@@ -145,7 +151,6 @@ const EditRecipe = () => {
     if (isValid) {
       const formData = new FormData();
 
-      console.log(image);
       formData.append("recipe_name", name);
       formData.append("portions", portions);
       formData.append("category", category);
@@ -157,12 +162,10 @@ const EditRecipe = () => {
       formData.append("user_id", user.id);
       formData.append("recipe-image", image);
       formData.append("ingredients", JSON.stringify(ingredients));
-      console.log({
-        formData,
-      });
+
 
       axios
-        .post("http://localhost:8000/api/recipes/add", formData, {
+        .put(`http://localhost:8000/api/recipes/${recipeId}`, formData, {
           headers: {
             "Content-type": "multipart/form-data",
             // "Authorization": `Bearer ${token}`
@@ -242,6 +245,10 @@ const EditRecipe = () => {
     navigate("/user/profile");
   };
 
+  const cancelForm = () => {
+    navigate("/user/profile");
+  }
+
   const ingredientChangesHandler = (index, e) => {
     let ingredientsCopy = [...ingredients];
     ingredientsCopy[index][e.target.name] = e.target.value;
@@ -297,7 +304,7 @@ const EditRecipe = () => {
                 id="recipe-name"
                 type="text"
                 placeholder="Unesite naziv recepta"
-                value={recipe.name}
+                value={name}
                 name="name"
                 handler={onChangeHandler}
                 error={nameError}
@@ -308,7 +315,7 @@ const EditRecipe = () => {
                   label="Kategorija"
                   selectClass="form-control"
                   data={categories}
-                  value={recipe.category_id}
+                  value={category}
                   name="category"
                   handler={onChangeHandler}
                   error={categoryError}
@@ -318,7 +325,7 @@ const EditRecipe = () => {
                   label="Kuhinja"
                   selectClass="form-control"
                   data={cuisines}
-                  value={recipe.cuisine_id}
+                  value={cuisine}
                   name="cuisine"
                   handler={onChangeHandler}
                   error={cuisineError}
@@ -335,7 +342,7 @@ const EditRecipe = () => {
                 textarea={true}
                 inputClass="form-control"
                 placeholder="Unesite opis Vaseg recepta"
-                value={recipe.description}
+                value={desc}
                 name="desc"
                 handler={onChangeHandler}
                 error={descError}
@@ -359,7 +366,7 @@ const EditRecipe = () => {
                   type="text"
                   inputClass="form-control"
                   placeholder="min"
-                  value={recipe.prep}
+                  value={prep}
                   name="prep"
                   handler={onChangeHandler}
                   error={prepError}
@@ -371,7 +378,7 @@ const EditRecipe = () => {
                   type="text"
                   inputClass="form-control"
                   placeholder="Broj porcija"
-                  value={recipe.portions}
+                  value={portions}
                   name="portions"
                   handler={onChangeHandler}
                   error={portionError}
@@ -386,17 +393,35 @@ const EditRecipe = () => {
                   handler={onChangeHandler}
                 />
               </div>
-              <InputField
-                cardClass="form-group"
-                label="Izaberite sliku recepta"
-                type="file"
-                inputClass="form-control"
-                name="image"
-                handler={onChangeHandler}
-              />
-              <div className="d-flex justify-content-center mt-5">
+              <div className="row">
+                <InputField
+                  cardClass="form-group col-md-4"
+                  label="Izaberite sliku recepta"
+                  type="file"
+                  inputClass="form-control"
+                  name="image"
+                  handler={onChangeHandler}
+                />
+                <div className="col-md-12">
+                  <img
+                    className="img-fluid"
+                    src={
+                      recipe.images
+                        ? "http://localhost:8000/" +
+                          recipe.images[0].path +
+                          recipe.images[0].name
+                        : ""
+                    }
+                  />
+                </div>
+              </div>
+
+              <div className="d-flex justify-content-evenly mt-5">
                 <button type="submit" className="btn form-btn">
                   Pošalji
+                </button>
+                <button className="btn cancel-btn" onClick={cancelForm}>
+                  Poništi
                 </button>
               </div>
             </form>

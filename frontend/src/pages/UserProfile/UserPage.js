@@ -8,6 +8,7 @@ import FavoriteRecipes from "./FavoriteRecipes";
 import { Link } from "react-router-dom";
 import { loadUser } from "../../actions/userActions";
 import Button from '../../components/Button';
+import avatar from "../../assets/images/avatar.svg";
 
 const Box = styled.span`
   width: 30px;
@@ -16,10 +17,18 @@ const Box = styled.span`
   margin-right: 10px;
 `;
 
+const UserAvatar = styled.div`
+  width: 300px;
+  height: 300px;
+
+  img {
+    width: 100%;
+  }
+`;
+
 const UserPage = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  
 
 
   return (
@@ -33,7 +42,9 @@ const UserPage = () => {
           </div>
           <div className="row">
             <div className="col">
-              <h2>Slika korisnika</h2>
+              <UserAvatar>
+                <img src={avatar} alt="avatar" />
+              </UserAvatar>
             </div>
             <div className="col">
               <ul>

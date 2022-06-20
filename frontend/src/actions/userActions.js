@@ -7,8 +7,10 @@ import {
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
-    REGISTER_FAIL
+    REGISTER_FAIL,
+    RESPONSE_MESSAGE
 } from './types';
+
 
 export const loadUser = () => (dispatch, getState) => {
     dispatch({ type: USER_LOADING });
@@ -31,7 +33,11 @@ export const loadUser = () => (dispatch, getState) => {
             type: USER_LOADED,
             payload: res.data
         }))
-        .catch(err => console.log(err));
+        .catch(err => 
+            dispatch({
+                type: AUTH_ERROR
+            })    
+        );
 }
 
 export const register = ({ first_name, last_name, username, email, password }) => dispatch => {
@@ -44,10 +50,12 @@ export const register = ({ first_name, last_name, username, email, password }) =
     const body = JSON.stringify({ first_name, last_name, username, email, password });
 
     axios.post("http://localhost:8000/api/register", body, config)
-    .then(res => dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res.data
-    }))
+    .then(res => {
+        dispatch({
+            type: REGISTER_SUCCESS,
+            payload: res.data,
+        });
+    })
     .catch(err => {
         dispatch({
             type: REGISTER_FAIL

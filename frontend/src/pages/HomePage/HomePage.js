@@ -1,7 +1,11 @@
+import { useState } from "react";
+
 import OnMenuToday from "./components/OnMenuToday";
 import Popular from "./components/Popular";
 import LatestRecipes from "./components/LatestRecipes";
 import ParallaxBanner from "./components/ParallaxBanner";
+import Popup from "../../components/Popup";
+import { useSelector } from "react-redux";
 
 const HomePage = () => {
   return (

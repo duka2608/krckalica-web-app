@@ -24,6 +24,11 @@ a:hover {
   color: #000 !important;
 }
 
+img {
+  object-fit: contain;
+  object-position: center;
+}
+
 .height-img {
   height: 80vh;
   object-fit: cover;
@@ -35,6 +40,22 @@ ul {
 
 textarea {
   resize: none;
+}
+
+.scroll::-webkit-scrollbar {
+	width: 10px;
+}
+
+.scroll::-webkit-scrollbar-track {
+	background: #FFF;
+	border-radius: 10px;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+	height: 80px;
+	border-radius: 10px;
+	background-clip: content-box;
+	background-color: var(--secondary-green);
 }
 
 
@@ -57,7 +78,6 @@ textarea {
 .card-img-top {
   width: 100%;
   height: 15vw;
-  object-fit: cover;
 }
 
 .large-img {
@@ -95,12 +115,24 @@ textarea {
 
 .form-btn {
   background-color: #1c8314;
-  width: 50%;
+  width: 35%;
   color: #fff;
 }
 
 .form-btn:hover {
   background-color: var(--secondary-green);
+}
+
+.cancel-btn {
+  width: 35%;
+  background-color: #f00;
+  border: 1px solid #f00;
+  color: #fff;
+}
+
+.cancel-btn:hover {
+  background-color: #fff;
+  color: #000;
 }
 
 .pageLink {

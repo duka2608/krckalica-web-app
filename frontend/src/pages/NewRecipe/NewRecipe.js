@@ -129,7 +129,6 @@ const NewRecipe = () => {
     if(isValid) {
       const formData = new FormData();
 
-      console.log(image);
       formData.append('recipe_name', name);
       formData.append('portions', portions);
       formData.append('category', category);
@@ -141,9 +140,6 @@ const NewRecipe = () => {
       formData.append('user_id', user.id);
       formData.append('recipe-image', image);
       formData.append('ingredients', JSON.stringify(ingredients));
-      console.log({
-        formData
-      });
       
       axios
         .post("http://localhost:8000/api/recipes/add", formData, {
@@ -220,7 +216,6 @@ const NewRecipe = () => {
     ingredientsCopy[index][e.target.name] = e.target.value
 
     setIngredients(ingredientsCopy);
-    console.log(ingredients);
   }
 
   const addField = () => {

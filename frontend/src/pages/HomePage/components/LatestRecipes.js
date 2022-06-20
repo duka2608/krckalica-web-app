@@ -47,7 +47,6 @@ const LatestRecipes = () => {
             </div>
          )
     });
-    console.log(recipes)
     return (
         <div className="row my-5 py-4 px-2 bg-light rounded">
             <h1 className="d-flex justify-content-center mb-4">Najnoviji recepti</h1>

@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { register } from "../../actions/userActions";
 import { useNavigate } from "react-router-dom";
 import LoadingPage from "../../components/LoadingPage";
+import Popup from "../../components/Popup";
 
 const Container = styled.div`
   margin: 0 auto;
@@ -41,6 +42,7 @@ const Registration = () => {
   const [password, setPassword] = useState("");
 
   const [isValid, setIsValid] = useState(true);
+  const [popup, setPopup] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -67,14 +69,15 @@ const Registration = () => {
     };
 
     if (isValid) {
-      let result = dispatch(register(newUser));
+      dispatch(register(newUser));
       navigate("/");
     }
   };
 
+
   return (
     <>
-        {loading && <LoadingPage />}
+      {loading && <LoadingPage />}
       <div className="px-3 py-5">
         <Container>
           <div className="row text-center">
@@ -118,13 +121,13 @@ const Registration = () => {
                 </div>
               </div>
               <div className="form-group">
-                <label className="text-muted" htmlFor="username">
+                <label className="text-muted" htmlFor="register_username">
                   Korisničko ime
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  id="username"
+                  id="register_username"
                   aria-describedby="emailHelp"
                   placeholder="Unesite korisničko ime"
                   value={username}
@@ -132,13 +135,13 @@ const Registration = () => {
                 />
               </div>
               <div className="form-group">
-                <label className="text-muted" htmlFor="username">
+                <label className="text-muted" htmlFor="birthday">
                   Datum rođenja
                 </label>
                 <input
                   type="date"
                   className="form-control"
-                  id="username"
+                  id="birthday"
                   aria-describedby="emailHelp"
                 />
               </div>
@@ -157,13 +160,13 @@ const Registration = () => {
                 />
               </div>
               <div className="form-group">
-                <label className="text-muted" htmlFor="password">
+                <label className="text-muted" htmlFor="register_password">
                   Šifra
                 </label>
                 <input
                   type="password"
                   className="form-control"
-                  id="password"
+                  id="register_password"
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}

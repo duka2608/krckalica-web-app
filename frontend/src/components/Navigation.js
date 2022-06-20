@@ -40,6 +40,8 @@ const SearchResults = styled.div`
   position: absolute;
   background-color: white;
   height: fit-content;
+  max-height: 26vh;
+  overflow-y: scroll;
   width: 500px;
   border: 1px solid rgba(0,0,0,.15);
   border-radius: 0.25rem;
@@ -55,7 +57,7 @@ const SearchResults = styled.div`
       margin-right: 1rem;
 
       img {
-        max-width: 100px;
+        width: 50px;
         height: 50px;
         object-fit: contain;
         object-position: center;
@@ -64,8 +66,16 @@ const SearchResults = styled.div`
 
     p {
       margin: 0;
+      transition: color 0.15s ease-in-out;
+    }
+
+    &:hover {
+      p {
+        color: var(--main-green);
+      }
     }
   }
+
 `;
 
 const Navigation = () => {
@@ -150,7 +160,7 @@ const Navigation = () => {
   }
 
   const searchBoxHandler = (e) => {
-    setSearchBox(e.target.value.trim());
+    setSearchBox(e.target.value);
     if(searchBox.length > 2) {
       axios
       .post("http://localhost:8000/api/recipes/search", {
@@ -173,7 +183,9 @@ const Navigation = () => {
   const showData =
     recipes && recipes.length > 0 ? (
       recipes.map((el, index) => (
-        <Link to={`/recipes/${el.id}`} onClick={closeSearch} key={index}>
+        <Link to={{
+          pathname: `/recipes/${el.id}`
+        }} key={index} onClick={closeSearch}>
           <div>
             <div className="img-container">
               <img src={"http://localhost:8000/" +
@@ -242,9 +254,11 @@ const Navigation = () => {
                   placeholder="Pretrazi"
                   value={searchBox}
                   onChange={(e) => searchBoxHandler(e)}
+                  onBlur={() => setTimeout(() => { setSearch(false) }, 500) }
+                  onFocus={() => searchBox.length > 2 && setSearch(true)}
                 />
                 {search &&                 
-                <SearchResults>
+                <SearchResults className="scroll">
                   {showData}
                 </SearchResults>}
               </li>

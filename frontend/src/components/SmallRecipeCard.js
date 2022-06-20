@@ -6,13 +6,11 @@ const SmallCard = styled.div`
     margin-bottom: 50px;
 
     .recipe-thumb {
-        background-color: green;
-        width: 25%;
         margin-right: 1rem;
 
         img {
-            min-height: 100%;
-            max-width: 100%;
+            width: 80px;
+            height: 80px;
         }
     }
 

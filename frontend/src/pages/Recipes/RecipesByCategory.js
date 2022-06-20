@@ -14,7 +14,6 @@ const RecipesByCategory = () => {
     const fetchRecipes = () => {
         axios.post(`http://localhost:8000/api/recipes/category/${categoryId}`, { limit: 10 })
         .then((response) => {
-            console.log(response);
             setRecipes(response.data.recipes);
             setCategory(response.data.category);
             setLoading(false);

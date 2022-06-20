@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
@@ -60,6 +60,7 @@ const Recipe = () => {
   const user = useSelector((state) => state.user);
 
   const { recipeId } = useParams();
+  const navigate = useNavigate();
 
   const fetchRecipe = () => {
     setLoading(true);
@@ -88,8 +89,8 @@ const Recipe = () => {
     return newDate.toString();
   };
 
-  const addToFavoritesHandler = (e) => {
-    e.preventDefault();
+  const addToFavoritesHandler = () => {
+    console.log(recipeId);
     axios
       .post(`http://localhost:8000/api/recipes/${recipeId}/favorite`, {
         user_id: user.id,
@@ -101,13 +102,37 @@ const Recipe = () => {
       });
   };
 
-  const goToEditPageHandler = (e) => {
-    e.preventDefault();
+  const deleteRecipeHandler = () => {
+    const token = localStorage.getItem('access_token');
+
+    const config = {
+        headers: {
+            "Content-type": "application/json"
+        }
+    }
+
+    if(token) {
+        config.headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    axios
+      .delete(`http://localhost:8000/api/recipes/${recipeId}`,
+        config
+      )
+      .then((res) => {
+        let message = res.data.message;
+        setPopup(true);
+        setPopupMessage(message);
+      });
+  };
+
+  const goToEditPageHandler = () => {
     window.location.href = `/user/recipe/${recipeId}/edit`;
-  }
+  };
 
   const closePopup = () => {
     setPopup(false);
+    navigate('/user/profile');
   };
 
   return (
@@ -167,19 +192,37 @@ const Recipe = () => {
                     <i className="fa fa-star fa-star-lg" aria-hidden="true"></i>
                   </div>
                   {user && (
-                    <div
-                      onClick={user.id === recipe.user_id ? goToEditPageHandler : addToFavoritesHandler}
-                      className="align-self-end"
-                    >
+                    <div className="d-flex justify-content-between align-self-end">
                       <Button
                         path="#"
-                        btnClass="align-self-end"
+                        btnClass="mr-3"
                         customStyle={{ btnWidth: "100%" }}
-                      >
-                        {
-                          user.id === recipe.user_id ? "Izmeni" : "Dodaj u omiljene"
+                        action={
+                          user.id === recipe.user_id
+                            ? goToEditPageHandler
+                            : addToFavoritesHandler
                         }
+                      >
+                        {user.id === recipe.user_id
+                          ? "Izmeni"
+                          : "Dodaj u omiljene"}
                       </Button>
+                      {user.id === recipe.user_id && (
+                        <Button
+                          path="#"
+                          customStyle={{
+                            btnWidth: "90%",
+                            background: "#F00",
+                            hoverBackground: "#700707",
+                            border: "3px solid #700707",
+                            hoverColor: "#FFF !important",
+                            margin: "0 10px",
+                          }}
+                          action={deleteRecipeHandler}
+                        >
+                          Ukloni
+                        </Button>
+                      )}
                     </div>
                   )}
                 </div>

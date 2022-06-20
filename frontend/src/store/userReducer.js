@@ -1,4 +1,5 @@
 import { applyMiddleware, createStore } from "redux";
+import { composeWithDevTools } from "@redux-devtools/extension";
 import thunk from "redux-thunk";
 import {
     USER_LOADING,
@@ -8,18 +9,24 @@ import {
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
-    REGISTER_FAIL
+    REGISTER_FAIL,
+    RESPONSE_MESSAGE
 } from "../actions/types";
 
 const initialState = {
     token: localStorage.getItem('access_token') ? localStorage.getItem('access_token') : null,
     isAuthenticated: false,
     isLoading: false,
-    user: null
+    user: null,
+    message: ''
 };
 
 const userReducer = (state = initialState, action) => {
     switch(action.type) {
+        case RESPONSE_MESSAGE:
+            return {
+                message: state.message
+            }
         case USER_LOADING:
             return {
                 ...state,
@@ -39,7 +46,7 @@ const userReducer = (state = initialState, action) => {
                 ...state,
                 ...action.payload,
                 isAuthenticated: true,
-                isLoading: false
+                isLoading: false,
             };
         case AUTH_ERROR:
         case LOGIN_FAIL:
@@ -51,7 +58,7 @@ const userReducer = (state = initialState, action) => {
                 token: null,
                 user: null,
                 isAuthenticated: false,
-                isLoading: false
+                isLoading: false,
             }
         default:
                 return state;
@@ -60,7 +67,7 @@ const userReducer = (state = initialState, action) => {
 
 const store = createStore(
         userReducer,
-        applyMiddleware(thunk)
+        composeWithDevTools(applyMiddleware(thunk)),
     );
 
 export default store;

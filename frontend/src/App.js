@@ -11,7 +11,7 @@ import RecipesByCategory from "./pages/Recipes/RecipesByCategory";
 import RecipesByCuisine from "./pages/Recipes/RecipesByCuisine";
 import Registration from "./pages/Registration/Registration";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loadUser } from "./actions/userActions";
 import UserPage from "./pages/UserProfile/UserPage";
 import NewRecipe from "./pages/NewRecipe/NewRecipe";
