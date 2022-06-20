@@ -57,6 +57,7 @@ const Recipe = () => {
   const [popup, setPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [deleteState, setDeleteState] = useState(false);
   const user = useSelector((state) => state.user);
 
   const { recipeId } = useParams();
@@ -103,6 +104,7 @@ const Recipe = () => {
   };
 
   const deleteRecipeHandler = () => {
+    setDeleteState(true);
     const token = localStorage.getItem('access_token');
 
     const config = {
@@ -132,7 +134,10 @@ const Recipe = () => {
 
   const closePopup = () => {
     setPopup(false);
-    navigate('/user/profile');
+    if(deleteState) {
+      navigate('/user/profile');
+      setDeleteState(false);
+    }
   };
 
   return (
