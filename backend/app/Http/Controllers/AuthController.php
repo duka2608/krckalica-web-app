@@ -151,7 +151,7 @@ class AuthController extends Controller
 
             $storageDelete = \Storage::exists('\public\images\recipes\\'.$image->name);
             if (!$storageDelete) {
-                return response()->json(['message' => 'Slika za izabrani recept ne postoji.'], 500);
+                return response()->json(['message' => 'Slika za izabrani recept ne postoji !'], 500);
             }
 
             $storageDelete = \Storage::delete('\public\images\recipes\\'.$image->name);
