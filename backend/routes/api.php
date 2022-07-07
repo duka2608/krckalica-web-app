@@ -37,6 +37,7 @@ Route::post('/recipes/add', [ApiController::class, 'addRecipe']);
 Route::get('/categories', [ApiController::class, 'getCategories']);
 Route::get('/cuisines', [ApiController::class, 'getCuisines']);
 Route::get('/recipes/all', [ApiController::class, 'getAllRecipes']);
+Route::post('/recipes/{id}', [ApiController::class, 'updateRecipe']);
 Route::get('/recipes/popular', [ApiController::class, 'popularRecipes']);
 Route::get('/recipes/today-on-menu', [ApiController::class, 'getForTodaysOnMenu']);
 Route::get('/recipes/latest', [ApiController::class, 'getRecentRecipes']);
@@ -44,7 +45,6 @@ Route::post('/recipes/search', [ApiController::class, 'searchRecipes']);
 Route::get('/recipes/{id}', [ApiController::class, 'getRecipe']);
 Route::post('/recipes/category/{id}', [ApiController::class, 'getRecipesFromCategory']);
 Route::post('/recipes/cuisine/{id}', [ApiController::class, 'getRecipesFromCuisine']);
-Route::put('/recipes/{id}', [ApiController::class, 'updateRecipe']);
 Route::get('/locations', [ApiController::class, 'getLocations']);
 
 Route::post('/recipes/{id}/comments', [ApiController::class, 'getCommentsForRecipe']);

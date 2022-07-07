@@ -142,7 +142,6 @@ class ApiController extends Controller
                 $newIngredient->recipe_id = $recipe->id;
                 $newIngredient->save();
             }
-
             if($request->hasFile('recipe-image')) {
                 $image = time()."-".$request->file('recipe-image')->getClientOriginalName();
                 $request->file('recipe-image')->storeAs('public/images/recipes/', $image);
@@ -163,8 +162,9 @@ class ApiController extends Controller
     }
 
     public function updateRecipe(Request $request, $id) {
-        try {
-            $recipe = Recipe::find($id);
+         try {
+
+            $recipe = Recipe::findOrFail($id);
             $recipe->name = $request->recipe_name;
             $recipe->portions = (int)$request->portions;
             $recipe->category_id = $request->category;
@@ -172,24 +172,32 @@ class ApiController extends Controller
             $recipe->description = $request->description;
             $recipe->preparation_time = (int)$request->preparation_time;
             $recipe->fast = (bool)$request->fast;
+            $recipe->user_id = $request->user_id;
             $recipe->advice = $request->advice;
-            $recipe->user_id = 2;
             $recipe->slug = Str::slug($request->recipe_name, '-').'-'.Str::uuid()->toString();
-            
+            $recipe->updated_at = time();
+
 
             $recipe->save();
+
+
             $ingredients = json_decode($request->ingredients);
+
+            Ingredient::where("recipe_id", $id)->delete();
 
             foreach($ingredients as $ingredient) {
                 $newIngredient = new Ingredient();
-
                 $newIngredient->name = $ingredient->name;
                 $newIngredient->amount = $ingredient->amount;
-                $newIngredient->recipe_id = $recipe->id;
+                $newIngredient->recipe_id = $id;
                 $newIngredient->save();
             }
 
             if($request->hasFile('recipe-image')) {
+                $image = Image::where('recipe_id', $recipe->id)->first();
+                $storageDelete = \Storage::delete('\public\images\recipes\\'.$image->name);
+                $image->delete();
+
                 $image = time()."-".$request->file('recipe-image')->getClientOriginalName();
                 $request->file('recipe-image')->storeAs('public/images/recipes/', $image);
                 $newImage = new Image();
