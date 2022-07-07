@@ -24,7 +24,7 @@ const InputField = (props) => {
             type={props.type}
             placeholder={props.placeholder}
             value={props.value}
-            onChange={props.name === "image" ? (e) => props.handler(props.name, e.target.files[0]) :(e) => props.handler(props.name, e.target.value)}
+            onChange={props.name === "image" ? (e) => props.handler(props.name, e.target.files[0]) : (e) => props.handler(props.name, e.target.value)}
           />
           {props.error && <p className="text-danger">{props.error}</p>}
         </>

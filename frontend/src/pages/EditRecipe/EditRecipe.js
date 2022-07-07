@@ -46,6 +46,7 @@ const EditRecipe = () => {
   const [portions, setPortions] = useState("");
   const [fast, setFast] = useState(false);
   const [image, setImage] = useState("");
+  const [tempImg, setTempImg] = useState("");
   const [ingredients, setIngredients] = useState([{ name: "", amount: "" }]);
 
   const [nameError, setNameError] = useState("");
@@ -72,9 +73,10 @@ const EditRecipe = () => {
         setRecipe(recipe);
         setName(recipe.name);
         setDesc(recipe.description);
+        setAdvice(recipe.advice);
         setCategory(recipe.category_id);
         setCuisine(recipe.cuisine_id);
-        setPrep(recipe.prep);
+        setPrep(recipe.preparation_time);
         setPortions(recipe.portions)
         setIngredients(response.data.recipe.ingredients);
         setLoading(false);
@@ -113,7 +115,7 @@ const EditRecipe = () => {
     fetchRecipe();
   }, []);
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async(e) => {
     e.preventDefault();
 
     if (name === "") {
@@ -163,19 +165,21 @@ const EditRecipe = () => {
       formData.append("recipe-image", image);
       formData.append("ingredients", JSON.stringify(ingredients));
 
-
-      axios
-        .put(`http://localhost:8000/api/recipes/${recipeId}`, formData, {
+      let request = await axios
+        .post(`http://localhost:8000/api/recipes/${recipeId}`, formData, {
           headers: {
+            // "Content-type": "x-www-form-urlencoded",
             "Content-type": "multipart/form-data",
             // "Authorization": `Bearer ${token}`
-          },
+          },method: "PUT",
         })
         .then((res) => {
           let message = res.data.message;
           setPopup(true);
           setPopupMessage(message);
         });
+
+        console.log(request)
     }
   };
 
@@ -207,6 +211,9 @@ const EditRecipe = () => {
         return;
       case "advice":
         setAdvice(value);
+        value === ""
+          ? setDescError("Polje za savet je prazno.")
+          : setDescError("");
         return;
       case "prep":
         setPrep(value);
@@ -225,6 +232,7 @@ const EditRecipe = () => {
         return;
       case "image":
         setImage(value);
+        setTempImg(URL.createObjectURL(value));
         return;
       default:
         return;
@@ -254,7 +262,6 @@ const EditRecipe = () => {
     ingredientsCopy[index][e.target.name] = e.target.value;
 
     setIngredients(ingredientsCopy);
-    console.log(ingredients);
   };
 
   const addField = () => {
@@ -279,7 +286,7 @@ const EditRecipe = () => {
       removeInput={removeFields}
     />
   ));
-
+    
   return (
     <>
       {loading && <LoadingPage />}
@@ -354,7 +361,7 @@ const EditRecipe = () => {
                 textarea={true}
                 inputClass="form-control"
                 placeholder="Podelite savet sa drugim korisnicima"
-                value={recipe.advice}
+                value={advice}
                 name="advice"
                 handler={onChangeHandler}
               />
@@ -406,11 +413,11 @@ const EditRecipe = () => {
                   <img
                     className="img-fluid"
                     src={
-                      recipe.images
-                        ? "http://localhost:8000/" +
-                          recipe.images[0].path +
-                          recipe.images[0].name
-                        : ""
+                      image ? tempImg : recipe.images
+                      ? "http://localhost:8000/" +
+                        recipe.images[0].path +
+                        recipe.images[0].name
+                      : ""
                     }
                   />
                 </div>
