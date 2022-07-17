@@ -24,20 +24,26 @@
             <div class="login_wrapper">
                 <div class="animate form login_form">
                     <section class="login_content">
-                        <form  id="login-form">
+                        <form action={{ route('login.submit') }} method="POST"  id="login-form">
+                            @csrf
                             <h1>Krčkalica Admin</h1>
                             <div class="form-group">
-                                <input type="email" name="email" class="form-control" placeholder="Email" required="" />
+                                <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}" required="" />
                                 <span class="error-custom error-email"></span>
                             </div>
                             <div class="form-group">
-                                <input type="password" name="password" class="form-control" placeholder="Password" required="" />
+                                <input type="password" name="password" class="form-control" placeholder="Password" value="{{ old('password') }}" required="" />
                                 <span class="error-custom error-password"></span>
                             </div>
                             <div>
                                 <button class="btn btn-default submit" style="width: 100%;">Log in</button>
                             </div>
                         </form>
+                        @if(session()->has('error'))
+                            <div class="alert alert-danger">
+                                {{ session()->get('error') }}
+                            </div>
+                        @endif
                     </section>
                 </div>
             </div>

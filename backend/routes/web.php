@@ -8,6 +8,8 @@ use App\Http\Controllers\LocationsController;
 use App\Http\Controllers\RecipesController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\AdminAuth;
+use App\Http\Middleware\AuthMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,13 +22,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('pages.home');
-});
+Route::get('/', [AdminController::class, 'loginForm'])->name('login.form')->middleware(AuthMiddleware::class);
+Route::post('/login', [AdminController::class, 'loginSubmit'])->name('login.submit');
+ 
 
-
-Route::prefix('admin')->group(function() {
-    Route::get('/', [AdminController::class, 'loginForm'])->name('login.form');
+Route::group(['prefix' => 'admin', 'middleware' => [AdminAuth::class]], function() {
 
     Route::get('/users', [UsersController::class, 'index'])->name('admin.users');
     Route::get('/users/create', [UsersController::class, 'create'])->name('admin.users.create');
@@ -65,4 +65,6 @@ Route::prefix('admin')->group(function() {
     Route::delete('/cuisines/{id}', [CuisinesController::class, 'destroy'])->name('admin.cuisines.destroy');
 
     Route::delete('/comments/{id}', [CommentsController::class, 'destroy'])->name('admin.comments.destroy');
+
+    Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
 });
