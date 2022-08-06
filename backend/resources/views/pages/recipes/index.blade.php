@@ -96,14 +96,14 @@
     </div>
 </div>
 
-<div class="modal fade" id="delete-user-alert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="delete-recipe-alert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
                 <h2 class="modal-title">Da li ste sigurni?</h2>
-                <button type="button" id="delete-user" class="btn btn-primary" onclick="deleteUser()">Obriši</button>
+                <button type="button" id="delete-recipe" class="btn btn-primary" onclick="deleteRecipe()">Obriši</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Poništi</button>
-                <input type="hidden" value="" id="user-id">
+                <input type="hidden" value="" id="recipe-id">
             </div>
         </div>
     </div>
@@ -113,26 +113,26 @@
 @endsection
 @section('script')
     <script>
-        $('.delete-user').click(function(e) {
+        $('.delete-recipe').click(function(e) {
             e.preventDefault();
-            let user = $(this).data('user');
+            let recipe = $(this).data('recipe');
 
-            $('#user-id').val(user);
-            $('#delete-user-alert').modal('show');
+            $('#recipe-id').val(recipe);
+            $('#delete-recipe-alert').modal('show');
         });
 
-        function deleteUser() {
-            let id = $('#user-id').val();
+        function deleteRecipe() {
+            let id = $('#recipe-id').val();
 
             $.ajax({
             method: "DELETE",
-            url: "/admin/users/" + id,
+            url: "/admin/recipes/" + id,
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             dataType: 'json',
             success: function(response) {
-                alert('Korisnik uspešno uklonjen.');
+                alert('Recept uspešno uklonjen.');
                 console.log(response);
                 location.reload();
             },

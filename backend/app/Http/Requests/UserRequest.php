@@ -26,7 +26,7 @@ class UserRequest extends FormRequest
         $rules = [
             'first_name' => 'required|regex:/^([A-Z][a-z]+)$/',
             'last_name' => 'required|regex:/^([A-Z][a-z]+)$/',
-            'username' => 'required|unique:users,username|min:8|max:15',
+            'username' => 'required|unique:users,username|min:8|max:20',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|max:20'
         ];
@@ -36,7 +36,7 @@ class UserRequest extends FormRequest
         // ne dodje do greske da oni vec postoje u bazi
         
         if (in_array($this->method(), ['PUT', 'PATCH'])) {
-            $rules['username'] = 'required|min:8|max:15|unique:users,username,'.$this->id;
+            $rules['username'] = 'required|min:8|max:20|unique:users,username,'.$this->id;
             $rules['email'] = 'required|email|unique:users,email,'.$this->id;
         }
 

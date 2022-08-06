@@ -17,6 +17,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
+use Bezhanov\Faker\Provider\Food;
+
 
 
 class ApiController extends Controller
@@ -87,6 +89,19 @@ class ApiController extends Controller
 
         $data['recipes'] = Recipe::where('cuisine_id', $id)->with('images')->offset(0)->limit($limit)->get();
         $data['cuisine'] = Cuisine::find($id);
+
+        return response()->json($data);
+    }
+
+    public function getFastRecipes(Request $request) {
+        $limit = 5;
+        $data['recipes'] = Recipe::where('fast', 1)->with('images')->offset(0)->limit($limit)->get();
+
+        // $faker = \Faker\Factory::create();
+
+        // $faker->addProvider(new Food($faker));
+
+        // dd($faker->name, $faker->spice, $faker->measurement);
 
         return response()->json($data);
     }

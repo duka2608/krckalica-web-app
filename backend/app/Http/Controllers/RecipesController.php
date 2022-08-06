@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Cuisine;
 use App\Models\Image;
+use App\Models\Ingredient;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -43,6 +44,11 @@ class RecipesController extends Controller
      */
     public function store(Request $request)
     {
+
+        if(!$request->hasFile('recipe-image')) {
+            return redirect()->back()->with('error', 'Morate izabrati sliku recepta');
+        }
+
         $recipe = new Recipe();
         $recipe->name = $request->recipe_name;
         $recipe->portions = (int)$request->portions;
@@ -56,18 +62,34 @@ class RecipesController extends Controller
         $recipe->slug = Str::slug($request->recipe_name, '-').'-'.Str::uuid()->toString();
 
         $recipe->save();
+        $name = $request->name;
+        $amount = $request->amount;
+        $ingredients = array_map(function ($name, $amount) {
+            return [
+                'name' => $name,
+                'amount' => $amount,
+            ];
+        }, $name, $amount);
+        
 
-        if($request->hasFile('recipe-image')) {
-            $image = time()."-".$request->file('recipe-image')->getClientOriginalName();
-            $request->file('recipe-image')->storeAs('public/images/recipes/', $image);
-            $newImage = new Image();
-            $newImage->name = $image;
-            $newImage->path = 'storage/images/recipes/';
-            $newImage->recipe_id = $recipe->id;
-            $newImage->main = true;
+        foreach($ingredients as $ingredient) {
+            $newIngredient = new Ingredient();
 
-            $newImage->save();
+            $newIngredient->name = $ingredient['name'];
+            $newIngredient->amount = $ingredient['amount'];
+            $newIngredient->recipe_id = $recipe->id;
+            $newIngredient->save();
         }
+
+        $image = time()."-".$request->file('recipe-image')->getClientOriginalName();
+        $request->file('recipe-image')->storeAs('public/images/recipes/', $image);
+        $newImage = new Image();
+        $newImage->name = $image;
+        $newImage->path = 'storage/images/recipes/';
+        $newImage->recipe_id = $recipe->id;
+        $newImage->main = true;
+
+        $newImage->save();
 
         return redirect()->back();
     }
@@ -110,12 +132,33 @@ class RecipesController extends Controller
     {
         $recipe = Recipe::find($id);
         $recipe->name = $request->recipe_name;
+        $recipe->portions = (int)$request->portions;
         $recipe->category_id = $request->category;
         $recipe->cuisine_id = $request->cuisine;
         $recipe->description = $request->description;
-        $recipe->preparation_time = $request->preparation_time;
+        $recipe->preparation_time = (int)$request->preparation_time;
+        $recipe->fast = $request->fast === 'on' ? true : false;
 
         $recipe->save();
+        $name = $request->name;
+        $amount = $request->amount;
+        $ingredients = array_map(function ($name, $amount) {
+            return [
+                'name' => $name,
+                'amount' => $amount,
+            ];
+        }, $name, $amount);
+        
+        Ingredient::where("recipe_id", $id)->delete();
+
+        foreach($ingredients as $ingredient) {
+            $newIngredient = new Ingredient();
+
+            $newIngredient->name = $ingredient['name'];
+            $newIngredient->amount = $ingredient['amount'];
+            $newIngredient->recipe_id = $recipe->id;
+            $newIngredient->save();
+        }
 
         if($request->hasFile('recipe-image')) {
             $image = time()."-".$request->file('recipe-image')->getClientOriginalName();
@@ -140,6 +183,15 @@ class RecipesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $user = Recipe::find($id);
+            $user->delete();
+
+            return response()->json([
+                'success' => 'Recept uspesno uklonjen.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Doslo je do greske prilikom uklanjanja.']);
+        }
     }
 }

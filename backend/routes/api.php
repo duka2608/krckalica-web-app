@@ -32,6 +32,8 @@ Route::group(['middleware' => 'CORS'], function($router) {
 });
 
 Route::post('/recipes/add', [ApiController::class, 'addRecipe']);
+Route::post('/recipes/search', [ApiController::class, 'searchRecipes']);
+Route::post('/recipes/fast', [ApiController::class, 'getFastRecipes']);
 
 
 Route::get('/categories', [ApiController::class, 'getCategories']);
@@ -41,7 +43,6 @@ Route::post('/recipes/{id}', [ApiController::class, 'updateRecipe']);
 Route::get('/recipes/popular', [ApiController::class, 'popularRecipes']);
 Route::get('/recipes/today-on-menu', [ApiController::class, 'getForTodaysOnMenu']);
 Route::get('/recipes/latest', [ApiController::class, 'getRecentRecipes']);
-Route::post('/recipes/search', [ApiController::class, 'searchRecipes']);
 Route::get('/recipes/{id}', [ApiController::class, 'getRecipe']);
 Route::post('/recipes/category/{id}', [ApiController::class, 'getRecipesFromCategory']);
 Route::post('/recipes/cuisine/{id}', [ApiController::class, 'getRecipesFromCuisine']);
