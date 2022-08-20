@@ -15,9 +15,13 @@ const RootDiv = styled.div`
   h2 {
     font-size: 36px;
     color: #474747;
-    margin-bottom: 30px;
+    margin-bottom: 5px;
     line-height: 1.3;
     font-weight: 600;
+  }
+
+  h5 {
+    margin-bottom: 10px;
   }
 `;
 
@@ -39,6 +43,12 @@ const RecipeInfo = styled.div`
     line-height: 1.3;
   }
 `;
+
+const AdviceParagraph = styled.p`
+  white-space: pre-line;
+  font-size: 18px;
+  line-height: 31px;
+`;  
 
 const Box = styled.span`
   width: 30px;
@@ -69,6 +79,7 @@ const Recipe = () => {
       .get(`http://localhost:8000/api/recipes/${recipeId}`)
       .then((response) => {
         setRecipe(response.data.recipe);
+        console.log(response)
         setLoading(false);
       });
   };
@@ -91,7 +102,6 @@ const Recipe = () => {
   };
 
   const addToFavoritesHandler = () => {
-    console.log(recipeId);
     axios
       .post(`http://localhost:8000/api/recipes/${recipeId}/favorite`, {
         user_id: user.id,
@@ -104,23 +114,25 @@ const Recipe = () => {
   };
 
   const deleteRecipeHandler = () => {
-    setDeleteState(true);
-    const token = localStorage.getItem('access_token');
-
-    const config = {
-        headers: {
-            "Content-type": "application/json"
-        }
+    if (recipe.user_id !== user.id) {
+      return;
     }
 
-    if(token) {
-        config.headers['Authorization'] = `Bearer ${token}`;
+    setDeleteState(true);
+    const token = localStorage.getItem("access_token");
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
     }
 
     axios
-      .delete(`http://localhost:8000/api/recipes/${recipeId}`,
-        config
-      )
+      .delete(`http://localhost:8000/api/recipes/${recipeId}`, config)
       .then((res) => {
         let message = res.data.message;
         setPopup(true);
@@ -129,13 +141,14 @@ const Recipe = () => {
   };
 
   const goToEditPageHandler = () => {
-    window.location.href = `/user/recipe/${recipeId}/edit`;
+    navigate(`/user/recipe/${recipeId}/edit`);
+    // window.location.href = `/user/recipe/${recipeId}/edit`;
   };
 
   const closePopup = () => {
     setPopup(false);
-    if(deleteState) {
-      navigate('/user/profile');
+    if (deleteState) {
+      navigate("/user/profile");
       setDeleteState(false);
     }
   };
@@ -171,6 +184,8 @@ const Recipe = () => {
               <div className="col-12 col-md-8">
                 <RecipeDate>{dateFormat(recipe.created_at)}</RecipeDate>
                 <h2>{recipe.name}</h2>
+                <h5>Autor: {recipe.user?.first_name+" "+recipe.user?.last_name}</h5>
+
                 <RecipeInfo>
                   <h6>Priprema: {recipe.preparation_time} min</h6>
                   <h6>Broj porcija: {recipe.portions}</h6>
@@ -181,21 +196,14 @@ const Recipe = () => {
                   {recipe.fast ? <h6>Posno</h6> : ""}
                 </RecipeInfo>
                 {recipe.description && (
-                  <div>
-                    <h2>Priprema</h2>
-                    {recipe.description}
+                  <div className="mb-3">
+                    <h2>Opis</h2>
+                    <p>{recipe.description}</p>
                   </div>
                 )}
               </div>
               <div className="col-12 col-md-4">
                 <div className="d-flex flex-column">
-                  <div className="ratings align-self-end mb-4">
-                    <i className="fa fa-star fa-star-lg" aria-hidden="true"></i>
-                    <i className="fa fa-star fa-star-lg" aria-hidden="true"></i>
-                    <i className="fa fa-star fa-star-lg" aria-hidden="true"></i>
-                    <i className="fa fa-star fa-star-lg" aria-hidden="true"></i>
-                    <i className="fa fa-star fa-star-lg" aria-hidden="true"></i>
-                  </div>
                   {user && (
                     <div className="d-flex justify-content-between align-self-end">
                       <Button
@@ -235,17 +243,12 @@ const Recipe = () => {
             </div>
             <div className="row">
               <div className="col-12 col-lg-8 mt-5">
-                {recipe.steps &&
-                  recipe.steps.map((step, index) => {
-                    return (
-                      <div className="d-flex" key={step.id}>
-                        <h4>0{index + 1}.</h4>
-                        <p className="px-4 text-justify text-muted">
-                          {step.description}
-                        </p>
-                      </div>
-                    );
-                  })}
+              {recipe.advice && (
+                  <div>
+                    <h2>Priprema</h2>
+                    <AdviceParagraph>{recipe.advice}</AdviceParagraph>
+                  </div>
+                )}
               </div>
               <div className="col-12 col-lg-4">
                 <div className="ingredients">

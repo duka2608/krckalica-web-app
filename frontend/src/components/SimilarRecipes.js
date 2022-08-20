@@ -45,7 +45,7 @@ const SimilarRecipes = ({ categoryId, recipeId }) => {
       {similarRecipes.length > 0 ? (
         <>
           <div className="col-12 my-3 text-center">
-            <h2>Recepti iz slične kategorije</h2>
+            <h2>Slični recepti iz kategorije</h2>
           </div>
           {RecipesDisplay}
         </>

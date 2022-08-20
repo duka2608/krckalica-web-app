@@ -37,6 +37,9 @@ const RecipeContainer = styled.div`
 `;
 
 const RecipeCard = (props) => {
+    console.log(props)
+    const activeTime = props.dayDifference > 0 ? props.dayDifference + " dana" : props.hourDifference > 0 ? props.hourDifference + " sati" : props.minuteDifference + " min"
+
     return(
         <RecipeContainer>
             <img className="card-img-top fluid" src={props.path} alt={props.name} />
@@ -45,16 +48,9 @@ const RecipeCard = (props) => {
                     <h5>{props.name}</h5>
                 </Link>
                 {
-                    props.difference && <p><small className="text-muted">Objavljeno pre:  { props.dayDifference ? props.dayDifference+" dana" : props.hourDifference + " sati"}
+                    props.difference && <p><small className="text-muted">Objavljeno pre:  { activeTime}
                     </small></p>
                 }
-                {props.rating && <div className="ratings">
-                    <i className="fa fa-star" aria-hidden="true"></i>
-                    <i className="fa fa-star" aria-hidden="true"></i>
-                    <i className="fa fa-star" aria-hidden="true"></i>
-                    <i className="fa fa-star" aria-hidden="true"></i>
-                    <i className="fa fa-star" aria-hidden="true"></i>
-                </div>}
             </div>
         </RecipeContainer>
     );

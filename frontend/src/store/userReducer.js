@@ -13,11 +13,14 @@ import {
     RESPONSE_MESSAGE
 } from "../actions/types";
 
+const token = localStorage.getItem('access_token');
+const user = JSON.parse(localStorage.getItem('user'));
+
 const initialState = {
-    token: localStorage.getItem('access_token') ? localStorage.getItem('access_token') : null,
+    token: token ? token : null,
     isAuthenticated: false,
     isLoading: false,
-    user: null,
+    user: user ? user : null,
     message: ''
 };
 
@@ -40,8 +43,15 @@ const userReducer = (state = initialState, action) => {
                 user: action.payload
             };
         case LOGIN_SUCCESS:
-        case REGISTER_SUCCESS:
             localStorage.setItem('access_token', action.payload.access_token);
+            localStorage.setItem('user', JSON.stringify(action.payload.user));
+            return {
+                ...state,
+                ...action.payload,
+                isAuthenticated: true,
+                isLoading: false,
+            };
+        case REGISTER_SUCCESS:
             return {
                 ...state,
                 ...action.payload,
@@ -59,6 +69,7 @@ const userReducer = (state = initialState, action) => {
                 user: null,
                 isAuthenticated: false,
                 isLoading: false,
+                message: 'Došlo je do greške prilikom autorizacije korisnika.'
             }
         default:
                 return state;

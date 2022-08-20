@@ -56,7 +56,6 @@ const EditRecipe = () => {
   const [prepError, setPrepError] = useState("");
   const [portionError, setPortionError] = useState("");
 
-  const [isValid, setIsValid] = useState(false);
   const [popup, setPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
   const navigate = useNavigate();
@@ -70,6 +69,11 @@ const EditRecipe = () => {
       .get(`http://localhost:8000/api/recipes/${recipeId}`)
       .then((response) => {
         let recipe = response.data.recipe;
+
+        if(recipe.user_id !== user.id) {
+          navigate("/");
+        }
+
         setRecipe(recipe);
         setName(recipe.name);
         setDesc(recipe.description);
@@ -77,7 +81,7 @@ const EditRecipe = () => {
         setCategory(recipe.category_id);
         setCuisine(recipe.cuisine_id);
         setPrep(recipe.preparation_time);
-        setPortions(recipe.portions)
+        setPortions(recipe.portions);
         setIngredients(response.data.recipe.ingredients);
         setLoading(false);
       });
@@ -115,40 +119,40 @@ const EditRecipe = () => {
     fetchRecipe();
   }, []);
 
-  const onSubmitHandler = async(e) => {
-    e.preventDefault();
+  const onSubmitHandler =  (e) => {
+    let isValid = false;
 
     if (name === "") {
       setNameError("Polje za ime je prazno.");
-      setIsValid(false);
+      isValid = false;
     }
 
     if (desc === "") {
       setDescError("Polje za opis je prazno.");
-      setIsValid(false);
+      isValid = false;
     }
 
     if (category === 0) {
       setCategoryError("Morate izabrati kategoriju.");
-      setIsValid(false);
+      isValid = false;
     }
 
     if (cuisine === 0) {
       setCuisineError("Morate izabrati kuhinju.");
-      setIsValid(false);
+      isValid = false;
     }
 
     if (prep === "") {
       setPrepError("Unesite vreme pripreme.");
-      setIsValid(false);
+      isValid = false;
     }
 
     if (portions === "") {
       setPortionError("Unesite broj porcija.");
-      setIsValid(false);
+      isValid = false;
     }
 
-    setIsValid(true);
+    isValid = true;
 
     if (isValid) {
       const formData = new FormData();
@@ -165,13 +169,14 @@ const EditRecipe = () => {
       formData.append("recipe-image", image);
       formData.append("ingredients", JSON.stringify(ingredients));
 
-      let request = await axios
+      let request = axios
         .post(`http://localhost:8000/api/recipes/${recipeId}`, formData, {
           headers: {
             // "Content-type": "x-www-form-urlencoded",
             "Content-type": "multipart/form-data",
             // "Authorization": `Bearer ${token}`
-          },method: "PUT",
+          },
+          method: "PUT",
         })
         .then((res) => {
           let message = res.data.message;
@@ -179,7 +184,7 @@ const EditRecipe = () => {
           setPopupMessage(message);
         });
 
-        console.log(request)
+      console.log(request);
     }
   };
 
@@ -255,7 +260,7 @@ const EditRecipe = () => {
 
   const cancelForm = () => {
     navigate("/user/profile");
-  }
+  };
 
   const ingredientChangesHandler = (index, e) => {
     let ingredientsCopy = [...ingredients];
@@ -286,7 +291,7 @@ const EditRecipe = () => {
       removeInput={removeFields}
     />
   ));
-    
+
   return (
     <>
       {loading && <LoadingPage />}
@@ -303,7 +308,7 @@ const EditRecipe = () => {
         </div>
         <Container>
           <div className="row">
-            <form onSubmit={onSubmitHandler}>
+            <form>
               <InputField
                 cardClass="form-row"
                 label="Naziv recepta"
@@ -356,11 +361,11 @@ const EditRecipe = () => {
               />
               <InputField
                 cardClass="form-group"
-                label="Savet"
+                label="Priprema"
                 id="advice"
                 textarea={true}
                 inputClass="form-control"
-                placeholder="Podelite savet sa drugim korisnicima"
+                placeholder="Podelite način pripreme sa drugim korisnicima"
                 value={advice}
                 name="advice"
                 handler={onChangeHandler}
@@ -413,20 +418,22 @@ const EditRecipe = () => {
                   <img
                     className="img-fluid"
                     src={
-                      image ? tempImg : recipe.images
-                      ? "http://localhost:8000/" +
-                        recipe.images[0].path +
-                        recipe.images[0].name
-                      : ""
+                      image
+                        ? tempImg
+                        : recipe.images
+                        ? "http://localhost:8000/" +
+                          recipe.images[0].path +
+                          recipe.images[0].name
+                        : ""
                     }
                   />
                 </div>
               </div>
 
               <div className="d-flex justify-content-evenly mt-5">
-                <button type="submit" className="btn form-btn">
+                <div type="submit" className="btn form-btn" onClick={onSubmitHandler}>
                   Pošalji
-                </button>
+                </div>
                 <button className="btn cancel-btn" onClick={cancelForm}>
                   Poništi
                 </button>

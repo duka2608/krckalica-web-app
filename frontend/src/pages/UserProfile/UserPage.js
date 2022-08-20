@@ -18,11 +18,14 @@ const Box = styled.span`
 `;
 
 const UserAvatar = styled.div`
-  width: 300px;
-  height: 300px;
+
 
   img {
-    width: 100%;
+    border: 3px solid var(--main-green);
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
   }
 `;
 
@@ -30,6 +33,7 @@ const UserPage = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
+  console.log(user)
 
   return (
     user && (
@@ -43,7 +47,7 @@ const UserPage = () => {
           <div className="row">
             <div className="col">
               <UserAvatar>
-                <img src={avatar} alt="avatar" />
+                <img src={"http://localhost:8000/"+user.avatar} alt="avatar" />
               </UserAvatar>
             </div>
             <div className="col">

@@ -94,37 +94,39 @@ const NewRecipe = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
+    let isValid = false;
+
     if (name === "") {
       setNameError("Polje za ime je prazno.");
-      setIsValid(false);
+      isValid = false;
     } 
 
     if (desc === "") {
       setDescError("Polje za opis je prazno.");
-      setIsValid(false);
+      isValid = false;
     }
 
     if (category === 0) {
       setCategoryError("Morate izabrati kategoriju.");
-      setIsValid(false);
+      isValid = false;
     }
 
     if (cuisine === 0) {
       setCuisineError("Morate izabrati kuhinju.");
-      setIsValid(false);
+      isValid = false;
     }
 
     if (prep === "") {
       setPrepError("Unesite vreme pripreme.");
-      setIsValid(false);
+      isValid = false;
     }
 
     if (portions === "") {
       setPortionError("Unesite broj porcija.");
-      setIsValid(false);
+      isValid = false;
     }
 
-    setIsValid(true);
+    isValid = true;
 
     if(isValid) {
       const formData = new FormData();
@@ -310,11 +312,11 @@ const NewRecipe = () => {
               />
               <InputField
                 cardClass="form-group"
-                label="Savet"
+                label="Priprema"
                 id="advice"
                 textarea={true}
                 inputClass="form-control"
-                placeholder="Podelite savet sa drugim korisnicima"
+                placeholder="Podelite način pripreme sa drugim korisnicima"
                 value={advice}
                 name="advice"
                 handler={onChangeHandler}

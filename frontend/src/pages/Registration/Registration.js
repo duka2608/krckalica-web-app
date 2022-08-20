@@ -7,6 +7,7 @@ import { register } from "../../actions/userActions";
 import { useNavigate } from "react-router-dom";
 import LoadingPage from "../../components/LoadingPage";
 import Popup from "../../components/Popup";
+import InputField from "../../components/InputField";
 
 const Container = styled.div`
   margin: 0 auto;
@@ -40,24 +41,29 @@ const Registration = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [image, setImage] = useState("");
 
-  const [isValid, setIsValid] = useState(true);
   const [popup, setPopup] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
+
+  useEffect(() => {}, [user]);
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
 
+    let isValid = true;
+
     if (firstName.trim() === "") {
       setFirstNameError("Polje za ime ne sme biti prazno.");
-      setIsValid(false);
+      isValid = false;
     }
 
     if (lastName.trim() === "") {
       setLastNameError("Polje za prezime ne sme biti prazno.");
-      setIsValid(false);
+      isValid = false;
     }
 
     const newUser = {
@@ -65,6 +71,7 @@ const Registration = () => {
       last_name: lastName,
       username,
       email,
+      image,
       password,
     };
 
@@ -84,7 +91,7 @@ const Registration = () => {
             <h2>Registracija</h2>
           </div>
           <div className="row">
-            <form onSubmit={formSubmitHandler}>
+            <form onSubmit={formSubmitHandler} encType="multipart/form-data">
               <div className="form-row d-flex justify-content-between">
                 <div className="col-md-5">
                   <label className="text-muted" htmlFor="first-name">
@@ -170,6 +177,19 @@ const Registration = () => {
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <div className="form-group">
+              <label className="text-muted" htmlFor="register_avatar">
+                  Slika
+                </label>
+                <input
+                  className="form-control"
+                  label="Izaberite profilnu sliku"
+                  type="file"
+                  inputClass="form-control"
+                  name="image"
+                  onChange={(e) => setImage(e.target.files[0])}
                 />
               </div>
               <div className="d-flex justify-content-center mt-5">

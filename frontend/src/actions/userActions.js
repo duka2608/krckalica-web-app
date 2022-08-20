@@ -40,14 +40,22 @@ export const loadUser = () => (dispatch, getState) => {
         );
 }
 
-export const register = ({ first_name, last_name, username, email, password }) => dispatch => {
+export const register = ({ first_name, last_name, username, email, password, image }) => dispatch => {
+    
     const config = {
         headers: {
             "Content-type": "application/json"
         }
     }
 
-    const body = JSON.stringify({ first_name, last_name, username, email, password });
+    // const body = JSON.stringify({ first_name, last_name, username, email, password, image });
+    const body = new FormData();
+    body.append('first_name', first_name);
+    body.append('last_name', last_name);
+    body.append('username', username);
+    body.append('email', email);
+    body.append('password', password);
+    body.append('avatar', image);
 
     axios.post("http://localhost:8000/api/register", body, config)
     .then(res => {
@@ -64,6 +72,8 @@ export const register = ({ first_name, last_name, username, email, password }) =
 }
 
 export const login = ({ username, password }) => dispatch => {
+    dispatch({ type: USER_LOADING });
+    
     const config = {
         headers: {
             "Content-type": "application/json"
@@ -85,6 +95,7 @@ export const login = ({ username, password }) => dispatch => {
 }
 
 export const logout = () => (dispatch) => {
+    dispatch({ type: USER_LOADING });
     const token = localStorage.getItem('access_token');
 
     const config = {

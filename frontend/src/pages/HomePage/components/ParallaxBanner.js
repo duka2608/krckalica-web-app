@@ -23,8 +23,8 @@ const ParallaxContainer = styled.div`
 
     p {
         max-width: 55%;
-        margin-bottom: 100px;
-        font-size: 16px;
+        margin-bottom: 50px;
+        font-size: 20px;
         text-align: center;
     }
 `;
@@ -32,12 +32,12 @@ const ParallaxContainer = styled.div`
 const ParallaxBanner = () => {
     return(
         <ParallaxContainer>
-            <h1>Recepti za jela bez glutena</h1>
+            <h1>Posna jela</h1>
             <p>
-                Fusce nec ante vitae lacus aliquet vulputate. Donec scelerisque accumsan molestie. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras sed accumsan neque. Ut vulputate, lectus vel aliquam congue, risus leo elementum nibh
+                Veliki broj recepata za sve one koji poste, ali ne zaju koja bi posna jela spremili
             </p>
-            <Button path='/' customStyle={{ btnWidth: '250px' }}>
-                Idi na recept
+            <Button path='/recipes/fast' customStyle={{ btnWidth: '250px' }}>
+                Pregledaj recepte
             </Button>
         </ParallaxContainer>
     );

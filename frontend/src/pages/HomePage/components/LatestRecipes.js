@@ -23,27 +23,28 @@ const LatestRecipes = () => {
         let currentDate = new Date();
 
         let difference = currentDate.getTime() - created.getTime();
-        let dayDifference = Math.round(difference / (1000 * 3600 * 24));
-        let hourDifference = Math.round(difference / (1000 * 3600))
+        let dayDifference = Math.round(Math.abs(difference / (1000 * 3600 * 24)));
+        let hourDifference = Math.round(Math.abs(difference / (1000 * 3600)))
+        let minuteDifference = Math.round(Math.abs(difference / (1000 * 60)));
 
         return (        
             <div className='col-12 col-md-6 col-lg-3' key={recipe.id}>
-                            <RecipeCard
-              id={recipe.id}
-              name={recipe.name}
-              path={
-                recipe.images
-                  ? "http://localhost:8000/" +
-                    recipe.images[0].path +
-                    recipe.images[0].name
-                  : ""
-              }
-              rating={false}
-              difference={true}
-              dayDifference={dayDifference}
-              hourDifference={hourDifference}
-            />
-
+                <RecipeCard
+                id={recipe.id}
+                name={recipe.name}
+                path={
+                    recipe.images
+                    ? "http://localhost:8000/" +
+                        recipe.images[0].path +
+                        recipe.images[0].name
+                    : ""
+                }
+                rating={false}
+                difference={true}
+                dayDifference={dayDifference}
+                hourDifference={hourDifference}
+                minuteDifference={minuteDifference}
+                />
             </div>
          )
     });

@@ -6,6 +6,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { loadUser, login, logout } from "../actions/userActions";
+import LoadingPage from "./LoadingPage";
 
 const TopNav = styled.nav`
   background-color: var(--main-green);
@@ -91,7 +92,7 @@ const Navigation = () => {
 
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state);
+  const reduxState = useSelector((state) => state);
 
   const fetchCategories = () => {
     axios
@@ -119,7 +120,7 @@ const Navigation = () => {
     fetchCategories();
     fetchCuisines();
 
-    if (!user) {
+    if (!reduxState.user) {
       localStorage.removeItem("access_token");
     }
   }, []);
@@ -138,8 +139,8 @@ const Navigation = () => {
 
     dispatch(login(loginUser));
 
-    if (user.isAuthenticated) {
-      navigate("/user/profile");
+    if (reduxState.user) {
+      navigate("/");
     }
 
     setUsername('');
@@ -201,7 +202,9 @@ const Navigation = () => {
     );
 
   return (
-    <header>
+    <>
+      {reduxState.isLoading && <LoadingPage />}
+      <header>
       <TopNav className="navbar navbar-expand-md">
         <div className="container">
           <ImageBox>
@@ -262,7 +265,7 @@ const Navigation = () => {
                   {showData}
                 </SearchResults>}
               </li>
-              {!user.isAuthenticated ? (
+              {!reduxState.user ? (
                 <>
                   <li className="nav-item dropdown">
                     <a
@@ -340,6 +343,7 @@ const Navigation = () => {
         </div>
       </TopNav>
     </header>
+    </>
   );
 };
 
