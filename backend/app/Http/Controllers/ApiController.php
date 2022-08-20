@@ -142,7 +142,7 @@ class ApiController extends Controller
             $recipe->preparation_time = (int)$request->preparation_time;
             $recipe->fast = (bool)$request->fast;
             $recipe->advice = $request->advice;
-            $recipe->user_id = 2;
+            $recipe->user_id = $request->user_id;
             $recipe->slug = Str::slug($request->recipe_name, '-').'-'.Str::uuid()->toString();
             
 

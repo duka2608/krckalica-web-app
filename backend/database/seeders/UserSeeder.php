@@ -24,7 +24,8 @@ class UserSeeder extends Seeder
                 'biography' => 'Kratka biografija korisnika',
                 'password' => Hash::make('Sifra123'),
                 'location_id' => 1,
-                'role_id' => 1
+                'role_id' => 1,
+                'avatar' => 'storage/images/avatars/avatar.jpg'
             ],
             [
                 'first_name' => 'Pera',
@@ -34,7 +35,8 @@ class UserSeeder extends Seeder
                 'biography' => 'Kratka biografija korisnika Pera Peric',
                 'password' => Hash::make('Sifra123'),
                 'location_id' => 5,
-                'role_id' => 2
+                'role_id' => 2,
+                'avatar' => 'storage/images/avatars/avatar.jpg'
             ],
             [
                 'first_name' => 'Jovan',
@@ -44,7 +46,8 @@ class UserSeeder extends Seeder
                 'biography' => 'Kratka biografija korisnika Jovan Memedovic',
                 'password' => Hash::make('Sifra123'),
                 'location_id' => 8,
-                'role_id' => 2
+                'role_id' => 2,
+                'avatar' => 'storage/images/avatars/avatar.jpg'
             ],
             [
                 'first_name' => 'Mika',
@@ -54,7 +57,8 @@ class UserSeeder extends Seeder
                 'biography' => 'Kratka biografija korisnika Mika Mikic',
                 'password' => Hash::make('Sifra123'),
                 'location_id' => 7,
-                'role_id' => 2
+                'role_id' => 2,
+                'avatar' => 'storage/images/avatars/avatar.jpg'
             ]
         ]);
     }

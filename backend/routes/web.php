@@ -36,8 +36,8 @@ Route::group(['prefix' => 'admin', 'middleware' => [AdminAuth::class]], function
     Route::delete('/users/{id}', [UsersController::class, 'destroy'])->name('admin.users.destroy');
 
     Route::get('/recipes', [RecipesController::class, 'index'])->name('admin.recipes');
-    Route::get('/recipes/create', [RecipesController::class, 'create'])->name('admin.recipes.create');
-    Route::post('/recipes', [RecipesController::class, 'store'])->name('admin.recipes.store');
+    // Route::get('/recipes/create', [RecipesController::class, 'create'])->name('admin.recipes.create');
+    // Route::post('/recipes', [RecipesController::class, 'store'])->name('admin.recipes.store');
     Route::get('/recipes/{id}/show', [RecipesController::class, 'show'])->name('admin.recipes.show');
     Route::get('/recipes/{id}/edit', [RecipesController::class, 'edit'])->name('admin.recipes.edit');
     Route::put('/recipes/{id}', [RecipesController::class, 'update'])->name('admin.recipes.update');

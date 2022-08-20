@@ -19,9 +19,8 @@ class CreateRecipesTable extends Migration
             $table->integer('preparation_time');
             $table->integer('portions');
             $table->boolean('fast');
-            $table->string('advice');
-            $table->integer('views')->nullable();
-
+            $table->longText('advice');
+            
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('cuisine_id');
             $table->unsignedBigInteger('user_id');

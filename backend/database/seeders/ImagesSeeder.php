@@ -5,8 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-
-class StepSeeder extends Seeder
+class ImagesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,11 +14,13 @@ class StepSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('steps')->insert(
+        DB::table('images')->insert([
             [
-                'description' => 'Opis postupka 1',
+                'name' => '1660826261-Full_English_breakfast.jpg',
+                'path' => 'storage/images/recipes/',
+                'main' => 1,
                 'recipe_id' => 1
             ]
-        );
+        ]);
     }
 }

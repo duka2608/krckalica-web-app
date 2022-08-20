@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('username');
             $table->string('email')->unique();
             $table->string('biography')->unique();
+            $table->string('avatar')->default('');
 
             $table->unsignedBigInteger('location_id');
             $table->unsignedBigInteger('role_id');

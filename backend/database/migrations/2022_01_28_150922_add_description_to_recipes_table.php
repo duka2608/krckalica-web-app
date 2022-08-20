@@ -14,7 +14,7 @@ class AddDescriptionToRecipesTable extends Migration
     public function up()
     {
         Schema::table('recipes', function (Blueprint $table) {
-            $table->string('description');
+            $table->longText('description');
         });
     }
 

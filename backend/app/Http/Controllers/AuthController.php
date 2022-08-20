@@ -29,8 +29,10 @@ class AuthController extends Controller
             'last_name' => 'required|regex:/^([A-Z][a-z]+)$/',
             'username' => 'required|unique:users,username|min:8|max:15',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8|max:20'
+            'password' => 'required|min:8|max:20',
+            'avatar' => ''
         ]);
+
 
         if($validatedData->fails()) {
             return response()->json([
@@ -45,9 +47,19 @@ class AuthController extends Controller
         $validatedData['role_id'] = 2;
         $validatedData['biography'] = "Ja sam ". $validatedData['first_name'];
 
+        $image = 'avatar.jpg';
+
+        if($request->hasFile('avatar')) {
+            $image = time()."-".$request->file('avatar')->getClientOriginalName();
+            $request->file('avatar')->storeAs('public/images/avatars/', $image);
+        }
+
+        $validatedData['avatar'] = 'storage/images/avatars/'.$image;
+
         // $data = (array)$validatedData;
 
         $user = $this->user->create($validatedData);
+
 
         if(!$user) {
             return response(['message' => "Registration failed"]);

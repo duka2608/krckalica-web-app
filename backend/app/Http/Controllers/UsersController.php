@@ -47,6 +47,7 @@ class UsersController extends Controller
      */
     public function store(UserRequest $request)
     {
+
         $first_name = $request->first_name;
         $last_name = $request->last_name;
         $username = $request->username;
@@ -57,6 +58,15 @@ class UsersController extends Controller
         $role = (int)$request->role;
 
         $user = new User();
+        
+        $image = 'avatar.jpg';
+
+        if($request->hasFile('user-image')) {
+            $image = time()."-".$request->file('user-image')->getClientOriginalName();
+            $request->file('user-image')->storeAs('public/images/avatars/', $image);
+        }
+
+        $user->avatar = 'storage/images/avatars/'.$image;
 
         try {
             
@@ -110,6 +120,12 @@ class UsersController extends Controller
             $user->password = Hash::make($request->password);
             $user->location_id = $request->location;
             $user->role_id = $request->role;
+    
+            if($request->hasFile('user-image')) {
+                $image = time()."-".$request->file('user-image')->getClientOriginalName();
+                $request->file('user-image')->storeAs('public/images/avatars/', $image);
+                $user->avatar = 'storage/images/avatars/'.$image;
+            }
     
             $res = $user->save();
 

@@ -19,7 +19,7 @@ class RecipesController extends Controller
      */
     public function index()
     {
-        $recipes = Recipe::with('user', 'category', 'cuisine', 'ingredients', 'images')->get();
+        $recipes = Recipe::with('user', 'category', 'cuisine', 'ingredients', 'images')->paginate(10);
         return view('pages.recipes.index')->with(compact('recipes'));
     }
 

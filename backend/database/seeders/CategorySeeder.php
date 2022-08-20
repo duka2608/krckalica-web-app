@@ -16,6 +16,7 @@ class CategorySeeder extends Seeder
     public function run()
     {
         $categories = [
+            'Doručak',
             'Hladna predjela',
             'Topla predjela',
             'Supe i čorbe',

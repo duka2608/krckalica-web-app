@@ -1,7 +1,7 @@
 @php
     $route = request()->routeIs('admin.users.edit');
 @endphp
-<form method="POST" action="{{ $route ? route('admin.users.update', $data['user']->id) : route('admin.users.store') }}" id="submit-admin-form" class="form-horizontal form-label-left">
+<form method="POST" action="{{ $route ? route('admin.users.update', $data['user']->id) : route('admin.users.store') }}" id="submit-admin-form" class="form-horizontal form-label-left" enctype="multipart/form-data">
     @if(request()->routeIs('admin.users.edit'))
         @method('PUT')
     @endif
@@ -92,6 +92,14 @@
             @error('password')
                 <span class="error-custom error-custom-input error-password">{{ $message }}</span>
             @enderror
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="profile_image">Slika recepta<span class="required">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="fa fa-picture-o"></i></a>
+            <input type="file" data-role="magic-overlay" name="user-image" data-target="#pictureBtn" data-edit="insertImage" accept=".jpg, .jpeg, .png" />
         </div>
     </div>
     <div class="ln_solid"></div>

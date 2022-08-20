@@ -24,7 +24,7 @@
                                 <p>{{ session()->get('success') }}</p>
                             </div>
                         @endif
-                        <a href="{{ route('admin.recipes.create') }}" class="btn btn-default btn-block"><i class="fa fa-plus-circle" aria-hidden="true"></i>Dodaj recept</a>
+                        {{-- <a href="{{ route('admin.recipes.create') }}" class="btn btn-default btn-block"><i class="fa fa-plus-circle" aria-hidden="true"></i>Dodaj recept</a> --}}
 
                         <table id="datatable" class="table table-striped table-bordered">
                             <thead>
@@ -42,7 +42,7 @@
                                 <tr>
                                     <td>
                                         @if($recipe->images->count() > 0)
-                                        <img src="{{ asset($recipe->images[0]->path.$recipe->images[0]->name) }}" alt="{{ $recipe->name }}" height='100px'/>
+                                        <img src="{{ asset($recipe->images[0]->path.$recipe->images[0]->name) }}" alt="{{ $recipe->name }}" height='100px' width="200px" style="object-fit: contain"/>
                                         @else
                                             <h1>Slika</h1>
                                         @endif
@@ -58,9 +58,6 @@
                                             </li>
                                             <li>
                                                 <p>Korisnik: {{ $recipe->user->first_name.' '.$recipe->user->last_name }}</p>
-                                            </li>
-                                            <li>
-                                                <p>Pregledi: {{ $recipe->views ? $recipe->views : 0 }}</p>
                                             </li>
                                             @if($recipe->fast)
                                                 <li>
@@ -82,13 +79,13 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        {{-- @if ($users)
+                        @if ($recipes)
                             <ul class="pagination" id="pagination">
-                                @for($i = 1; $i <= $users->lastPage(); $i++)
-                                    <li class="page-item"><a class="page-link" href="users?page={{ $i }}">{{ $i }}</a></li>
+                                @for($i = 1; $i <= $recipes->lastPage(); $i++)
+                                    <li class="page-item"><a class="page-link" href="recipes?page={{ $i }}">{{ $i }}</a></li>
                                 @endfor
                             </ul>
-                        @endif --}}
+                        @endif
                     </div>
                 </div>
             </div>

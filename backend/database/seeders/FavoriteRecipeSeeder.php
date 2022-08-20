@@ -17,20 +17,8 @@ class FavoriteRecipeSeeder extends Seeder
     {
         DB::table('favorite')->insert([
             [
-                'user_id' => 1,
-                'recipe_id' => 2
-            ],
-            [
                 'user_id' => 2,
                 'recipe_id' => 1
-            ],
-            [
-                'user_id' => 2,
-                'recipe_id' => 6
-            ],
-            [
-                'user_id' => 2,
-                'recipe_id' => 4
             ]
         ]);
     }
