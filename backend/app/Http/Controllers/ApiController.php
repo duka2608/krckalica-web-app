@@ -48,9 +48,15 @@ class ApiController extends Controller
         return response()->json($recipe, 200);
     }
 
-    public function getRecentRecipes() {
-        $recipes = Recipe::with('images')->orderBy('created_at')->limit(3)->get();
+    public function getPopularRecipes() {
+        $recipes = Recipe::with('images')->orderBy('views')->limit(3)->get();
         return response()->json($recipes, 200);
+    }
+
+    public function addView($id) {
+        Recipe::where('id', $id)->increment('views', 1);     
+
+        return response(204);
     }
 
     public function getRecipe($id) {

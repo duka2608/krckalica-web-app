@@ -20,6 +20,7 @@ class CreateRecipesTable extends Migration
             $table->integer('portions');
             $table->boolean('fast');
             $table->longText('advice');
+            $table->bigInteger('views')->nullable();
             
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('cuisine_id');

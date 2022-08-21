@@ -15,6 +15,7 @@ class Recipe extends Model
         'portions',
         'fast',
         'advice',
+        'views',
         'description',
         'slug'
     ];
