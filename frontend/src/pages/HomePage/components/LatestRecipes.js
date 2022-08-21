@@ -8,7 +8,7 @@ const LatestRecipes = () => {
     const [recipes, setRecipes] = useState([]);
 
     const fetchRecipes = () => {
-        axios.get('http://localhost:8000/api/recipes/latest')
+        axios.get('http://localhost:8000/api/recipes/popular')
         .then((response) => {
             setRecipes(response.data);
         });
@@ -50,7 +50,7 @@ const LatestRecipes = () => {
     });
     return (
         <div className="row my-5 py-4 px-2 bg-light rounded">
-            <h1 className="d-flex justify-content-center mb-4">Najnoviji recepti</h1>
+            <h1 className="d-flex justify-content-center mb-4">Najpopularniji recepti</h1>
             <div className="card-group card-md-deck gap-5 d-flex justify-content-center">
                 {recipes && displayRecipes}
             </div>

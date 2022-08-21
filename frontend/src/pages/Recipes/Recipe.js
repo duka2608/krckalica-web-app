@@ -84,9 +84,17 @@ const Recipe = () => {
       });
   };
 
+  const registerRecipeView = () => {
+    axios.get(`http://localhost:8000/api/recipes/popular/${recipeId}`)
+    .then((response) => {
+        console.log(response);
+    });
+}
+
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchRecipe();
+    registerRecipeView();
   }, [recipeId]);
 
   const dateFormat = (date) => {

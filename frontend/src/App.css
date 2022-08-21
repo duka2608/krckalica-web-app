@@ -82,6 +82,7 @@ textarea {
 
 .large-img {
   height: 25vw;
+  object-fit: cover;
 }
 
 .word-break {

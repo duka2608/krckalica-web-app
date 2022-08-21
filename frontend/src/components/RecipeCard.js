@@ -8,6 +8,7 @@ const RecipeContainer = styled.div`
     img {
         max-width: 100%;
         border-bottom: 3px solid var(--main-green);
+        object-fit: cover;
     }
 
     .recipe-content {
