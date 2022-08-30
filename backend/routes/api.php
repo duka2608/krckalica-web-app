@@ -43,7 +43,7 @@ Route::post('/recipes/{id}', [ApiController::class, 'updateRecipe']);
 Route::get('/recipes/popular', [ApiController::class, 'popularRecipes']);
 Route::get('/recipes/today-on-menu', [ApiController::class, 'getForTodaysOnMenu']);
 Route::get('/recipes/popular', [ApiController::class, 'getPopularRecipes']);
-Route::get('/recipes/popular/{id}', [ApiController::class, 'addView']);
+Route::post('/recipes/popular/{id}', [ApiController::class, 'addView']);
 Route::get('/recipes/{id}', [ApiController::class, 'getRecipe']);
 Route::post('/recipes/category/{id}', [ApiController::class, 'getRecipesFromCategory']);
 Route::post('/recipes/cuisine/{id}', [ApiController::class, 'getRecipesFromCuisine']);

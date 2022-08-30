@@ -8,9 +8,12 @@ import {
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
     REGISTER_FAIL,
-    RESPONSE_MESSAGE
+    CLEAR_MESSAGE
 } from './types';
 
+export const clearMessage = () => (dispatch) => {
+    dispatch({ type: CLEAR_MESSAGE });
+}
 
 export const loadUser = () => (dispatch, getState) => {
     dispatch({ type: USER_LOADING });

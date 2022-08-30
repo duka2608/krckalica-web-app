@@ -10,7 +10,8 @@ import {
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
     REGISTER_FAIL,
-    RESPONSE_MESSAGE
+    RESPONSE_MESSAGE,
+    CLEAR_MESSAGE
 } from "../actions/types";
 
 const token = localStorage.getItem('access_token');
@@ -21,7 +22,7 @@ const initialState = {
     isAuthenticated: false,
     isLoading: false,
     user: user ? user : null,
-    message: ''
+    message: null
 };
 
 const userReducer = (state = initialState, action) => {
@@ -29,6 +30,10 @@ const userReducer = (state = initialState, action) => {
         case RESPONSE_MESSAGE:
             return {
                 message: state.message
+            }
+        case CLEAR_MESSAGE:
+            return {
+                message: null
             }
         case USER_LOADING:
             return {

@@ -39,8 +39,15 @@ const Registration = () => {
   const [lastNameError, setLastNameError] = useState("");
 
   const [username, setUsername] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+
   const [email, setEmail] = useState("");
+  const validEmail = new RegExp("^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$");
+  const [emailError, setEmailError] = useState("");
+
   const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  
   const [image, setImage] = useState("");
 
   const [popup, setPopup] = useState(false);
@@ -63,6 +70,30 @@ const Registration = () => {
 
     if (lastName.trim() === "") {
       setLastNameError("Polje za prezime ne sme biti prazno.");
+      isValid = false;
+    }
+
+    if (username.trim() === "") {
+      setUsernameError("Polje za prezime ne sme biti prazno.");
+      isValid = false;
+    } else if(username.length < 6 || username.length > 15) {
+      setUsernameError("Korisničko ime mora imati između 8 i 15 karaktera.");
+      isValid = false;
+    }
+
+    if(email.trim() === "") {
+      setEmailError("Morate uneti e-mail adresu.");
+      isValid = false;
+    } else if (validEmail.test(email)) {
+      setEmailError("Vaša e-mail adresa nije validnog formata.");
+      isValid = false;
+    }
+
+    if(password.trim() === "") {
+      setPasswordError("Morate uneti šifru kako biste napravili nalog.");
+      isValid = false;
+    } else if (password.length < 8 || password.length > 20) {
+      setPasswordError("Šifra mora imati između 8 i 20 karaktera");
       isValid = false;
     }
 
@@ -95,7 +126,7 @@ const Registration = () => {
               <div className="form-row d-flex justify-content-between">
                 <div className="col-md-5">
                   <label className="text-muted" htmlFor="first-name">
-                    Ime
+                    Ime*
                   </label>
                   <input
                     type="text"
@@ -112,7 +143,7 @@ const Registration = () => {
                 </div>
                 <div className="col-md-6">
                   <label className="text-muted" htmlFor="last-name">
-                    Prezime
+                    Prezime*
                   </label>
                   <input
                     type="text"
@@ -129,7 +160,7 @@ const Registration = () => {
               </div>
               <div className="form-group">
                 <label className="text-muted" htmlFor="register_username">
-                  Korisničko ime
+                  Korisničko ime*
                 </label>
                 <input
                   type="text"
@@ -140,6 +171,9 @@ const Registration = () => {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                 />
+                {usernameError && (
+                    <p className="text-danger mb-0">{usernameError}</p>
+                )}
               </div>
               <div className="form-group">
                 <label className="text-muted" htmlFor="birthday">
@@ -154,7 +188,7 @@ const Registration = () => {
               </div>
               <div className="form-group">
                 <label className="text-muted" htmlFor="email">
-                  Email adresa
+                  Email adresa*
                 </label>
                 <input
                   type="email"
@@ -165,10 +199,13 @@ const Registration = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
+                {emailError && (
+                    <p className="text-danger mb-0">{emailError}</p>
+                )}
               </div>
               <div className="form-group">
                 <label className="text-muted" htmlFor="register_password">
-                  Šifra
+                  Šifra*
                 </label>
                 <input
                   type="password"
@@ -178,6 +215,9 @@ const Registration = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                {passwordError && (
+                    <p className="text-danger mb-0">{passwordError}</p>
+                )}
               </div>
               <div className="form-group">
               <label className="text-muted" htmlFor="register_avatar">

@@ -85,7 +85,7 @@ const Recipe = () => {
   };
 
   const registerRecipeView = () => {
-    axios.get(`http://localhost:8000/api/recipes/popular/${recipeId}`)
+    axios.post(`http://localhost:8000/api/recipes/popular/${recipeId}`)
     .then((response) => {
         console.log(response);
     });
@@ -139,11 +139,14 @@ const Recipe = () => {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
 
+    setLoading(true);
+
     axios
       .delete(`http://localhost:8000/api/recipes/${recipeId}`, config)
       .then((res) => {
         let message = res.data.message;
         setPopup(true);
+        setLoading(false);
         setPopupMessage(message);
       });
   };

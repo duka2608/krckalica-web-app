@@ -100,6 +100,7 @@ class AuthController extends Controller
 
         $accessToken = Auth::user()->createToken('authToken')->accessToken;
         $authUser = Auth::user();
+        $authUser->favoriteCount = FavoriteRecipe::where('user_id', $authUser->id)->count();
         $authUser->location;
         $authUser->recipesCount = count($authUser->recipes);
         $authUser->commentsCount = count($authUser->comments);

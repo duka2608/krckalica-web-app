@@ -155,6 +155,7 @@ const EditRecipe = () => {
     isValid = true;
 
     if (isValid) {
+      setLoading(true);
       const formData = new FormData();
 
       formData.append("recipe_name", name);
@@ -180,6 +181,7 @@ const EditRecipe = () => {
         })
         .then((res) => {
           let message = res.data.message;
+          setLoading(false);
           setPopup(true);
           setPopupMessage(message);
         });

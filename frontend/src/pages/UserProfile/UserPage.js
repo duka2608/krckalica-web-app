@@ -7,7 +7,7 @@ import UserRecipes from "./UserRecipes";
 import FavoriteRecipes from "./FavoriteRecipes";
 import { Link } from "react-router-dom";
 import { loadUser } from "../../actions/userActions";
-import Button from '../../components/Button';
+import Button from "../../components/Button";
 import avatar from "../../assets/images/avatar.svg";
 
 const Box = styled.span`
@@ -18,8 +18,6 @@ const Box = styled.span`
 `;
 
 const UserAvatar = styled.div`
-
-
   img {
     border: 3px solid var(--main-green);
     border-radius: 50%;
@@ -27,46 +25,60 @@ const UserAvatar = styled.div`
     height: 200px;
     object-fit: contain;
   }
+
+  h1 {
+    margin-top: 15px;
+  }
 `;
 
 const UserPage = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
-  console.log(user)
+  console.log(user);
 
   return (
     user && (
       <div className="px-3 py-5">
         <div className="container">
           <div className="row">
-            <div className="col-12">
+            <div className="col-12 d-none d-md-flex">
               <h1>{user.first_name + " " + user.last_name}</h1>
             </div>
           </div>
           <div className="row">
-            <div className="col">
+            <div className="col-12 col-md-4 mb-3 mb-md-0">
               <UserAvatar>
-                <img src={"http://localhost:8000/"+user.avatar} alt="avatar" />
+                <img
+                  src={"http://localhost:8000/" + user.avatar}
+                  alt="avatar"
+                />
+                <h1 className="d-block d-md-none">{user.first_name + " " + user.last_name}</h1>
               </UserAvatar>
             </div>
-            <div className="col">
-              <ul>
-                <li className="profile-list-item">Lokacija: {user.location.name}</li>
-                <li className="profile-list-item">Datum rodjenja: 26.08.1997.</li>
-                <li className="profile-list-item">Biografija: {user.biography}</li>
+            <div className="col-12 col-md-4">
+              <ul className="px-0">
+                <li className="profile-list-item">
+                  Lokacija: {user.location.name}
+                </li>
+                <li className="profile-list-item">
+                  Datum rodjenja: 26.08.1997.
+                </li>
+                <li className="profile-list-item">
+                  Biografija: {user.biography}
+                </li>
               </ul>
             </div>
-            <div className="col">
-              <ul>
+            <div className="col-12 col-md-4">
+              <ul className="px-0">
                 <li className="profile-list-item">
-                  {user.commentsCount} Komentara
+                  Ukupno recepata: {user.recipesCount}
                 </li>
                 <li className="profile-list-item">
-                  0 Prijatelja
+                  Omiljeni recepti: {user.favoriteCount}
                 </li>
                 <li className="profile-list-item">
-                  {user.recipesCount} Recepata
+                  Komentari: {user.commentsCount}
                 </li>
               </ul>
             </div>
@@ -75,21 +87,15 @@ const UserPage = () => {
             <div className="col">
               <h1>Moji recepti</h1>
             </div>
-            <div className="col d-flex justify-content-center">
-              <Button path="/user/new-recipe">
-                Novi recept
-              </Button>
+            <div className="col d-flex justify-content-end">
+              <Button path="/user/new-recipe">Novi recept</Button>
             </div>
           </div>
-          <div className="row mt-3">
-                {<UserRecipes id={user.id} />}  
-            </div>
+          <div className="row mt-3">{<UserRecipes id={user.id} />}</div>
           <div className="row">
             <h1>Omiljeni recepti</h1>
           </div>
-          <div className="row mt-3">
-              {<FavoriteRecipes id={user.id} />}
-          </div>
+          <div className="row mt-3">{<FavoriteRecipes id={user.id} />}</div>
         </div>
       </div>
     )

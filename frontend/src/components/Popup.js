@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Button from './Button';
 
 const PopupContainer = styled.div`
+    z-index: 2;
     min-height: 100vh;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.4);

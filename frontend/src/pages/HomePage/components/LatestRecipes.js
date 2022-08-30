@@ -28,7 +28,7 @@ const LatestRecipes = () => {
         let minuteDifference = Math.round(Math.abs(difference / (1000 * 60)));
 
         return (        
-            <div className='col-12 col-md-6 col-lg-3' key={recipe.id}>
+            <div className='card col-12 col-md-6 col-lg-3' key={recipe.id}>
                 <RecipeCard
                 id={recipe.id}
                 name={recipe.name}
@@ -51,7 +51,7 @@ const LatestRecipes = () => {
     return (
         <div className="row my-5 py-4 px-2 bg-light rounded">
             <h1 className="d-flex justify-content-center mb-4">Najpopularniji recepti</h1>
-            <div className="card-group card-md-deck gap-5 d-flex justify-content-center">
+            <div className="card-group card-md-deck gap-5 d-md-flex justify-content-md-center">
                 {recipes && displayRecipes}
             </div>
         </div>

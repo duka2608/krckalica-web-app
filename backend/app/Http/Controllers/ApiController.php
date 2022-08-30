@@ -49,12 +49,12 @@ class ApiController extends Controller
     }
 
     public function getPopularRecipes() {
-        $recipes = Recipe::with('images')->orderBy('views')->limit(3)->get();
+        $recipes = Recipe::with('images')->orderByDesc('views')->limit(3)->get();
         return response()->json($recipes, 200);
     }
 
     public function addView($id) {
-        Recipe::where('id', $id)->increment('views', 1);     
+        Recipe::where('id', $id)->increment('views');     
 
         return response(204);
     }
@@ -148,6 +148,7 @@ class ApiController extends Controller
             $recipe->preparation_time = (int)$request->preparation_time;
             $recipe->fast = (bool)$request->fast;
             $recipe->advice = $request->advice;
+            $recipe->views = 0;
             $recipe->user_id = $request->user_id;
             $recipe->slug = Str::slug($request->recipe_name, '-').'-'.Str::uuid()->toString();
             

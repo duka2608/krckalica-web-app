@@ -22,17 +22,12 @@ const TopNav = styled.nav`
 const ImageBox = styled.div`
   margin-right: 20px;
 
-  @media only screen and (max-width: 991px) {
-    margin-right: 0px;
-
+  @media only screen and (max-width: 1199px) {
+    width: 150px;
+    margin-right: 0;
+    
     img {
-      width: 90%;
-    }
-  }
-
-  @media only screen and (max-width: 768px) {
-    img {
-      width: 80%;
+      width: 100%;
     }
   }
 `;
@@ -75,6 +70,17 @@ const SearchResults = styled.div`
         color: var(--main-green);
       }
     }
+  }
+
+  @media only screen and (max-width: 1199px) {
+    width: 30%;
+
+    left: 45%;
+  }
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+    left: 0%;
+    position: relative;
   }
 
 `;
@@ -205,7 +211,7 @@ const Navigation = () => {
     <>
       {reduxState.isLoading && <LoadingPage />}
       <header>
-      <TopNav className="navbar navbar-expand-md">
+      <TopNav className="navbar navbar-light navbar-expand-md">
         <div className="container">
           <ImageBox>
             <Link to="/">
@@ -216,12 +222,30 @@ const Navigation = () => {
             className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navmenu"
+            data-bs-target="#navbar"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="row collapse navbar-collapse" id="navmenu">
-            <ul className="navbar-nav ms-auto d-flex align-items-center justify-content-evenly">
+          <div className="collapse navbar-collapse row px-4" id="navbar">
+            <ul className="navbar-nav ms-auto d-flex align-items-md-center justify-content-evenly">
+            <li className="nav-item d-block d-md-none py-3">
+                <input
+                  type="text"
+                  className="navbar-form nav-search rounded"
+                  placeholder="Pretrazi"
+                  value={searchBox}
+                  onChange={(e) => searchBoxHandler(e)}
+                  onBlur={() => setTimeout(() => { setSearch(false) }, 500) }
+                  onFocus={() => searchBox.length > 2 && setSearch(true)}
+                />
+                {search &&                 
+                <SearchResults className="scroll">
+                  {showData}
+                </SearchResults>}
+              </li>
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
@@ -230,6 +254,7 @@ const Navigation = () => {
                   data-bs-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
+                  role="button"
                 >
                   Kategorije
                 </a>
@@ -242,6 +267,7 @@ const Navigation = () => {
                   className="nav-link dropdown-toggle"
                   href="#"
                   id="navbarDropdownMenuLink"
+                  role="button"
                   data-bs-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
@@ -250,10 +276,10 @@ const Navigation = () => {
                 </a>
                 {cuisines && <DropdownList data={cuisines} title="cuisine" />}
               </li>
-              <li>
+              <li className="d-none d-md-block">
                 <input
                   type="text"
-                  className="navbar-form nav-search"
+                  className="navbar-form nav-search rounded"
                   placeholder="Pretrazi"
                   value={searchBox}
                   onChange={(e) => searchBoxHandler(e)}

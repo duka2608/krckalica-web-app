@@ -41,6 +41,15 @@ const RecipeInfo = styled.div`
             font-size: 20px;
         }
     }
+
+    @media (max-width: 768px) {
+        width: 100%;
+        left: 50%;
+
+        h2 {
+            font-size: 20px;
+        }
+    }
 `;
 
 const OnMenuToday = () => {
@@ -73,7 +82,7 @@ const OnMenuToday = () => {
                     <img className="card-img img-fluid height-img" src={recipe.images ? "http://localhost:8000/" + recipe.images[0].path + recipe.images[0].name : '' } alt={recipe.name} />
                     <RecipeInfo className="card-img-overlay">
                         <h2 className="card-title">{recipe.name}</h2>
-                        <p className="card-text">{recipe.description}</p>
+                        <p className="card-text d-none d-md-block">{recipe.description}</p>
                         {recipe.user && <p className="card-text">Autor: {recipe.user.first_name+' '+recipe.user.last_name}</p>}
                         <Button path={`/recipes/${recipe.id}`} customStyle={{ btnWidth: '200px' }}>
                             Pogledaj recept

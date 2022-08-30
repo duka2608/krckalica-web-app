@@ -41,7 +41,7 @@ const SimilarRecipes = ({ categoryId, recipeId }) => {
   });
 
   return (
-    <div className="row">
+    <div className="row justify-content-center">
       {similarRecipes.length > 0 ? (
         <>
           <div className="col-12 my-3 text-center">
