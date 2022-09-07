@@ -8,7 +8,7 @@ const SimilarRecipes = ({ categoryId, recipeId }) => {
 
   const fetchSimilar = () => {
     axios
-      .post(`http://localhost:8000/api/recipes/category/${categoryId}`, {
+      .post(`http://krckalica-web-app-backend.herokuapp.com/api/recipes/category/${categoryId}`, {
         limit: 4,
         recipe: recipeId,
       })
@@ -29,7 +29,7 @@ const SimilarRecipes = ({ categoryId, recipeId }) => {
           name={recipe.name}
           path={
             recipe.images
-              ? "http://localhost:8000/" +
+              ?
                 recipe.images[0].path +
                 recipe.images[0].name
               : ""

@@ -10,7 +10,7 @@ const FavoriteRecipes = ({ id }) => {
   const fetchUserRecipes = (selectedPage = 1) => {
     axios
       .get(
-        `http://localhost:8000/api/user/${id}/recipes/favorite?page=${selectedPage}`
+        `http://krckalica-web-app-backend.herokuapp.com/api/user/${id}/recipes/favorite?page=${selectedPage}`
       )
       .then((res) => {
         setRecipes(res.data.data);
@@ -35,7 +35,7 @@ const FavoriteRecipes = ({ id }) => {
               name={recipe.recipe.name}
               path={
                 recipe.recipe.image
-                  ? "http://localhost:8000/" +
+                  ?
                     recipe.recipe.image[0].path +
                     recipe.recipe.image[0].name
                   : ""

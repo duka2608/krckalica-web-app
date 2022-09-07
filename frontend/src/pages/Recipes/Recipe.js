@@ -76,7 +76,7 @@ const Recipe = () => {
   const fetchRecipe = () => {
     setLoading(true);
     axios
-      .get(`http://localhost:8000/api/recipes/${recipeId}`)
+      .get(`http://krckalica-web-app-backend.herokuapp.com/api/recipes/${recipeId}`)
       .then((response) => {
         setRecipe(response.data.recipe);
         console.log(response)
@@ -85,7 +85,7 @@ const Recipe = () => {
   };
 
   const registerRecipeView = () => {
-    axios.post(`http://localhost:8000/api/recipes/popular/${recipeId}`)
+    axios.post(`http://krckalica-web-app-backend.herokuapp.com/api/recipes/popular/${recipeId}`)
     .then((response) => {
         console.log(response);
     });
@@ -111,7 +111,7 @@ const Recipe = () => {
 
   const addToFavoritesHandler = () => {
     axios
-      .post(`http://localhost:8000/api/recipes/${recipeId}/favorite`, {
+      .post(`http://krckalica-web-app-backend.herokuapp.com/api/recipes/${recipeId}/favorite`, {
         user_id: user.id,
       })
       .then((res) => {
@@ -142,7 +142,7 @@ const Recipe = () => {
     setLoading(true);
 
     axios
-      .delete(`http://localhost:8000/api/recipes/${recipeId}`, config)
+      .delete(`http://krckalica-web-app-backend.herokuapp.com/api/recipes/${recipeId}`, config)
       .then((res) => {
         let message = res.data.message;
         setPopup(true);
@@ -183,7 +183,7 @@ const Recipe = () => {
                 className="card-img-top large-img fluid mb-5"
                 src={
                   recipe.images
-                    ? "http://localhost:8000/" +
+                    ?
                       recipe.images[0].path +
                       recipe.images[0].name
                     : ""

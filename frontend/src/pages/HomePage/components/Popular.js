@@ -17,7 +17,7 @@ const Popular = () => {
 
     const fetchRecipes = async () => {
         try {
-            await axios.get('http://localhost:8000/api/recipes/popular')
+            await axios.get('http://krckalica-web-app-backend.herokuapp.com/api/recipes/popular')
             .then((response) => {
                 let responseData = response.data;
                 setRecipes(responseData);
@@ -44,7 +44,7 @@ const Popular = () => {
             date={fullDate}
             path={
                 recipe.images
-                  ? "http://localhost:8000/" +
+                  ?
                     recipe.images[0].path +
                     recipe.images[0].name
                   : ""

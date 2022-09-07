@@ -63,9 +63,18 @@ const userReducer = (state = initialState, action) => {
                 isAuthenticated: true,
                 isLoading: false,
             };
+        case LOGOUT_SUCCESS:
+            localStorage.clear();
+            return {
+                ...state,
+                token: null,
+                user: null,
+                isAuthenticated: false,
+                isLoading: false,
+                message: null
+            }
         case AUTH_ERROR:
         case LOGIN_FAIL:
-        case LOGOUT_SUCCESS:
         case REGISTER_FAIL:
             localStorage.clear();
             return {

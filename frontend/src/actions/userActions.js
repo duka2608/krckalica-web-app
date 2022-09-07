@@ -31,7 +31,7 @@ export const loadUser = () => (dispatch, getState) => {
     }
 
 
-    axios.get('http://localhost:8000/api/user', config)
+    axios.get('http://krckalica-web-app-backend.herokuapp.com/api/user', config)
         .then(res => dispatch({
             type: USER_LOADED,
             payload: res.data
@@ -43,7 +43,7 @@ export const loadUser = () => (dispatch, getState) => {
         );
 }
 
-export const register = ({ first_name, last_name, username, email, password, image }) => dispatch => {
+export const register = ({ first_name, last_name, username, email, location, password, image }) => dispatch => {
     
     const config = {
         headers: {
@@ -51,16 +51,16 @@ export const register = ({ first_name, last_name, username, email, password, ima
         }
     }
 
-    // const body = JSON.stringify({ first_name, last_name, username, email, password, image });
     const body = new FormData();
     body.append('first_name', first_name);
     body.append('last_name', last_name);
     body.append('username', username);
     body.append('email', email);
-    body.append('password', password);
     body.append('avatar', image);
+    body.append('location_id', location);
+    body.append('password', password);
 
-    axios.post("http://localhost:8000/api/register", body, config)
+    axios.post("http://krckalica-web-app-backend.herokuapp.com/api/register", body, config)
     .then(res => {
         dispatch({
             type: REGISTER_SUCCESS,
@@ -85,7 +85,7 @@ export const login = ({ username, password }) => dispatch => {
 
     const body = JSON.stringify({ username, password });
 
-    axios.post("http://localhost:8000/api/login", body, config)
+    axios.post("http://krckalica-web-app-backend.herokuapp.com/api/login", body, config)
     .then(res => dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data
@@ -112,7 +112,7 @@ export const logout = () => (dispatch) => {
     }
 
 
-    axios.post("http://localhost:8000/api/logout", config)
+    axios.post("http://krckalica-web-app-backend.herokuapp.com/api/logout", config)
         .then(res => dispatch({
             type: LOGOUT_SUCCESS
         }))

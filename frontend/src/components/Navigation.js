@@ -102,7 +102,7 @@ const Navigation = () => {
 
   const fetchCategories = () => {
     axios
-      .get("http://localhost:8000/api/categories")
+      .get("http://krckalica-web-app-backend.herokuapp.com/api/categories")
       .then(function (response) {
         setCategories(response.data);
       })
@@ -113,7 +113,7 @@ const Navigation = () => {
 
   const fetchCuisines = () => {
     axios
-      .get("http://localhost:8000/api/cuisines")
+      .get("http://krckalica-web-app-backend.herokuapp.com/api/cuisines")
       .then(function (response) {
         setCuisines(response.data);
       })
@@ -170,7 +170,7 @@ const Navigation = () => {
     setSearchBox(e.target.value);
     if(searchBox.length > 2) {
       axios
-      .post("http://localhost:8000/api/recipes/search", {
+      .post("http://krckalica-web-app-backend.herokuapp.com/api/recipes/search", {
         search: searchBox
       })
       .then(function (response) {
@@ -195,7 +195,7 @@ const Navigation = () => {
         }} key={index} onClick={closeSearch}>
           <div>
             <div className="img-container">
-              <img src={"http://localhost:8000/" +
+              <img src={
                     el.images[0].path +
                     el.images[0].name} alt={el.name} />
             </div>

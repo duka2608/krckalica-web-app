@@ -12,7 +12,7 @@ const RecipesByCategory = () => {
     const [category, setCategory] = useState('');
 
     const fetchRecipes = () => {
-        axios.post(`http://localhost:8000/api/recipes/category/${categoryId}`, { limit: 10 })
+        axios.post(`http://krckalica-web-app-backend.herokuapp.com/api/recipes/category/${categoryId}`, { limit: 10 })
         .then((response) => {
             setRecipes(response.data.recipes);
             setCategory(response.data.category);
@@ -32,7 +32,7 @@ const RecipesByCategory = () => {
                 <RecipeCard 
                     id={recipe.id}
                     name={recipe.name}
-                    path={recipe.images ? "http://localhost:8000/" + recipe.images[0].path + recipe.images[0].name : '' }
+                    path={recipe.images ? recipe.images[0].path + recipe.images[0].name : '' }
                     rating={true}
                 />
             </div>

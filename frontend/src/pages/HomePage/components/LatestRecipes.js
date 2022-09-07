@@ -8,7 +8,7 @@ const LatestRecipes = () => {
     const [recipes, setRecipes] = useState([]);
 
     const fetchRecipes = () => {
-        axios.get('http://localhost:8000/api/recipes/popular')
+        axios.get('http://krckalica-web-app-backend.herokuapp.com/api/recipes/popular')
         .then((response) => {
             setRecipes(response.data);
         });
@@ -34,7 +34,7 @@ const LatestRecipes = () => {
                 name={recipe.name}
                 path={
                     recipe.images
-                    ? "http://localhost:8000/" +
+                    ?
                         recipe.images[0].path +
                         recipe.images[0].name
                     : ""

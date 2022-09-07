@@ -11,7 +11,7 @@ const UserRecipes = ({ id }) => {
 
   const fetchUserRecipes = (selectedPage = 1) => {
     axios
-      .post(`http://localhost:8000/api/user/${id}/recipes?page=${selectedPage}`)
+      .post(`http://krckalica-web-app-backend.herokuapp.com/api/user/${id}/recipes?page=${selectedPage}`)
       .then((res) => {
         setUserRecipes(res.data.data);
         let count = Math.ceil(res.data.total / res.data.per_page);
@@ -41,7 +41,7 @@ const UserRecipes = ({ id }) => {
               name={recipe.name}
               path={
                 recipe.images
-                  ? "http://localhost:8000/" +
+                  ?
                     recipe.images[0].path +
                     recipe.images[0].name
                   : ""

@@ -38,7 +38,7 @@ const Comments = ({ recipeId, dateFormat, itemsPerPage }) => {
 
   const fetchComments = () => {
     axios
-      .post(`http://localhost:8000/api/recipes/${recipeId}/comments`)
+      .post(`http://krckalica-web-app-backend.herokuapp.com/api/recipes/${recipeId}/comments`)
       .then((response) => {
         setCommentsCount(response.data.comments.length);
 
@@ -57,7 +57,7 @@ const Comments = ({ recipeId, dateFormat, itemsPerPage }) => {
     e.preventDefault();
 
     axios
-      .post("http://localhost:8000/api/comments/add", {
+      .post("http://krckalica-web-app-backend.herokuapp.com/api/comments/add", {
         comment,
         recipe_id: recipeId,
         user_id: user.id

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import LoadingPage from "../../components/LoadingPage";
 import Popup from "../../components/Popup";
 import InputField from "../../components/InputField";
+import CustomSelect from "../../components/CustomSelect";
 
 const Container = styled.div`
   margin: 0 auto;
@@ -41,6 +42,10 @@ const Registration = () => {
   const [username, setUsername] = useState("");
   const [usernameError, setUsernameError] = useState("");
 
+  const [locations, setLocations] = useState([]);
+  const [location, setLocation] = useState(0);
+  const [locationError, setLocationError] = useState(false);
+
   const [email, setEmail] = useState("");
   const validEmail = new RegExp("^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$");
   const [emailError, setEmailError] = useState("");
@@ -56,7 +61,13 @@ const Registration = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
 
-  useEffect(() => {}, [user]);
+  useEffect(() => {
+    fetchLocations();
+  }, [user]);
+
+  const fetchLocations = () => {
+    axios.get("http://krckalica-web-app-backend.herokuapp.com/api/locations").then((res) => setLocations(res.data));
+  }
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
@@ -81,10 +92,15 @@ const Registration = () => {
       isValid = false;
     }
 
+    if (location == 0) {
+      setLocationError(true);
+      isValid = false;
+    }
+
     if(email.trim() === "") {
       setEmailError("Morate uneti e-mail adresu.");
       isValid = false;
-    } else if (validEmail.test(email)) {
+    } else if (!validEmail.test(email)) {
       setEmailError("Vaša e-mail adresa nije validnog formata.");
       isValid = false;
     }
@@ -103,6 +119,7 @@ const Registration = () => {
       username,
       email,
       image,
+      location,
       password,
     };
 
@@ -112,6 +129,15 @@ const Registration = () => {
     }
   };
 
+  const onLocationChangeHandler = (action, value) => {
+    if(value === 0) {
+      setLocationError(true);
+    } else {
+      setLocationError(false);
+    }
+    
+    setLocation(value);
+  }
 
   return (
     <>
@@ -186,6 +212,16 @@ const Registration = () => {
                   aria-describedby="emailHelp"
                 />
               </div>
+              <CustomSelect
+                  cardClass="form-group col-md-6"
+                  label="Lokacija"
+                  selectClass="form-control"
+                  data={locations}
+                  value={location}
+                  name="location"
+                  handler={onLocationChangeHandler}
+                  error={locationError && "Morate odabrati lokaciju."}
+                />
               <div className="form-group">
                 <label className="text-muted" htmlFor="email">
                   Email adresa*

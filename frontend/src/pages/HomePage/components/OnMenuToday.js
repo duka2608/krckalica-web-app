@@ -60,7 +60,7 @@ const OnMenuToday = () => {
         setLoading(true)
 
        axios
-        .get("http://localhost:8000/api/recipes/today-on-menu")
+        .get("http://krckalica-web-app-backend.herokuapp.com/api/recipes/today-on-menu")
         .then(function (response) {
             setRecipe(response.data);
             setLoading(false)
@@ -79,7 +79,7 @@ const OnMenuToday = () => {
             {loading && <LoadingPage />}
             <div className='col pt-5'>
                 <div className="card bg-light text-dark">
-                    <img className="card-img img-fluid height-img" src={recipe.images ? "http://localhost:8000/" + recipe.images[0].path + recipe.images[0].name : '' } alt={recipe.name} />
+                    <img className="card-img img-fluid height-img" src={recipe.images ? recipe.images[0].path + recipe.images[0].name : '' } alt={recipe.name} />
                     <RecipeInfo className="card-img-overlay">
                         <h2 className="card-title">{recipe.name}</h2>
                         <p className="card-text d-none d-md-block">{recipe.description}</p>

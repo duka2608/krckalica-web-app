@@ -50,7 +50,7 @@ const UserPage = () => {
             <div className="col-12 col-md-4 mb-3 mb-md-0">
               <UserAvatar>
                 <img
-                  src={"http://localhost:8000/" + user.avatar}
+                  src={user.avatar}
                   alt="avatar"
                 />
                 <h1 className="d-block d-md-none">{user.first_name + " " + user.last_name}</h1>

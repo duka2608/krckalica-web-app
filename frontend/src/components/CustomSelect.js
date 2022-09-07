@@ -8,6 +8,7 @@ const CustomSelect = (props) => {
   });
 
   return (
+<>
     <div className={props.cardClass}>
       <label htmlFor={props.id}>{props.label}</label>
       <select
@@ -20,7 +21,7 @@ const CustomSelect = (props) => {
         {displayData}
       </select>
       {props.error && <p className="text-danger">{props.error}</p>}
-    </div>
+    </div></>
   );
 };
 

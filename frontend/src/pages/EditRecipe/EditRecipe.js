@@ -66,7 +66,7 @@ const EditRecipe = () => {
   const fetchRecipe = () => {
     setLoading(true);
     axios
-      .get(`http://localhost:8000/api/recipes/${recipeId}`)
+      .get(`http://krckalica-web-app-backend.herokuapp.com/api/recipes/${recipeId}`)
       .then((response) => {
         let recipe = response.data.recipe;
 
@@ -90,7 +90,7 @@ const EditRecipe = () => {
   const fetchCategories = () => {
     setLoading(true);
     axios
-      .get("http://localhost:8000/api/categories")
+      .get("http://krckalica-web-app-backend.herokuapp.com/api/categories")
       .then(function (response) {
         setCategories(response.data);
         setLoading(false);
@@ -103,7 +103,7 @@ const EditRecipe = () => {
   const fetchCuisines = () => {
     setLoading(true);
     axios
-      .get("http://localhost:8000/api/cuisines")
+      .get("http://krckalica-web-app-backend.herokuapp.com/api/cuisines")
       .then(function (response) {
         setCuisines(response.data);
         setLoading(false);
@@ -171,7 +171,7 @@ const EditRecipe = () => {
       formData.append("ingredients", JSON.stringify(ingredients));
 
       let request = axios
-        .post(`http://localhost:8000/api/recipes/${recipeId}`, formData, {
+        .post(`http://krckalica-web-app-backend.herokuapp.com/api/recipes/${recipeId}`, formData, {
           headers: {
             // "Content-type": "x-www-form-urlencoded",
             "Content-type": "multipart/form-data",
@@ -423,7 +423,7 @@ const EditRecipe = () => {
                       image
                         ? tempImg
                         : recipe.images
-                        ? "http://localhost:8000/" +
+                        ?
                           recipe.images[0].path +
                           recipe.images[0].name
                         : ""

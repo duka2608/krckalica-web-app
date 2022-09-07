@@ -63,7 +63,7 @@ const NewRecipe = () => {
   const fetchCategories = () => {
     setLoading(true);
     axios
-      .get("http://localhost:8000/api/categories")
+      .get("http://krckalica-web-app-backend.herokuapp.com/api/categories")
       .then(function (response) {
         setCategories(response.data);
         setLoading(false);
@@ -76,7 +76,7 @@ const NewRecipe = () => {
   const fetchCuisines = () => {
     setLoading(true);
     axios
-      .get("http://localhost:8000/api/cuisines")
+      .get("http://krckalica-web-app-backend.herokuapp.com/api/cuisines")
       .then(function (response) {
         setCuisines(response.data);
         setLoading(false);
@@ -145,7 +145,7 @@ const NewRecipe = () => {
       formData.append('ingredients', JSON.stringify(ingredients));
       
       axios
-        .post("http://localhost:8000/api/recipes/add", formData, {
+        .post("http://krckalica-web-app-backend.herokuapp.com/api/recipes/add", formData, {
           headers: {
             "Content-type": "multipart/form-data",
             // "Authorization": `Bearer ${token}`
